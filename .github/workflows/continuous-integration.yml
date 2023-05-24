@@ -20,8 +20,7 @@ jobs:
         uses: actions/cache@v3
         id: node-cache
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       # Install node dependencies if there is no matching cache
       - name: Install node dependencies
@@ -40,8 +39,7 @@ jobs:
       - name: Load node dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       # Cache the front-end build
       - name: Cache build
@@ -67,8 +65,7 @@ jobs:
       - name: Load node dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       # Check the code style with eslint
       - name: Eslint
@@ -89,8 +86,7 @@ jobs:
       - name: Load node dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       # Runs the npm tests
       - name: Npm test
