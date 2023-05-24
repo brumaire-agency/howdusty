@@ -55,6 +55,28 @@ jobs:
         if: steps.build-cache.outputs.cache-hit != true
         run: npm run build
 
+  code-style:
+    name: Code Style
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the source code
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      # Load the node dependencies from cache
+      - name: Load node dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+      # Check the code style with eslint
+      - name: Eslint
+        run: npm run lint:eslint
+      # Check the code formatting with eslint
+      - name: Prettier
+        run: npm run lint:prettier
+
   test:
     name: Test
     needs: install
@@ -69,7 +91,6 @@ jobs:
         with:
           path: |
             node_modules
-            .nuxt
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       # Runs the npm tests
       - name: Npm test
