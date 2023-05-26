@@ -3,7 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ContributorsModule } from './contributors/contributors.module';
 import configuration from './config/configuration';
+import { ContributorEntity } from './contributors/entity/contributor.entity';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import configuration from './config/configuration';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const { host, port, database, username, password, type, synchronize } =
+        const { host, port, database, username, password, type } =
           configService.get('database');
         return {
           type,
@@ -23,11 +25,12 @@ import configuration from './config/configuration';
           database,
           username,
           password,
-          synchronize,
-          entities: ['dist/**/*.entity.js'],
+          entities: [ContributorEntity],
+          synchronize: true,
         };
       },
     }),
+    ContributorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
