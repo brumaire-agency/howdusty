@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('contributors')
-export class ContributorEntity {
+export class Contributor {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,6 +11,6 @@ export class ContributorEntity {
   @Column()
   name: string;
 
-  @Column()
-  avatar_url: string;
+  @Column({ name: 'avatar_url' })
+  avatarUrl: string;
 }

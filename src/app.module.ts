@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ContributorsModule } from './contributors/contributors.module';
 import configuration from './config/configuration';
-import { ContributorEntity } from './contributors/entity/contributor.entity';
+import { Contributor } from './contributors/entity/contributor.entity';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { ContributorEntity } from './contributors/entity/contributor.entity';
           database,
           username,
           password,
-          entities: [ContributorEntity],
+          entities: [Contributor],
           synchronize: true,
         };
       },
