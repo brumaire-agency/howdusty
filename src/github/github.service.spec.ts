@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GithubService } from './github.service';
 import { GithubApi } from './github.api';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/configuration';
 import { User } from './types';
 import { GithubApiMock } from './github.api.mock';
@@ -23,7 +23,6 @@ describe('GithubService', () => {
         }),
       ],
       providers: [
-        ConfigService,
         GithubService,
         GithubApi,
         { provide: GithubApi, useClass: GithubApiMock },
