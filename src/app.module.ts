@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ContributorsModule } from './contributors/contributors.module';
 import configuration from './config/configuration';
 import { Contributor } from './contributors/entity/contributor.entity';
+import { GithubModule } from './github/github.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { Contributor } from './contributors/entity/contributor.entity';
       },
     }),
     ContributorsModule,
+    GithubModule,
   ],
   controllers: [AppController],
   providers: [AppService],

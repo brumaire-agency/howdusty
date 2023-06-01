@@ -7,4 +7,7 @@ export default () => ({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
   },
+  github: {
+    access_token: process.env.GITHUB_ACCESS_TOKEN,
+  },
 });
