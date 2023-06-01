@@ -1,14 +1,14 @@
-import { User } from './interfaces/user.interface';
+import { User } from './types';
 
 export class GithubApiMock {
   /**
    * Gets contributor info from github.
    */
-  async getContributorInfo(contributorUsername: string): Promise<User> {
-    return {
+  getContributorInfo(contributorUsername: string): Promise<User> {
+    return Promise.resolve({
       username: contributorUsername,
       name: 'User Name',
       avatarUrl: 'https://username.com',
-    };
+    });
   }
 }

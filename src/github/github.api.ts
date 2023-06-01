@@ -1,18 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
-import { User } from './interfaces/user.interface';
-import { GetContributorInfoQuery } from './types/queries';
+import { GetContributorInfoQuery, User } from './types';
 
 @Injectable()
 export class GithubApi {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly config: ConfigService) {}
 
   /**
    * Gets contributor info from github.
    */
   async getContributorInfo(contributorUsername: string): Promise<User> {
-    const ACCESS_TOKEN = this.configService.get('github.access_token');
+    const ACCESS_TOKEN = this.config.get('github.access_token');
 
     const graphQLClient = new GraphQLClient('https://api.github.com/graphql', {
       headers: {

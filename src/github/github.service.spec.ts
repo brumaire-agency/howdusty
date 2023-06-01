@@ -3,11 +3,11 @@ import { GithubService } from './github.service';
 import { GithubApi } from './github.api';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '../config/configuration';
-import { User } from './interfaces/user.interface';
+import { User } from './types';
 import { GithubApiMock } from './github.api.mock';
 
 describe('GithubService', () => {
-  let githubService: GithubService;
+  let github: GithubService;
 
   const mockGithubUser: User = {
     username: 'username',
@@ -31,12 +31,12 @@ describe('GithubService', () => {
       exports: [GithubApi],
     }).compile();
 
-    githubService = module.get<GithubService>(GithubService);
+    github = module.get<GithubService>(GithubService);
   });
 
   describe('getContributorInfo', () => {
     it('should return a User', async () => {
-      expect(await githubService.getContributorInfo('username')).toStrictEqual(
+      expect(await github.getContributorInfo('username')).toStrictEqual(
         mockGithubUser,
       );
     });
