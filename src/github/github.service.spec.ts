@@ -4,18 +4,15 @@ import { GithubApi } from './github.api';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '../config/configuration';
 import { User } from './interfaces/user.interface';
+import { GithubApiMock } from './github.api.mock';
 
 describe('GithubService', () => {
   let githubService: GithubService;
 
   const mockGithubUser: User = {
-    username: 'mockUsername',
-    name: 'Mock User Name',
-    avatarUrl: 'https://mockusername.com',
-  };
-
-  const mockGithubApi = {
-    getContributorInfo: jest.fn(() => mockGithubUser),
+    username: 'username',
+    name: 'User Name',
+    avatarUrl: 'https://username.com',
   };
 
   beforeEach(async () => {
@@ -29,7 +26,7 @@ describe('GithubService', () => {
         ConfigService,
         GithubService,
         GithubApi,
-        { provide: GithubApi, useValue: mockGithubApi },
+        { provide: GithubApi, useClass: GithubApiMock },
       ],
       exports: [GithubApi],
     }).compile();
@@ -39,7 +36,7 @@ describe('GithubService', () => {
 
   describe('getContributorInfo', () => {
     it('should return a User', async () => {
-      expect(await githubService.getContributorInfo('mockUsername')).toBe(
+      expect(await githubService.getContributorInfo('username')).toStrictEqual(
         mockGithubUser,
       );
     });

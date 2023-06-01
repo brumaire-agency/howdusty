@@ -7,7 +7,6 @@ import { ContributorsModule } from './contributors/contributors.module';
 import configuration from './config/configuration';
 import { Contributor } from './contributors/entity/contributor.entity';
 import { GithubModule } from './github/github.module';
-import { GithubService } from './github/github.service';
 
 @Module({
   imports: [
@@ -36,6 +35,6 @@ import { GithubService } from './github/github.service';
     GithubModule,
   ],
   controllers: [AppController],
-  providers: [AppService, GithubService],
+  providers: [AppService],
 })
 export class AppModule {}

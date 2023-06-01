@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
 import { User } from './interfaces/user.interface';
+import { GetContributorInfoQuery } from './types/queries';
 
 @Injectable()
 export class GithubApi {
@@ -19,14 +20,6 @@ export class GithubApi {
       },
     });
 
-    type Query = {
-      user: {
-        login: string;
-        name: string;
-        avatarUrl: string;
-      };
-    };
-
     const query = gql`
       {
         user(login: "${contributorUsername}") {
@@ -36,7 +29,7 @@ export class GithubApi {
         }
       }
     `;
-    const result: Query = await graphQLClient.request(query);
+    const result: GetContributorInfoQuery = await graphQLClient.request(query);
 
     return {
       username: result.user.login,
