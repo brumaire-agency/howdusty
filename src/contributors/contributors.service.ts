@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Contributor } from './entity/contributor.entity';
 import { Repository } from 'typeorm';
+import { ContributorDto } from './dto';
 
 @Injectable()
 export class ContributorsService {
@@ -12,5 +13,9 @@ export class ContributorsService {
 
   findAll(): Promise<Contributor[]> {
     return this.contributorsRepository.find();
+  }
+
+  save(contributorDto: ContributorDto): Promise<Contributor> {
+    return this.contributorsRepository.save(contributorDto);
   }
 }

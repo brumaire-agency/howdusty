@@ -1,4 +1,4 @@
-export interface User {
+export class ContributorDto {
   id: string;
   username: string;
   name: string;
