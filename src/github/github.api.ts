@@ -25,12 +25,14 @@ export class GithubApi {
           avatarUrl
           login
           name
+          id
         }
       }
     `;
     const result: GetContributorInfoQuery = await graphQLClient.request(query);
 
     return {
+      id: result.user.id,
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,

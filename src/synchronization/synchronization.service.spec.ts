@@ -1,20 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SynchronizationService } from './synchronization.service';
-import { GithubModule } from '../github/github.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/configuration';
-import { ContributorsModule } from '../contributors/contributors.module';
 import { ContributorsService } from '../contributors/contributors.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Contributor } from '../contributors/entity/contributor.entity';
+import { ContributorsRepositoryMock } from '../contributors/contributors.repository.mock';
+import { GithubService } from '../github/github.service';
+import { GithubApi } from '../github/github.api';
+import { GithubApiMock } from '../github/github.api.mock';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;
-  const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
+  let contributorsRepository: ContributorsRepositoryMock;
+  let githubApi: GithubApiMock;
 
-  const mockProductRepository = {
-    find: jest.fn(),
-  };
+  const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,14 +23,18 @@ describe('SynchronizationService', () => {
         ConfigModule.forRoot({
           load: [configuration],
         }),
-        GithubModule,
       ],
       providers: [
         SynchronizationService,
         ContributorsService,
         {
           provide: CONTRIBUTOR_REPOSITORY_TOKEN,
-          useValue: mockProductRepository,
+          useClass: ContributorsRepositoryMock,
+        },
+        GithubService,
+        {
+          provide: GithubApi,
+          useClass: GithubApiMock,
         },
       ],
     }).compile();
@@ -37,11 +42,34 @@ describe('SynchronizationService', () => {
     synchronization = module.get<SynchronizationService>(
       SynchronizationService,
     );
+    contributorsRepository = module.get<ContributorsRepositoryMock>(
+      CONTRIBUTOR_REPOSITORY_TOKEN,
+    );
+    githubApi = module.get<GithubApiMock>(GithubApi);
   });
 
   describe('githubUser', () => {
-    it('should return a Contributor', () => {
-      // synchronization.githubUser('zoemeriet');
+    it("should add a new contributor if it doesn't exist", async () => {
+      expect(contributorsRepository.contributors.length).toBe(1);
+      await synchronization.githubUser(githubApi.user.username);
+      expect(contributorsRepository.contributors.length).toBe(2);
+      expect(contributorsRepository.contributors[1]).toStrictEqual(
+        githubApi.user,
+      );
+    });
+    it('should update a contributor if it does exist', async () => {
+      contributorsRepository.contributors = [
+        {
+          ...contributorsRepository.contributors[0],
+          id: githubApi.user.id,
+        },
+      ];
+      expect(contributorsRepository.contributors.length).toBe(1);
+      await synchronization.githubUser(githubApi.user.username);
+      expect(contributorsRepository.contributors.length).toBe(1);
+      expect(contributorsRepository.contributors[0]).toStrictEqual(
+        githubApi.user,
+      );
     });
   });
 });

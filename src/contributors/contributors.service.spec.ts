@@ -35,29 +35,26 @@ describe('ContributorsService', () => {
     });
   });
 
-  describe('create', () => {
-    it('should add a new contributor', async () => {
+  describe('save', () => {
+    it("should add a new contributor if it doesn't exist", async () => {
       expect(contributorsRepository.contributors.length).toBe(1);
-      await contributorsService.create(contributorsRepository.newContributor);
+      await contributorsService.save(contributorsRepository.newContributor);
       expect(contributorsRepository.contributors.length).toBe(2);
       expect(contributorsRepository.contributors[1]).toStrictEqual({
         id: 2,
         ...contributorsRepository.newContributor,
       });
     });
-  });
-
-  describe('update', () => {
-    it('should update a contributor', async () => {
+    it('should update a contributor if it does exist', async () => {
       expect(contributorsRepository.contributors.length).toBe(1);
-      await contributorsService.update(
-        1,
-        contributorsRepository.newContributor,
-      );
+      await contributorsService.save({
+        ...contributorsRepository.newContributor,
+        id: contributorsRepository.contributors[0].id,
+      });
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual({
-        id: 1,
         ...contributorsRepository.newContributor,
+        id: contributorsRepository.contributors[0].id,
       });
     });
   });

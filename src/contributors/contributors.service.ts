@@ -15,16 +15,7 @@ export class ContributorsService {
     return this.contributorsRepository.find();
   }
 
-  create(contributorDto: ContributorDto): Promise<Contributor> {
-    const contributor = new Contributor();
-    contributor.username = contributorDto.username;
-    contributor.name = contributorDto.name;
-    contributor.avatarUrl = contributorDto.avatarUrl;
-
-    return this.contributorsRepository.save(contributor);
-  }
-
-  update(id: number, contributorDto: ContributorDto): Promise<Contributor> {
-    return this.contributorsRepository.save({ ...contributorDto, id });
+  save(contributorDto: ContributorDto): Promise<Contributor> {
+    return this.contributorsRepository.save(contributorDto);
   }
 }

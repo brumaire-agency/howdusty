@@ -12,8 +12,7 @@ export class SynchronizationService {
   async githubUser(username: string) {
     const githubUserInfo = await this.github.getContributorInfo(username);
     if (githubUserInfo) {
-      const result = this.contributors.create(githubUserInfo);
-      console.log(result);
+      return await this.contributors.save(githubUserInfo);
     }
   }
 }

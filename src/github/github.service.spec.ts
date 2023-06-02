@@ -3,17 +3,11 @@ import { GithubService } from './github.service';
 import { GithubApi } from './github.api';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/configuration';
-import { User } from './types';
 import { GithubApiMock } from './github.api.mock';
 
 describe('GithubService', () => {
   let github: GithubService;
-
-  const mockGithubUser: User = {
-    username: 'username',
-    name: 'User Name',
-    avatarUrl: 'https://username.com',
-  };
+  let api: GithubApiMock;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,19 +18,18 @@ describe('GithubService', () => {
       ],
       providers: [
         GithubService,
-        GithubApi,
         { provide: GithubApi, useClass: GithubApiMock },
       ],
-      exports: [GithubApi, GithubService],
     }).compile();
 
     github = module.get<GithubService>(GithubService);
+    api = module.get<GithubApiMock>(GithubApi);
   });
 
   describe('getContributorInfo', () => {
     it('should return a User', async () => {
-      expect(await github.getContributorInfo('username')).toStrictEqual(
-        mockGithubUser,
+      expect(await github.getContributorInfo(api.user.username)).toStrictEqual(
+        api.user,
       );
     });
   });
