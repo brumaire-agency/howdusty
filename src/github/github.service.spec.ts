@@ -27,7 +27,7 @@ describe('GithubService', () => {
         GithubApi,
         { provide: GithubApi, useClass: GithubApiMock },
       ],
-      exports: [GithubApi],
+      exports: [GithubApi, GithubService],
     }).compile();
 
     github = module.get<GithubService>(GithubService);

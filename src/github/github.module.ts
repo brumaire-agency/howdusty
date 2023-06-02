@@ -6,6 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [ConfigModule],
   providers: [GithubService, GithubApi],
-  exports: [GithubApi],
+  exports: [GithubApi, GithubService],
 })
 export class GithubModule {}
