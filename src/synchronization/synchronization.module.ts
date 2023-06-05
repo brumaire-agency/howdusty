@@ -6,5 +6,6 @@ import { ContributorsModule } from '../contributors/contributors.module';
 @Module({
   imports: [ContributorsModule, GithubModule],
   providers: [SynchronizationService],
+  exports: [SynchronizationService],
 })
 export class SynchronizationModule {}

@@ -15,7 +15,7 @@ export class ContributorsService {
     return this.contributorsRepository.find();
   }
 
-  save(contributorDto: ContributorDto): Promise<Contributor> {
-    return this.contributorsRepository.save(contributorDto);
+  async save(contributorDto: ContributorDto): Promise<Contributor> {
+    return await this.contributorsRepository.save(contributorDto);
   }
 }
