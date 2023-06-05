@@ -8,6 +8,7 @@ import configuration from './config/configuration';
 import { Contributor } from './contributors/entity/contributor.entity';
 import { GithubModule } from './github/github.module';
 import { SynchronizationModule } from './synchronization/synchronization.module';
+import { CommandsModule } from './commands/commands.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { SynchronizationModule } from './synchronization/synchronization.module'
     ContributorsModule,
     GithubModule,
     SynchronizationModule,
+    CommandsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
