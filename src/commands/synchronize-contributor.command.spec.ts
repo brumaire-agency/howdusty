@@ -13,14 +13,14 @@ import { SynchronizationService } from '../synchronization/synchronization.servi
 import { GithubService } from '../github/github.service';
 
 describe('SynchronizeContributorCommand', () => {
-  let synchronizationContributorCommand: SynchronizeContributorCommand;
+  let command: SynchronizeContributorCommand;
   let githubApi: GithubApiMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
 
   beforeEach(async () => {
-    const command: TestingModule =
-      await CommandTestFactory.createTestingCommand({
+    const module: TestingModule = await CommandTestFactory.createTestingCommand(
+      {
         imports: [
           ConfigModule.forRoot({
             load: [configuration],
@@ -40,16 +40,18 @@ describe('SynchronizeContributorCommand', () => {
             useClass: GithubApiMock,
           },
         ],
-      }).compile();
+      },
+    ).compile();
 
-    synchronizationContributorCommand =
-      command.get<SynchronizeContributorCommand>(SynchronizeContributorCommand);
-    githubApi = command.get<GithubApiMock>(GithubApi);
+    command = module.get<SynchronizeContributorCommand>(
+      SynchronizeContributorCommand,
+    );
+    githubApi = module.get<GithubApiMock>(GithubApi);
   });
 
   it('should synchronize a user', async () => {
     const logSpy = jest.spyOn(global.console, 'log');
-    await synchronizationContributorCommand.run([githubApi.user.username]);
+    await command.run([githubApi.user.username]);
     expect(logSpy).toHaveBeenCalledWith(
       `The user ${githubApi.user.username} has been synchronized`,
     );
