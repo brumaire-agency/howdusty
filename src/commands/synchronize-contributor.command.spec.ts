@@ -10,7 +10,7 @@ import {
   ContributorsRepositoryMock,
 } from '@/contributors';
 import { SynchronizationService } from '@/synchronization';
-import { SynchronizeContributorCommand } from '@/commands/synchronize-contributor.command';
+import { SynchronizeContributorCommand } from './synchronize-contributor.command';
 
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;

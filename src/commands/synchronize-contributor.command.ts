@@ -1,5 +1,5 @@
 import { Command, CommandRunner } from 'nest-commander';
-import { SynchronizationService } from '../synchronization/synchronization.service';
+import { SynchronizationService } from '@/synchronization';
 
 @Command({
   name: 'synchronize-contributor',

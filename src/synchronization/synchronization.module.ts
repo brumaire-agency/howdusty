@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ContributorsModule } from '@/contributors';
 import { GithubModule } from '@/github';
-import { SynchronizationService } from '@/synchronization/synchronization.service';
+import { SynchronizationService } from './synchronization.service';
 
 @Module({
   imports: [ContributorsModule, GithubModule],

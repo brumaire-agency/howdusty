@@ -8,7 +8,7 @@ import {
   ContributorsService,
 } from '@/contributors';
 import { GithubApiMock, GithubApi, GithubService } from '@/github';
-import { SynchronizationService } from '@/synchronization';
+import { SynchronizationService } from './synchronization.service';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;

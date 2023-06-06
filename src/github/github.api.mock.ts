@@ -1,4 +1,4 @@
-import { User } from '@/github/types';
+import { User } from './types';
 
 export class GithubApiMock {
   user: User = {

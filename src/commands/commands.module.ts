@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { SynchronizeContributorCommand } from '@/commands/synchronize-contributor.command';
 import { SynchronizationModule } from '@/synchronization';
+import { SynchronizeContributorCommand } from './synchronize-contributor.command';
 
 @Module({
   imports: [SynchronizationModule],
