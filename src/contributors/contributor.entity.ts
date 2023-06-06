@@ -13,4 +13,7 @@ export class Contributor {
 
   @Column({ name: 'avatar_url' })
   avatarUrl: string;
+
+  @Column({ name: 'total_contributions' })
+  totalContributions: number;
 }

@@ -26,6 +26,9 @@ export class GithubApi {
           login
           name
           id
+          repositoriesContributedTo(privacy: PUBLIC) {
+            totalCount
+          }
         }
       }
     `;
@@ -36,6 +39,7 @@ export class GithubApi {
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,
+      totalContributions: result.user.repositoriesContributedTo.totalCount,
     };
   }
 }

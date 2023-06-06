@@ -4,5 +4,8 @@ export interface GetContributorInfoQuery {
     login: string;
     name: string;
     avatarUrl: string;
+    repositoriesContributedTo: {
+      totalCount: number;
+    };
   };
 }
