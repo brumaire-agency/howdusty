@@ -26,17 +26,8 @@ export class GithubApi {
           login
           name
           id
-          repositoriesContributedTo(
-            privacy: PUBLIC
-            includeUserRepositories: true
-            first: 100
-          ) {
-            nodes {
-              licenseInfo {
-                  key
-              }
-              isFork
-            }
+          repositoriesContributedTo(privacy: PUBLIC) {
+            totalCount
           }
         }
       }
@@ -48,9 +39,7 @@ export class GithubApi {
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,
-      totalContributions: this.openSourceRepositories(
-        result.user.repositoriesContributedTo.nodes,
-      ).length,
+      totalContributions: result.user.repositoriesContributedTo.totalCount,
     };
   }
 
