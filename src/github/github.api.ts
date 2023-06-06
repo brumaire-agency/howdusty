@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
-import { GetContributorInfoQuery, User } from './types';
+import { GetContributorInfoQuery, User } from '@/github/types';
 
 @Injectable()
 export class GithubApi {

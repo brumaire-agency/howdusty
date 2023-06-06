@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { GithubService } from '../github/github.service';
-import { ContributorsService } from '../contributors/contributors.service';
+import { GithubService } from '@/github';
+import { ContributorsService } from '@/contributors';
 
 @Injectable()
 export class SynchronizationService {

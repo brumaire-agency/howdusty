@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SynchronizationService } from './synchronization.service';
 import { ConfigModule } from '@nestjs/config';
-import configuration from '../config/configuration';
-import { ContributorsService } from '../contributors/contributors.service';
+import configuration from '@/config/configuration';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Contributor } from '../contributors/entity/contributor.entity';
-import { ContributorsRepositoryMock } from '../contributors/contributors.repository.mock';
-import { GithubService } from '../github/github.service';
-import { GithubApi } from '../github/github.api';
-import { GithubApiMock } from '../github/github.api.mock';
+import {
+  Contributor,
+  ContributorsRepositoryMock,
+  ContributorsService,
+} from '@/contributors';
+import { GithubApiMock, GithubApi, GithubService } from '@/github';
+import { SynchronizationService } from '@/synchronization';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;

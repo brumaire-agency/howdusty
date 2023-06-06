@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Contributor } from './entity/contributor.entity';
-import { ContributorsService } from './contributors.service';
+import { Contributor } from '@/contributors/contributor.entity';
+import { ContributorsService } from '@/contributors/contributors.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Contributor])],

@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { Contributor } from './entity/contributor.entity';
-import { ContributorDto } from './dto';
+import { ContributorDto } from '@/contributors/contributor.dto';
+import { Contributor } from '@/contributors/contributor.entity';
 
 export class ContributorsRepositoryMock extends Repository<Contributor> {
   contributors: Contributor[] = [

@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ContributorsModule } from './contributors/contributors.module';
-import configuration from './config/configuration';
-import { Contributor } from './contributors/entity/contributor.entity';
-import { GithubModule } from './github/github.module';
-import { SynchronizationModule } from './synchronization/synchronization.module';
-import { CommandsModule } from './commands/commands.module';
+import configuration from '@/config/configuration';
+import { Contributor, ContributorsModule } from '@/contributors';
+import { GithubModule } from '@/github';
+import { SynchronizationModule } from '@/synchronization';
+import { CommandsModule } from '@/commands';
 
 @Module({
   imports: [
@@ -38,7 +35,5 @@ import { CommandsModule } from './commands/commands.module';
     SynchronizationModule,
     CommandsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
