@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GithubService } from './github.service';
-import { GithubApi } from './github.api';
 import { ConfigModule } from '@nestjs/config';
-import configuration from '../config/configuration';
+import configuration from '@/config/configuration';
 import { GithubApiMock } from './github.api.mock';
+import { GithubApi } from './github.api';
+import { GithubService } from './github.service';
 
 describe('GithubService', () => {
   let github: GithubService;

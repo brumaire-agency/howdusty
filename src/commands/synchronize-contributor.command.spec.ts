@@ -1,16 +1,16 @@
 import { TestingModule } from '@nestjs/testing';
-import { CommandTestFactory } from 'nest-commander-testing';
-import { GithubApi } from '../github/github.api';
-import { GithubApiMock } from '../github/github.api.mock';
-import { ContributorsService } from '../contributors/contributors.service';
-import { ContributorsRepositoryMock } from '../contributors/contributors.repository.mock';
-import { Contributor } from '../contributors/entity/contributor.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import configuration from '../config/configuration';
+import { CommandTestFactory } from 'nest-commander-testing';
+import configuration from '@/config/configuration';
+import { GithubApiMock, GithubApi, GithubService } from '@/github';
+import {
+  Contributor,
+  ContributorsService,
+  ContributorsRepositoryMock,
+} from '@/contributors';
+import { SynchronizationService } from '@/synchronization';
 import { SynchronizeContributorCommand } from './synchronize-contributor.command';
-import { SynchronizationService } from '../synchronization/synchronization.service';
-import { GithubService } from '../github/github.service';
 
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;

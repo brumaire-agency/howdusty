@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ContributorsService } from './contributors.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Contributor } from './entity/contributor.entity';
+import { Contributor } from './contributor.entity';
+import { ContributorsService } from './contributors.service';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 
 describe('ContributorsService', () => {
