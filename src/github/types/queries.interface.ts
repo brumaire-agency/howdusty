@@ -5,7 +5,16 @@ export interface GetContributorInfoQuery {
     name: string;
     avatarUrl: string;
     repositoriesContributedTo: {
-      totalCount: number;
+      nodes: RepositoryQuery[];
     };
   };
+}
+
+export interface RepositoryQuery {
+  licenseInfo?: LicenseQuery;
+  isFork: boolean;
+}
+
+export interface LicenseQuery {
+  key: string;
 }
