@@ -5,7 +5,7 @@ export interface GetContributorInfoQuery {
     name: string;
     avatarUrl: string;
     repositoriesContributedTo: {
-      totalCount: number;
+      nodes: RepositoryQuery[];
     };
   };
 }

@@ -26,20 +26,38 @@ export class GithubApi {
           login
           name
           id
-          repositoriesContributedTo(privacy: PUBLIC) {
-            totalCount
+          repositoriesContributedTo(
+            privacy: PUBLIC
+            includeUserRepositories: true
+            first: 100
+          ) {
+            nodes {
+              licenseInfo {
+                  key
+              }
+              isFork
+            }
           }
         }
       }
     `;
     const result: GetContributorInfoQuery = await graphQLClient.request(query);
 
+    const openSourceLicenses = ['mit', 'apache-2.0', 'gpl-3.0', 'agpl-3.0'];
+
+    const openSourceRepositories: RepositoryQuery[] =
+      result.user.repositoriesContributedTo.nodes.filter(
+        (repository) =>
+          repository.isFork &&
+          openSourceLicenses.includes(repository.licenseInfo?.key),
+      );
+
     return {
       id: result.user.id,
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,
-      totalContributions: result.user.repositoriesContributedTo.totalCount,
+      totalContributions: openSourceRepositories.length,
     };
   }
 
