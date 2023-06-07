@@ -43,21 +43,26 @@ export class GithubApi {
     `;
     const result: GetContributorInfoQuery = await graphQLClient.request(query);
 
-    const openSourceLicenses = ['mit', 'apache-2.0', 'gpl-3.0', 'agpl-3.0'];
-
-    const openSourceRepositories: RepositoryQuery[] =
-      result.user.repositoriesContributedTo.nodes.filter(
-        (repository) =>
-          repository.isFork &&
-          openSourceLicenses.includes(repository.licenseInfo?.key),
-      );
-
     return {
       id: result.user.id,
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,
-      totalContributions: openSourceRepositories.length,
+      totalContributions: this.openSourceRepositories(
+        result.user.repositoriesContributedTo.nodes,
+      ).length,
     };
+  }
+
+  /**
+   * Return open source repositories.
+   */
+  openSourceRepositories(repositories: RepositoryQuery[]): RepositoryQuery[] {
+    const openSourceLicenses = ['mit', 'apache-2.0', 'gpl-3.0', 'agpl-3.0'];
+    return repositories.filter(
+      (repository) =>
+        repository.isFork &&
+        openSourceLicenses.includes(repository.licenseInfo?.key),
+    );
   }
 }
