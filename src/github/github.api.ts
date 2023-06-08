@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
-import { GetContributorInfoQuery, User } from './types';
+import { GetContributorInfoQuery, RepositoryQuery, User } from './types';
 
 @Injectable()
 export class GithubApi {
@@ -26,6 +26,18 @@ export class GithubApi {
           login
           name
           id
+          repositoriesContributedTo(
+            privacy: PUBLIC
+            includeUserRepositories: true
+            first: 100
+          ) {
+            nodes {
+              licenseInfo {
+                  key
+              }
+              isFork
+            }
+          }
         }
       }
     `;
@@ -36,6 +48,21 @@ export class GithubApi {
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,
+      totalContributions: this.openSourceRepositories(
+        result.user.repositoriesContributedTo.nodes,
+      ).length,
     };
+  }
+
+  /**
+   * Return open source repositories.
+   */
+  openSourceRepositories(repositories: RepositoryQuery[]): RepositoryQuery[] {
+    const openSourceLicenses = ['mit', 'apache-2.0', 'gpl-3.0', 'agpl-3.0'];
+    return repositories.filter(
+      (repository) =>
+        repository.isFork &&
+        openSourceLicenses.includes(repository.licenseInfo?.key),
+    );
   }
 }

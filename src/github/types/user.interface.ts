@@ -3,4 +3,5 @@ export interface User {
   username: string;
   name: string;
   avatarUrl: string;
+  totalContributions: number;
 }
