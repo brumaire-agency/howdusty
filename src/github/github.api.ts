@@ -7,10 +7,15 @@ import {
   GetContributorInfoQuery,
   User,
 } from './types';
+import { Metric, UserInfoMetric } from './metrics';
 
 @Injectable()
 export class GithubApi {
-  constructor(private readonly config: ConfigService) {}
+  private metrics: Metric[];
+
+  constructor(private readonly config: ConfigService) {
+    this.metrics = [new UserInfoMetric()];
+  }
 
   /**
    * Gets contributor info from github.
@@ -24,111 +29,133 @@ export class GithubApi {
       },
     });
 
-    const query = gql`
-      {
-        user(login: "${contributorUsername}") {
-          avatarUrl
-          login
-          name
-          id
-          contributionsCollection {
-            repositoryContributions(first: 100) {
-              nodes {
-                repository {
-                  name
-                  licenseInfo {
-                    key
-                  }
-                  isFork
-                  isPrivate
-                }
-              }
-            }
-            commitContributionsByRepository {
-              contributions(first: 100) {
-                totalCount
-              }
-              repository {
-                licenseInfo {
-                  key
-                }
-                isFork
-                isPrivate
-              }
-            }
-            issueContributionsByRepository {
-              contributions(first: 100) {
-                totalCount
-              }
-              repository {
-                licenseInfo {
-                  key
-                }
-                isFork
-                isPrivate
-              }
-            }
-            pullRequestContributionsByRepository {
-              contributions(first: 100) {
-                totalCount
-              }
-              repository {
-                licenseInfo {
-                  key
-                }
-                isFork
-                isPrivate
-              }
-            }
-          }
-        }
-      }
-    `;
-    const result: GetContributorInfoQuery = await graphQLClient.request(query);
+    console.log(this.metrics);
 
-    // Repositories
-    const repositoriesContributions: CreatedRepositoryContribution[] =
-      this.createdOpenSourceRepositories(
-        result.user.contributionsCollection.repositoryContributions.nodes,
-      );
-    const totalRepositoriesContributions = repositoriesContributions.length;
+    const query = this.metrics.reduce(
+      (accumulator, currentValue) => `${accumulator} ${currentValue}`,
+      '',
+    );
 
-    // Commit
-    const commitContributions: ContributionsByRepository[] =
-      this.contributionsFromOpenSourceRepositories(
-        result.user.contributionsCollection.commitContributionsByRepository,
-      );
-    const totalCommitContributions =
-      this.totalContributionsFromRepositories(commitContributions);
-
-    // Issue
-    const issueContributions: ContributionsByRepository[] =
-      this.contributionsFromOpenSourceRepositories(
-        result.user.contributionsCollection.issueContributionsByRepository,
-      );
-    const totalIssueContributions =
-      this.totalContributionsFromRepositories(issueContributions);
-
-    // Pull Request
-    const pullRequestContributions: ContributionsByRepository[] =
-      this.contributionsFromOpenSourceRepositories(
-        result.user.contributionsCollection
-          .pullRequestContributionsByRepository,
-      );
-    const totalPullRequestContributions =
-      this.totalContributionsFromRepositories(pullRequestContributions);
+    const result: GetContributorInfoQuery = await graphQLClient.request(
+      gql`
+        ${query}
+      `,
+    );
 
     return {
       id: result.user.id,
       username: result.user.login,
       name: result.user.name,
       avatarUrl: result.user.avatarUrl,
-      totalContributions:
-        totalRepositoriesContributions +
-        totalCommitContributions +
-        totalIssueContributions +
-        totalPullRequestContributions,
+      totalContributions: 0,
     };
+
+    // const query = gql`
+    //   {
+    //     user(login: "${contributorUsername}") {
+    //       avatarUrl
+    //       login
+    //       name
+    //       id
+    //       contributionsCollection {
+    //         repositoryContributions(first: 100) {
+    //           nodes {
+    //             repository {
+    //               name
+    //               licenseInfo {
+    //                 key
+    //               }
+    //               isFork
+    //               isPrivate
+    //             }
+    //           }
+    //         }
+    //         commitContributionsByRepository {
+    //           contributions(first: 100) {
+    //             totalCount
+    //           }
+    //           repository {
+    //             licenseInfo {
+    //               key
+    //             }
+    //             isFork
+    //             isPrivate
+    //           }
+    //         }
+    //         issueContributionsByRepository {
+    //           contributions(first: 100) {
+    //             totalCount
+    //           }
+    //           repository {
+    //             licenseInfo {
+    //               key
+    //             }
+    //             isFork
+    //             isPrivate
+    //           }
+    //         }
+    //         pullRequestContributionsByRepository {
+    //           contributions(first: 100) {
+    //             totalCount
+    //           }
+    //           repository {
+    //             licenseInfo {
+    //               key
+    //             }
+    //             isFork
+    //             isPrivate
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // `;
+
+    // const result: GetContributorInfoQuery = await graphQLClient.request(query);
+
+    // // Repositories
+    // const repositoriesContributions: CreatedRepositoryContribution[] =
+    //   this.createdOpenSourceRepositories(
+    //     result.user.contributionsCollection.repositoryContributions.nodes,
+    //   );
+    // const totalRepositoriesContributions = repositoriesContributions.length;
+
+    // // Commit
+    // const commitContributions: ContributionsByRepository[] =
+    //   this.contributionsFromOpenSourceRepositories(
+    //     result.user.contributionsCollection.commitContributionsByRepository,
+    //   );
+    // const totalCommitContributions =
+    //   this.totalContributionsFromRepositories(commitContributions);
+
+    // // Issue
+    // const issueContributions: ContributionsByRepository[] =
+    //   this.contributionsFromOpenSourceRepositories(
+    //     result.user.contributionsCollection.issueContributionsByRepository,
+    //   );
+    // const totalIssueContributions =
+    //   this.totalContributionsFromRepositories(issueContributions);
+
+    // // Pull Request
+    // const pullRequestContributions: ContributionsByRepository[] =
+    //   this.contributionsFromOpenSourceRepositories(
+    //     result.user.contributionsCollection
+    //       .pullRequestContributionsByRepository,
+    //   );
+    // const totalPullRequestContributions =
+    //   this.totalContributionsFromRepositories(pullRequestContributions);
+
+    // return {
+    //   id: result.user.id,
+    //   username: result.user.login,
+    //   name: result.user.name,
+    //   avatarUrl: result.user.avatarUrl,
+    //   totalContributions:
+    //     totalRepositoriesContributions +
+    //     totalCommitContributions +
+    //     totalIssueContributions +
+    //     totalPullRequestContributions,
+    // };
   }
 
   /**
