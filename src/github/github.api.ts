@@ -166,7 +166,7 @@ export class GithubApi {
   }
 
   /**
-   * Return contributions from open source repositories.
+   * Return total contributions.
    */
   totalContributionsFromRepositories(
     contributionsByRepository: ContributionsByRepository[],
