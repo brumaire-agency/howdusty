@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
 import { Metric, TotalContributionsMetric, UserInfoMetric } from './metrics';
+import { User } from './types';
 
 @Injectable()
 export class GithubApi {
@@ -14,7 +15,7 @@ export class GithubApi {
   /**
    * Gets contributor info from github.
    */
-  async getContributorInfo(contributorUsername: string): Promise<any> {
+  async getContributorInfo(contributorUsername: string): Promise<User> {
     const ACCESS_TOKEN = this.config.get('github.access_token');
 
     const graphQLClient = new GraphQLClient('https://api.github.com/graphql', {
@@ -45,6 +46,6 @@ export class GithubApi {
       {},
     );
 
-    return data;
+    return data as User;
   }
 }
