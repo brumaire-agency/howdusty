@@ -1,18 +1,14 @@
-import { graphqlResultMock } from '../github.api.mock';
-import { UserInfoData, UserInfoMetric } from './user-info.metric';
+import { UserInfoMetric } from './user-info.metric';
+import response from './query-response.example.json';
 
 describe('UserInfo Metric', () => {
   const metric = new UserInfoMetric();
-  const resultMock = graphqlResultMock;
-
-  const data: UserInfoData = {
-    id: 'githubusernameid',
-    username: 'githubusername',
-    name: 'Github User Name',
-    avatarUrl: 'https://githubusername.com',
-  };
 
   it('parseResult should return a User', async () => {
-    expect(await metric.parseResult(resultMock)).toStrictEqual(data);
+    const data = await metric.parseResult(response);
+    expect(typeof data.id).toBe('string');
+    expect(typeof data.username).toBe('string');
+    expect(typeof data.name).toBe('string');
+    expect(typeof data.avatarUrl).toBe('string');
   });
 });

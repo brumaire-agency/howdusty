@@ -1,0 +1,619 @@
+{
+      "userInfo": {
+          "id": "MDQ6VXNlcjE3Nzk5MTgx",
+          "login": "robinstraub",
+          "name": "Robin Straub",
+          "avatarUrl": "https://avatars.githubusercontent.com/u/17799181?u=308f467e097f26f738b53ecb5abec132c14ef6c9&v=4"
+      },
+      "totalContributions": {
+          "contributionsCollection": {
+              "repositoryContributions": {
+                  "nodes": [
+                      {
+                          "repository": {
+                              "licenseInfo": null,
+                              "isFork": true,
+                              "isPrivate": false
+                          }
+                      },
+                      {
+                          "repository": {
+                              "licenseInfo": {
+                                  "key": "mit"
+                              },
+                              "isFork": true,
+                              "isPrivate": false
+                          }
+                      },
+                      {
+                          "repository": {
+                              "licenseInfo": {
+                                  "key": "mit"
+                              },
+                              "isFork": true,
+                              "isPrivate": false
+                          }
+                      },
+                      {
+                          "repository": {
+                              "licenseInfo": {
+                                  "key": "apache-2.0"
+                              },
+                              "isFork": true,
+                              "isPrivate": false
+                          }
+                      },
+                      {
+                          "repository": {
+                              "licenseInfo": {
+                                  "key": "other"
+                              },
+                              "isFork": true,
+                              "isPrivate": false
+                          }
+                      }
+                  ]
+              },
+              "commitContributionsByRepository": [
+                  {
+                      "contributions": {
+                          "totalCount": 165
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 155
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 66
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 57
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 47
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 32
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 24
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 23
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 23
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 22
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 22
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 20
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 19
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 17
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 14
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 12
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 12
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 12
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 8
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 7
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 5
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 5
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "mit"
+                          },
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  }
+              ],
+              "issueContributionsByRepository": [
+                  {
+                      "contributions": {
+                          "totalCount": 15
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "mit"
+                          },
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 2
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "mit"
+                          },
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 1
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 1
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "mit"
+                          },
+                          "isFork": true,
+                          "isPrivate": false
+                      }
+                  }
+              ],
+              "pullRequestContributionsByRepository": [
+                  {
+                      "contributions": {
+                          "totalCount": 130
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 42
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 39
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 38
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 31
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 11
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 11
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 9
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 9
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 8
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 7
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 6
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 6
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 5
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "mit"
+                          },
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 5
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 5
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 4
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 3
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 2
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "apache-2.0"
+                          },
+                          "isFork": true,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 2
+                      },
+                      "repository": {
+                          "licenseInfo": {
+                              "key": "mit"
+                          },
+                          "isFork": true,
+                          "isPrivate": false
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 2
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  },
+                  {
+                      "contributions": {
+                          "totalCount": 2
+                      },
+                      "repository": {
+                          "licenseInfo": null,
+                          "isFork": false,
+                          "isPrivate": true
+                      }
+                  }
+              ]
+          }
+      }
+  }
