@@ -1,9 +1,7 @@
 /**
  * Represents an object returned by the github graphql api.
  */
-export interface GithubGraphResponse {
-  data: Record<string, any>;
-}
+export type GithubGraphResponse = Record<string, any>;
 
 /**
  * Represents the data associated with a given metric.

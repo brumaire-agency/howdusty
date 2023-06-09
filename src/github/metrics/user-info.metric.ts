@@ -17,32 +17,30 @@ export class UserInfoMetric extends Metric<UserInfoMetricResult, UserInfoData> {
 
   parseResult(result: UserInfoMetricResult): UserInfoData {
     return {
-      id: result.data.userInfo.id,
-      username: result.data.userInfo.login,
-      name: result.data.userInfo.name,
-      avatarUrl: result.data.userInfo.avatarUrl,
+      id: result.userInfo.id,
+      username: result.userInfo.login,
+      name: result.userInfo.name,
+      avatarUrl: result.userInfo.avatarUrl,
     };
   }
 }
 
 /**
- * blabla 1
+ * Represents the object returned by the github graphql api.
  */
-interface UserInfoMetricResult extends GithubGraphResponse {
-  data: {
-    userInfo: {
-      id: string;
-      login: string;
-      name: string;
-      avatarUrl: string;
-    };
+export interface UserInfoMetricResult extends GithubGraphResponse {
+  userInfo: {
+    id: string;
+    login: string;
+    name: string;
+    avatarUrl: string;
   };
 }
 
 /**
- * blabla 2
+ * Represents the data associated with the metric.
  */
-interface UserInfoData extends MetricData {
+export interface UserInfoData extends MetricData {
   id: string;
   username: string;
   name: string;
