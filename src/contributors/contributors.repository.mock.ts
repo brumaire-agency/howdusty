@@ -10,6 +10,7 @@ export class ContributorsRepositoryMock extends Repository<Contributor> {
       name: 'User name',
       avatarUrl: 'https://username.com',
       totalContributions: 2,
+      contributedRepositoryCount: 1,
     },
   ];
 
@@ -19,6 +20,7 @@ export class ContributorsRepositoryMock extends Repository<Contributor> {
     name: 'New User Name',
     avatarUrl: 'https://newusername.com',
     totalContributions: 3,
+    contributedRepositoryCount: 1,
   };
 
   find(): Promise<Contributor[]> {

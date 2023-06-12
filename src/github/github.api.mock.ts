@@ -7,6 +7,7 @@ export class GithubApiMock {
     name: 'Github User Name',
     avatarUrl: 'https://githubusername.com',
     totalContributions: 2,
+    contributedRepositoryCount: 1,
   };
 
   /**
@@ -19,6 +20,7 @@ export class GithubApiMock {
       name: this.user.name,
       avatarUrl: this.user.avatarUrl,
       totalContributions: this.user.totalContributions,
+      contributedRepositoryCount: this.user.contributedRepositoryCount,
     });
   }
 }
