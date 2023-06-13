@@ -5,4 +5,5 @@ export class ContributorDto {
   avatarUrl: string;
   totalContributions: number;
   contributedRepositoryCount: number;
+  repositoryMaintainedCount: number;
 }

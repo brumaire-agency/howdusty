@@ -1,7 +1,7 @@
 import { UserInfoMetric } from './user-info.metric';
 import response from './query-response.example.json';
 
-describe('UserInfo Metric', () => {
+describe('User Info Metric', () => {
   const metric = new UserInfoMetric();
 
   it('parseResult should return a User', async () => {

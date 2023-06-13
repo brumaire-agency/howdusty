@@ -6,6 +6,7 @@ import {
   TotalContributionsMetric,
   UserInfoMetric,
   ContributedRepositoryCountMetric,
+  RepositoryMaintainedCountMetric,
 } from './metrics';
 import { User } from './types';
 
@@ -18,6 +19,7 @@ export class GithubApi {
       new UserInfoMetric(),
       new TotalContributionsMetric(),
       new ContributedRepositoryCountMetric(),
+      new RepositoryMaintainedCountMetric(),
     ];
   }
 

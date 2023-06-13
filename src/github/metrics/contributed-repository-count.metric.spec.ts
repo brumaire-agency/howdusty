@@ -1,7 +1,7 @@
 import { ContributedRepositoryCountMetric } from './contributed-repository-count.metric';
 import response from './query-response.example.json';
 
-describe('TotalContributions Metric', () => {
+describe('Contributed Repository Count Metric', () => {
   const metric = new ContributedRepositoryCountMetric();
 
   it('parseResult should return a User', async () => {
