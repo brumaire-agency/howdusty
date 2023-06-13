@@ -12,6 +12,13 @@
           {
             "repository": {
               "licenseInfo": null,
+              "isFork": false,
+              "isPrivate": false
+            }
+          },
+          {
+            "repository": {
+              "licenseInfo": null,
               "isFork": true,
               "isPrivate": false
             }
@@ -107,17 +114,7 @@
         },
         {
           "contributions": {
-            "totalCount": 32
-          },
-          "repository": {
-            "licenseInfo": null,
-            "isFork": false,
-            "isPrivate": true
-          }
-        },
-        {
-          "contributions": {
-            "totalCount": 24
+            "totalCount": 26
           },
           "repository": {
             "licenseInfo": null,
@@ -197,6 +194,16 @@
         },
         {
           "contributions": {
+            "totalCount": 15
+          },
+          "repository": {
+            "licenseInfo": null,
+            "isFork": false,
+            "isPrivate": true
+          }
+        },
+        {
+          "contributions": {
             "totalCount": 14
           },
           "repository": {
@@ -260,6 +267,18 @@
             "totalCount": 5
           },
           "repository": {
+            "licenseInfo": {
+              "key": "mit"
+            },
+            "isFork": false,
+            "isPrivate": false
+          }
+        },
+        {
+          "contributions": {
+            "totalCount": 5
+          },
+          "repository": {
             "licenseInfo": null,
             "isFork": false,
             "isPrivate": true
@@ -295,16 +314,6 @@
             "licenseInfo": null,
             "isFork": false,
             "isPrivate": false
-          }
-        },
-        {
-          "contributions": {
-            "totalCount": 4
-          },
-          "repository": {
-            "licenseInfo": null,
-            "isFork": false,
-            "isPrivate": true
           }
         }
       ],
@@ -564,9 +573,31 @@
             "totalCount": 3
           },
           "repository": {
+            "licenseInfo": {
+              "key": "mit"
+            },
+            "isFork": false,
+            "isPrivate": false
+          }
+        },
+        {
+          "contributions": {
+            "totalCount": 3
+          },
+          "repository": {
             "licenseInfo": null,
             "isFork": false,
             "isPrivate": true
+          }
+        },
+        {
+          "contributions": {
+            "totalCount": 2
+          },
+          "repository": {
+            "licenseInfo": null,
+            "isFork": false,
+            "isPrivate": false
           }
         },
         {
@@ -592,26 +623,96 @@
             "isFork": true,
             "isPrivate": false
           }
+        }
+      ]
+    }
+  },
+  "contributedRepositoryCount": {
+    "repositoriesContributedTo": {
+      "nodes": [
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": true
         },
         {
-          "contributions": {
-            "totalCount": 2
-          },
-          "repository": {
-            "licenseInfo": null,
-            "isFork": false,
-            "isPrivate": true
-          }
+          "licenseInfo": null,
+          "isFork": false
         },
         {
-          "contributions": {
-            "totalCount": 2
+          "licenseInfo": {
+            "key": "other"
           },
-          "repository": {
-            "licenseInfo": null,
-            "isFork": false,
-            "isPrivate": true
-          }
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": false
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "apache-2.0"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": false
         }
       ]
     }
