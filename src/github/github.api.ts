@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
-import { Metric, TotalContributionsMetric, UserInfoMetric } from './metrics';
+import {
+  Metric,
+  TotalContributionsMetric,
+  UserInfoMetric,
+  ContributedRepositoryCountMetric,
+} from './metrics';
 import { User } from './types';
 
 @Injectable()
@@ -9,7 +14,11 @@ export class GithubApi {
   private metrics: Metric[];
 
   constructor(private readonly config: ConfigService) {
-    this.metrics = [new UserInfoMetric(), new TotalContributionsMetric()];
+    this.metrics = [
+      new UserInfoMetric(),
+      new TotalContributionsMetric(),
+      new ContributedRepositoryCountMetric(),
+    ];
   }
 
   /**

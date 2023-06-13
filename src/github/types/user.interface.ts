@@ -4,4 +4,5 @@ export interface User {
   name: string;
   avatarUrl: string;
   totalContributions: number;
+  contributedRepositoryCount: number;
 }
