@@ -1,19 +1,9 @@
-import { Repository } from 'typeorm';
 import { ContributorDto } from './contributor.dto';
 import { Contributor } from './contributor.entity';
+import { ContributorFactory } from './contributor.factory';
 
-export class ContributorsRepositoryMock extends Repository<Contributor> {
-  contributors: Contributor[] = [
-    {
-      id: 'usernameid',
-      username: 'username',
-      name: 'User name',
-      avatarUrl: 'https://username.com',
-      totalContributions: 2,
-      contributedRepositoryCount: 1,
-      maintainedRepositoryCount: 1,
-    },
-  ];
+export class ContributorsRepositoryMock {
+  contributors: Contributor[] = [ContributorFactory.generate()];
 
   newContributor: ContributorDto = {
     id: 'newusernameid',
