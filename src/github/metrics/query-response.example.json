@@ -717,7 +717,7 @@
       ]
     }
   },
-  "repositoryMaintainedCount": {
+  "maintainedRepositoryCount": {
     "repositories": {
       "nodes": [
         {

@@ -1,15 +1,15 @@
 import { GithubGraphResponse, Metric, MetricData } from './base.metric';
 
-export class RepositoryMaintainedCountMetric extends Metric<
-  RepositoryMaintainedCountResult,
-  RepositoryMaintainedCountData
+export class MaintainedRepositoryCountMetric extends Metric<
+  MaintainedRepositoryCountResult,
+  MaintainedRepositoryCountData
 > {
   /**
    * @inheritDoc
    */
   buildQuery(username: string): string {
     return `
-      repositoryMaintainedCount: user(login: "${username}") {
+      maintainedRepositoryCount: user(login: "${username}") {
         repositories(first: 100, privacy: PUBLIC) {
           nodes {
               licenseInfo {
@@ -23,15 +23,15 @@ export class RepositoryMaintainedCountMetric extends Metric<
   }
 
   parseResult(
-    result: RepositoryMaintainedCountResult,
-  ): RepositoryMaintainedCountData {
+    result: MaintainedRepositoryCountResult,
+  ): MaintainedRepositoryCountData {
     const openSourceRepositories = this.openSourceRepositories(
-      result.repositoryMaintainedCount.repositories.nodes,
+      result.maintainedRepositoryCount.repositories.nodes,
     );
     const totalOpenSourceRepositories = openSourceRepositories.length;
 
     return {
-      repositoryMaintainedCount: totalOpenSourceRepositories,
+      maintainedRepositoryCount: totalOpenSourceRepositories,
     };
   }
 
@@ -51,8 +51,8 @@ export class RepositoryMaintainedCountMetric extends Metric<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface RepositoryMaintainedCountResult extends GithubGraphResponse {
-  repositoryMaintainedCount: {
+export interface MaintainedRepositoryCountResult extends GithubGraphResponse {
+  maintainedRepositoryCount: {
     repositories: {
       nodes: RepositoryQuery[];
     };
@@ -62,8 +62,8 @@ export interface RepositoryMaintainedCountResult extends GithubGraphResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface RepositoryMaintainedCountData extends MetricData {
-  repositoryMaintainedCount: number;
+export interface MaintainedRepositoryCountData extends MetricData {
+  maintainedRepositoryCount: number;
 }
 
 interface RepositoryQuery {

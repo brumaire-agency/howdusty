@@ -5,5 +5,5 @@ export interface User {
   avatarUrl: string;
   totalContributions: number;
   contributedRepositoryCount: number;
-  repositoryMaintainedCount: number;
+  maintainedRepositoryCount: number;
 }

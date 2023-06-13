@@ -11,7 +11,7 @@ export class ContributorsRepositoryMock extends Repository<Contributor> {
       avatarUrl: 'https://username.com',
       totalContributions: 2,
       contributedRepositoryCount: 1,
-      repositoryMaintainedCount: 1,
+      maintainedRepositoryCount: 1,
     },
   ];
 
@@ -22,7 +22,7 @@ export class ContributorsRepositoryMock extends Repository<Contributor> {
     avatarUrl: 'https://newusername.com',
     totalContributions: 3,
     contributedRepositoryCount: 1,
-    repositoryMaintainedCount: 1,
+    maintainedRepositoryCount: 1,
   };
 
   find(): Promise<Contributor[]> {
