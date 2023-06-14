@@ -716,5 +716,85 @@
         }
       ]
     }
+  },
+  "maintainedRepositoryCount": {
+    "repositories": {
+      "nodes": [
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": true
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": false
+        },
+        {
+          "licenseInfo": null,
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "other"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "apache-2.0"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": {
+            "key": "mit"
+          },
+          "isFork": true
+        },
+        {
+          "licenseInfo": null,
+          "isFork": true
+        },
+        {
+          "licenseInfo": null,
+          "isFork": false
+        }
+      ]
+    }
   }
 }

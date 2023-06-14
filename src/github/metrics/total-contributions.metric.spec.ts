@@ -1,7 +1,7 @@
 import { TotalContributionsMetric } from './total-contributions.metric';
 import response from './query-response.example.json';
 
-describe('TotalContributions Metric', () => {
+describe('Total Contributions Metric', () => {
   const metric = new TotalContributionsMetric();
 
   it('parseResult should return a User', async () => {

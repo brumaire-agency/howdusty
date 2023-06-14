@@ -19,4 +19,7 @@ export class Contributor {
 
   @Column({ name: 'contributed_repository_count' })
   contributedRepositoryCount: number;
+
+  @Column({ name: 'maintained_repository_count' })
+  maintainedRepositoryCount: number;
 }
