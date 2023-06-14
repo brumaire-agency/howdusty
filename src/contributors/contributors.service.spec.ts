@@ -21,10 +21,8 @@ describe('ContributorsService', () => {
       ],
     }).compile();
 
-    contributorsService = module.get<ContributorsService>(ContributorsService);
-    contributorsRepository = module.get<ContributorsRepositoryMock>(
-      CONTRIBUTOR_REPOSITORY_TOKEN,
-    );
+    contributorsService = module.get(ContributorsService);
+    contributorsRepository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
   });
 
   describe('findAll', () => {
