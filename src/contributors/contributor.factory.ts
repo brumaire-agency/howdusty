@@ -13,6 +13,7 @@ export class ContributorFactory {
         avatarUrl: 'https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png',
         totalContributions: 0,
         contributedRepositoryCount: 0,
+        maintainedRepositoryCount: 0,
       },
       preset,
     );
@@ -26,6 +27,7 @@ export class ContributorFactory {
       ContributorFactory.generate({
         totalContributions: index,
         contributedRepositoryCount: index,
+        maintainedRepositoryCount: index,
       }),
     );
   }
