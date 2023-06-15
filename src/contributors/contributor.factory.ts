@@ -18,7 +18,7 @@ export class ContributorFactory {
         issuePullRequestRatio: faker.number.float({
           min: 0.01,
           max: 0.99,
-          precision: 2,
+          precision: 0.01,
         }),
       },
       preset,

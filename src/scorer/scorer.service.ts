@@ -2,13 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { NormalizationService } from '@/scorer/normalization.service';
 import { Contributor } from '@/contributors';
 import { orderBy } from 'lodash';
+import { Metricable, MetricName } from '@/github/metrics';
 
 @Injectable()
 export class Scorer {
-  private weights = {
-    totalContributions: 1,
-    contributedRepositoryCount: 1,
-    maintainedRepositoryCount: 1,
+  private weights: Metricable = {
+    [MetricName.totalContributions]: 1,
+    [MetricName.contributedRepositoryCount]: 1,
+    [MetricName.maintainedRepositoryCount]: 1,
+    [MetricName.issuePullRequestRatio]: 1,
   };
 
   /**
