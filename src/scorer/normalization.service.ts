@@ -28,6 +28,7 @@ export class NormalizationService {
     const dataset = contributors.map((contributor) =>
       this.contributorToRecord(contributor),
     );
+
     // scale the dataset
     return this.scaler.scale(dataset);
   }

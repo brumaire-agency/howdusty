@@ -6,4 +6,5 @@ export class ContributorDto {
   totalContributions: number;
   contributedRepositoryCount: number;
   maintainedRepositoryCount: number;
+  issuePullRequestRatio: number;
 }

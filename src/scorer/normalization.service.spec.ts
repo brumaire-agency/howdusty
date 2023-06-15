@@ -23,6 +23,7 @@ describe('NormalizationService', () => {
   describe('normalize', () => {
     it('should normalize a set of contributors', async () => {
       const contributors = ContributorFactory.generateMany(10);
+
       const normalizedContributors = service.normalize(contributors);
 
       // ensures there is the correct count of normalized contributors
@@ -31,6 +32,7 @@ describe('NormalizationService', () => {
       // ensure every feature has been scaled between 0 and 1
       for (const contributor of normalizedContributors) {
         for (const key in contributor) {
+          expect(typeof contributor[key]).toBe('number');
           expect(contributor[key]).toBeGreaterThanOrEqual(0);
           expect(contributor[key]).toBeLessThanOrEqual(1);
         }

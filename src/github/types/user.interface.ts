@@ -6,4 +6,5 @@ export interface User {
   totalContributions: number;
   contributedRepositoryCount: number;
   maintainedRepositoryCount: number;
+  issuePullRequestRatio: number;
 }
