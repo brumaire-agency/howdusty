@@ -1,0 +1,56 @@
+import { Test } from '@nestjs/testing';
+import { ContributorFactory } from '@/contributors';
+import { Scorer } from './scorer.service';
+import { StandardScaler } from './standard-scaler.service';
+import { NormalizationService } from './normalization.service';
+import { faker } from '@faker-js/faker';
+import { sortBy } from 'lodash';
+
+describe('Scorer', () => {
+  /**
+   * The scorer service.
+   */
+  let service: Scorer;
+
+  /**
+   * Creates a new scorer service before each test.
+   */
+  beforeEach(async () => {
+    const module = await Test.createTestingModule({
+      providers: [NormalizationService, StandardScaler, Scorer],
+    }).compile();
+
+    service = module.get(Scorer);
+  });
+
+  describe('score', () => {
+    it('should score a set of contributors', () => {
+      faker.seed(42);
+      const contributors = ContributorFactory.generateMany(10);
+
+      const scored = service.score(contributors);
+
+      // ensures there is the correct count of normalized contributors
+      expect(contributors.length).toEqual(scored.length);
+
+      for (const contributor of scored) {
+        // ensure every contributor gets a positive score
+        expect(contributor.score).toBeGreaterThanOrEqual(0);
+      }
+    });
+
+    it('should compute a unique rank for every contributor', () => {
+      faker.seed(42);
+      const contributors = ContributorFactory.generateMany(10);
+
+      const scored = service.score(contributors);
+      const ranks = sortBy(scored.map((contributor) => contributor.rank));
+
+      // theoreticalRanks = [1, 2, 3, ..., 9, 10]
+      const theoreticalRanks = Array.from(new Array(contributors.length)).map(
+        (_, index) => index + 1,
+      );
+      expect(ranks).toEqual(theoreticalRanks);
+    });
+  });
+});
