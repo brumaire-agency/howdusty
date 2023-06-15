@@ -22,4 +22,12 @@ export class Contributor {
 
   @Column({ name: 'maintained_repository_count' })
   maintainedRepositoryCount: number;
+
+  @Column({
+    name: 'issue_pull_request_ratio',
+    type: 'decimal',
+    precision: 6,
+    scale: 2,
+  })
+  issuePullRequestRatio: number;
 }

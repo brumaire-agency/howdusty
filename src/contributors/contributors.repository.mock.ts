@@ -13,6 +13,7 @@ export class ContributorsRepositoryMock {
     totalContributions: 3,
     contributedRepositoryCount: 1,
     maintainedRepositoryCount: 1,
+    issuePullRequestRatio: 0.5,
   };
 
   find(): Promise<Contributor[]> {

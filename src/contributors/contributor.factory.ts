@@ -14,6 +14,7 @@ export class ContributorFactory {
         totalContributions: 0,
         contributedRepositoryCount: 0,
         maintainedRepositoryCount: 0,
+        issuePullRequestRatio: 0.5,
       },
       preset,
     );
@@ -28,6 +29,7 @@ export class ContributorFactory {
         totalContributions: index,
         contributedRepositoryCount: index,
         maintainedRepositoryCount: index,
+        issuePullRequestRatio: index / 3,
       }),
     );
   }
