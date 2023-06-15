@@ -15,6 +15,11 @@ export class ContributorFactory {
         totalContributions: faker.number.int(1000),
         contributedRepositoryCount: faker.number.int(10),
         maintainedRepositoryCount: faker.number.int(10),
+        issuePullRequestRatio: faker.number.float({
+          min: 0.01,
+          max: 0.99,
+          precision: 2,
+        }),
       },
       preset,
     );
