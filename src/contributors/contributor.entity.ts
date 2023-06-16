@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Metricable } from '@/github/metrics';
 
 @Entity('contributors')
-export class Contributor {
+export class Contributor implements Metricable {
   @PrimaryColumn()
   id: string;
 
@@ -30,4 +31,10 @@ export class Contributor {
     scale: 2,
   })
   issuePullRequestRatio: number;
+
+  @Column({ name: 'score', type: 'decimal', precision: 10, scale: 8 })
+  score?: number;
+
+  @Column()
+  rank?: number;
 }

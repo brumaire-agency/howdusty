@@ -1,4 +1,5 @@
 import { Contributor } from './contributor.entity';
+import { faker } from '@faker-js/faker';
 
 export class ContributorFactory {
   /**
@@ -7,14 +8,18 @@ export class ContributorFactory {
   public static generate(preset: Partial<Contributor> = {}): Contributor {
     return Object.assign(
       {
-        id: 'denvercoder9',
-        username: 'denvercoder9',
-        name: 'Denver Coder',
-        avatarUrl: 'https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png',
-        totalContributions: 0,
-        contributedRepositoryCount: 0,
-        maintainedRepositoryCount: 0,
-        issuePullRequestRatio: 0.5,
+        id: faker.string.numeric(),
+        username: faker.internet.userName(),
+        name: faker.person.fullName(),
+        avatarUrl: faker.image.avatarGitHub(),
+        totalContributions: faker.number.int(1000),
+        contributedRepositoryCount: faker.number.int(10),
+        maintainedRepositoryCount: faker.number.int(10),
+        issuePullRequestRatio: faker.number.float({
+          min: 0.01,
+          max: 0.99,
+          precision: 0.01,
+        }),
       },
       preset,
     );
@@ -23,14 +28,12 @@ export class ContributorFactory {
   /**
    * Generates a set of contributors of the given length.
    */
-  public static generateMany(count: number): Contributor[] {
-    return Array.from(new Array(count)).map((_, index) =>
-      ContributorFactory.generate({
-        totalContributions: index,
-        contributedRepositoryCount: index,
-        maintainedRepositoryCount: index,
-        issuePullRequestRatio: index / 3,
-      }),
+  public static generateMany(
+    count: number,
+    preset: Partial<Contributor> = {},
+  ): Contributor[] {
+    return Array.from(new Array(count)).map(() =>
+      ContributorFactory.generate(preset),
     );
   }
 }
