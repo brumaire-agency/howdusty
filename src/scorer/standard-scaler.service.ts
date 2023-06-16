@@ -37,6 +37,11 @@ export class StandardScaler {
     const min = Math.min(...values);
     const max = Math.max(...values);
 
+    // avoid dividing by 0 when every value is the same
+    if (min === max) {
+      return values.map(() => 0);
+    }
+
     return values.map((val) => (val - min) / (max - min));
   }
 }
