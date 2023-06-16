@@ -55,6 +55,7 @@ describe('ScoreContributorsCommand', () => {
   it('should score every contributors', async () => {
     faker.seed(42);
     await repository.save(ContributorFactory.generateMany(5));
+
     await command.run([]);
 
     expect(repository.contributors.length).toEqual(5);

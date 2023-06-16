@@ -8,7 +8,7 @@ export class ContributorFactory {
   public static generate(preset: Partial<Contributor> = {}): Contributor {
     return Object.assign(
       {
-        id: faker.string.numeric(),
+        id: faker.string.uuid(),
         username: faker.internet.userName(),
         name: faker.person.fullName(),
         avatarUrl: faker.image.avatarGitHub(),
