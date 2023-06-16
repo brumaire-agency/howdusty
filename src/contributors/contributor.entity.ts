@@ -32,9 +32,15 @@ export class Contributor implements Metricable {
   })
   issuePullRequestRatio: number;
 
-  @Column({ name: 'score', type: 'decimal', precision: 10, scale: 8 })
+  @Column({
+    name: 'score',
+    type: 'decimal',
+    precision: 10,
+    scale: 8,
+    nullable: true,
+  })
   score?: number;
 
-  @Column()
+  @Column({ nullable: true })
   rank?: number;
 }

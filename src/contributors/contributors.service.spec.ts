@@ -3,6 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Contributor } from './contributor.entity';
 import { ContributorsService } from './contributors.service';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
+import { faker } from '@faker-js/faker';
+import { ContributorFactory } from '@/contributors/contributor.factory';
 
 describe('ContributorsService', () => {
   let contributorsService: ContributorsService;
@@ -35,25 +37,26 @@ describe('ContributorsService', () => {
 
   describe('save', () => {
     it("should add a new contributor if it doesn't exist", async () => {
+      faker.seed(42);
+      const contributor = ContributorFactory.generate();
+
+      expect(contributorsRepository.contributors.length).toBe(0);
+      await contributorsService.save(contributor);
       expect(contributorsRepository.contributors.length).toBe(1);
-      await contributorsService.save(contributorsRepository.newContributor);
-      expect(contributorsRepository.contributors.length).toBe(2);
-      expect(contributorsRepository.contributors[1]).toStrictEqual({
-        id: 2,
-        ...contributorsRepository.newContributor,
-      });
+      expect(contributorsRepository.contributors[0]).toStrictEqual(contributor);
     });
     it('should update a contributor if it does exist', async () => {
+      faker.seed(42);
+      const contributor = ContributorFactory.generate({ id: '1' });
+      const updatedContributor = ContributorFactory.generate({ id: '1' });
+      contributorsRepository.contributors.push(contributor);
+
       expect(contributorsRepository.contributors.length).toBe(1);
-      await contributorsService.save({
-        ...contributorsRepository.newContributor,
-        id: contributorsRepository.contributors[0].id,
-      });
+      await contributorsService.save(updatedContributor);
       expect(contributorsRepository.contributors.length).toBe(1);
-      expect(contributorsRepository.contributors[0]).toStrictEqual({
-        ...contributorsRepository.newContributor,
-        id: contributorsRepository.contributors[0].id,
-      });
+      expect(contributorsRepository.contributors[0]).toStrictEqual(
+        updatedContributor,
+      );
     });
   });
 });

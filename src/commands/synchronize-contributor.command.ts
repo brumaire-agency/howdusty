@@ -2,7 +2,7 @@ import { Command, CommandRunner } from 'nest-commander';
 import { SynchronizationService } from '@/synchronization';
 
 @Command({
-  name: 'synchronize-contributor',
+  name: 'contributors:sync',
 })
 export class SynchronizeContributorCommand extends CommandRunner {
   constructor(private synchronization: SynchronizationService) {

@@ -9,6 +9,7 @@ import {
 } from '@/contributors';
 import { GithubApiMock, GithubApi, GithubService } from '@/github';
 import { SynchronizationService } from './synchronization.service';
+import { ScorerModule } from '@/scorer';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;
@@ -23,6 +24,7 @@ describe('SynchronizationService', () => {
         ConfigModule.forRoot({
           load: [configuration],
         }),
+        ScorerModule,
       ],
       providers: [
         SynchronizationService,
@@ -39,21 +41,17 @@ describe('SynchronizationService', () => {
       ],
     }).compile();
 
-    synchronization = module.get<SynchronizationService>(
-      SynchronizationService,
-    );
-    contributorsRepository = module.get<ContributorsRepositoryMock>(
-      CONTRIBUTOR_REPOSITORY_TOKEN,
-    );
-    githubApi = module.get<GithubApiMock>(GithubApi);
+    synchronization = module.get(SynchronizationService);
+    contributorsRepository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
+    githubApi = module.get(GithubApi);
   });
 
   describe('githubUser', () => {
     it("should add a new contributor if it doesn't exist", async () => {
-      expect(contributorsRepository.contributors.length).toBe(1);
+      expect(contributorsRepository.contributors.length).toBe(0);
       await synchronization.githubUser(githubApi.user.username);
-      expect(contributorsRepository.contributors.length).toBe(2);
-      expect(contributorsRepository.contributors[1]).toStrictEqual(
+      expect(contributorsRepository.contributors.length).toBe(1);
+      expect(contributorsRepository.contributors[0]).toStrictEqual(
         githubApi.user,
       );
     });

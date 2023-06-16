@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { ContributorFactory } from '@/contributors';
-import { Scorer } from './scorer.service';
+import { ScorerService } from './scorer.service';
 import { StandardScaler } from './standard-scaler.service';
 import { NormalizationService } from './normalization.service';
 import { faker } from '@faker-js/faker';
@@ -10,17 +10,17 @@ describe('Scorer', () => {
   /**
    * The scorer service.
    */
-  let service: Scorer;
+  let service: ScorerService;
 
   /**
    * Creates a new scorer service before each test.
    */
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [NormalizationService, StandardScaler, Scorer],
+      providers: [NormalizationService, StandardScaler, ScorerService],
     }).compile();
 
-    service = module.get(Scorer);
+    service = module.get(ScorerService);
   });
 
   describe('score', () => {
