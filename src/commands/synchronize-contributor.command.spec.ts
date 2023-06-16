@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CommandTestFactory } from 'nest-commander-testing';
 import configuration from '@/config/configuration';
 import { GithubApiMock, GithubApi, GithubService } from '@/github';
+import { ScorerModule } from '@/scorer';
 import {
   Contributor,
   ContributorsService,
@@ -25,6 +26,7 @@ describe('SynchronizeContributorCommand', () => {
           ConfigModule.forRoot({
             load: [configuration],
           }),
+          ScorerModule,
         ],
         providers: [
           SynchronizeContributorCommand,
@@ -43,10 +45,8 @@ describe('SynchronizeContributorCommand', () => {
       },
     ).compile();
 
-    command = module.get<SynchronizeContributorCommand>(
-      SynchronizeContributorCommand,
-    );
-    githubApi = module.get<GithubApiMock>(GithubApi);
+    command = module.get(SynchronizeContributorCommand);
+    githubApi = module.get(GithubApi);
   });
 
   it('should synchronize a user', async () => {
