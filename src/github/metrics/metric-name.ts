@@ -3,4 +3,5 @@ export enum MetricName {
   issuePullRequestRatio = 'issuePullRequestRatio',
   maintainedRepositoryCount = 'maintainedRepositoryCount',
   totalContributions = 'totalContributions',
+  activeContributionWeeks = 'activeContributionWeeks',
 }

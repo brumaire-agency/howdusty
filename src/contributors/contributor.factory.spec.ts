@@ -24,14 +24,15 @@ describe('ContributorFactory', () => {
       const contributor = ContributorFactory.generate();
 
       expect(contributor).toEqual({
-        id: '3',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/45924889',
-        username: 'Peyton_Deckow-Reynolds59',
-        name: 'Melinda Bradtke',
-        totalContributions: 867,
-        contributedRepositoryCount: 3,
-        maintainedRepositoryCount: 6,
-        issuePullRequestRatio: 0.15,
+        id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
+        username: 'Lia.Moore',
+        name: 'Nancy Leffler',
+        totalContributions: 139,
+        contributedRepositoryCount: 0,
+        maintainedRepositoryCount: 3,
+        issuePullRequestRatio: 0.97,
+        activeContributionWeeks: 4,
       });
     });
   });

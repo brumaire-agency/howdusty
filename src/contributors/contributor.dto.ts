@@ -7,4 +7,5 @@ export class ContributorDto {
   contributedRepositoryCount: number;
   maintainedRepositoryCount: number;
   issuePullRequestRatio: number;
+  activeContributionWeeks: number;
 }

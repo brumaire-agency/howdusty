@@ -8,6 +8,7 @@ import {
   ContributedRepositoryCountMetric,
   MaintainedRepositoryCountMetric,
   IssuePullRequestRatioMetric,
+  ActiveContributionWeeksMetric,
 } from './metrics';
 import { User } from './types';
 
@@ -22,6 +23,7 @@ export class GithubApi {
       new ContributedRepositoryCountMetric(),
       new MaintainedRepositoryCountMetric(),
       new IssuePullRequestRatioMetric(),
+      new ActiveContributionWeeksMetric(),
     ];
   }
 

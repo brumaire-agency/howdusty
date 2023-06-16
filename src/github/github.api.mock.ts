@@ -10,6 +10,7 @@ export class GithubApiMock {
     contributedRepositoryCount: 1,
     maintainedRepositoryCount: 1,
     issuePullRequestRatio: 0.5,
+    activeContributionWeeks: 1,
   };
 
   /**
@@ -25,6 +26,7 @@ export class GithubApiMock {
       contributedRepositoryCount: this.user.contributedRepositoryCount,
       maintainedRepositoryCount: this.user.maintainedRepositoryCount,
       issuePullRequestRatio: this.user.issuePullRequestRatio,
+      activeContributionWeeks: this.user.activeContributionWeeks,
     });
   }
 }
