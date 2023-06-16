@@ -33,7 +33,7 @@ export class Contributor implements Metricable {
   issuePullRequestRatio: number;
 
   @Column({ name: 'active_contribution_weeks' })
-  activeContributionWeeks: number;	
+  activeContributionWeeks: number;
 
   @Column({
     name: 'score',

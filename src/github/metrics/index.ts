@@ -1,3 +1,4 @@
+export * from './active-contribution-weeks/active-contribution-weeks.metric';
 export * from './base.metric';
 export * from './contributed-repository-count.metric';
 export * from './issue-pull-request-ratio.metric';

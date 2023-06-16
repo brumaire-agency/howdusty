@@ -1,5 +1,5 @@
 import { ActiveContributionWeeksMetric } from './active-contribution-weeks.metric';
-import response from './query-response.example.json';
+import response from '../query-response.example.json';
 
 describe('Active Contribution Weeks Metric', () => {
   const metric = new ActiveContributionWeeksMetric();

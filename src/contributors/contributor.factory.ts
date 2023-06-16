@@ -20,6 +20,7 @@ export class ContributorFactory {
           max: 0.99,
           precision: 0.01,
         }),
+        activeContributionWeeks: faker.number.int(10),
       },
       preset,
     );
