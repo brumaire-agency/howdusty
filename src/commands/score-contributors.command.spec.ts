@@ -13,8 +13,8 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from '@/config/configuration';
 import { ScorerModule } from '@/scorer';
 import { SynchronizationService } from '@/synchronization';
-import { ScoreContributorsCommand } from '@/commands/score-contributors.command';
 import { faker } from '@faker-js/faker';
+import { ScoreContributorsCommand } from './score-contributors.command';
 
 describe('ScoreContributorsCommand', () => {
   let command: SynchronizeContributorCommand;
