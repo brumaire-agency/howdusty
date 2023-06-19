@@ -1,4 +1,12 @@
-import { GithubGraphResponse, Metric, MetricData } from './base.metric';
+import {
+  GithubGraphResponse,
+  Metric,
+  MetricData,
+} from '@/github/metrics/base.metric';
+import {
+  getOpenSourceRepositories,
+  RepositoryQuery,
+} from '@/github/metrics/helpers';
 
 export class MaintainedRepositoryCountMetric extends Metric<
   MaintainedRepositoryCountResult,
@@ -25,7 +33,7 @@ export class MaintainedRepositoryCountMetric extends Metric<
   parseResult(
     result: MaintainedRepositoryCountResult,
   ): MaintainedRepositoryCountData {
-    const openSourceRepositories = this.openSourceRepositories(
+    const openSourceRepositories = getOpenSourceRepositories(
       result.maintainedRepositoryCount.repositories.nodes,
     );
     const totalOpenSourceRepositories = openSourceRepositories.length;
@@ -33,18 +41,6 @@ export class MaintainedRepositoryCountMetric extends Metric<
     return {
       maintainedRepositoryCount: totalOpenSourceRepositories,
     };
-  }
-
-  /**
-   * Return open source repositories.
-   */
-  openSourceRepositories(repositories: RepositoryQuery[]): RepositoryQuery[] {
-    const openSourceLicenses = ['mit', 'apache-2.0', 'gpl-3.0', 'agpl-3.0'];
-    return repositories.filter(
-      (repository) =>
-        !repository.isFork &&
-        openSourceLicenses.includes(repository.licenseInfo?.key),
-    );
   }
 }
 
@@ -64,13 +60,4 @@ export interface MaintainedRepositoryCountResult extends GithubGraphResponse {
  */
 export interface MaintainedRepositoryCountData extends MetricData {
   maintainedRepositoryCount: number;
-}
-
-interface RepositoryQuery {
-  licenseInfo?: LicenseQuery;
-  isFork: boolean;
-}
-
-interface LicenseQuery {
-  key: string;
 }

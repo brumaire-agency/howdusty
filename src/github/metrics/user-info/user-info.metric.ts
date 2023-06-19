@@ -1,4 +1,8 @@
-import { GithubGraphResponse, Metric, MetricData } from './base.metric';
+import {
+  GithubGraphResponse,
+  Metric,
+  MetricData,
+} from '@/github/metrics/base.metric';
 
 export class UserInfoMetric extends Metric<UserInfoMetricResult, UserInfoData> {
   /**
