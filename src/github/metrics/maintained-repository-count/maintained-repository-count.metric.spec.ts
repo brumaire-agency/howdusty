@@ -1,5 +1,5 @@
 import { MaintainedRepositoryCountMetric } from './maintained-repository-count.metric';
-import response from './query-response.example.json';
+import response from '@/github/metrics/query-response.example.json';
 
 describe('Maintained Repository Count Metric', () => {
   const metric = new MaintainedRepositoryCountMetric();

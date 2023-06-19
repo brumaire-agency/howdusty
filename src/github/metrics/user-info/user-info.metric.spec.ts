@@ -1,5 +1,5 @@
 import { UserInfoMetric } from './user-info.metric';
-import response from './query-response.example.json';
+import response from '@/github/metrics/query-response.example.json';
 
 describe('User Info Metric', () => {
   const metric = new UserInfoMetric();

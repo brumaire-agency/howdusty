@@ -4,28 +4,24 @@ import {
   MetricData,
 } from '@/github/metrics/base.metric';
 import {
-  getWeeksOfContributions,
-  getWeeksOfCreatedRepositories,
-  removeDuplicateWeeks,
-} from './helpers';
-import {
-  ContributionsByRepository,
-  CreatedRepositories,
-  WeekObject,
-} from './types';
+  getOpenSourceContributionsRepositories,
+  RepositoriesQuery,
+} from '@/github/metrics/helpers';
+import { getContributionsCount } from './helpers';
+import { ContributionsByRepository } from './types';
 
-export class ActiveContributionWeeksMetric extends Metric<
-  ActiveContributionWeeksResult,
-  ActiveContributionWeeksData
+export class TotalContributionsMetric extends Metric<
+  TotalContributionsResult,
+  TotalContributionsData
 > {
   buildQuery(username: string): string {
     return `
-      activeContributionWeeks: user(login: "${username}") {
+      totalContributions: user(login: "${username}") {
         contributionsCollection {
           repositoryContributions(first: 100) {
             nodes {
-              occurredAt
               repository {
+                name
                 licenseInfo {
                   key
                 }
@@ -36,9 +32,7 @@ export class ActiveContributionWeeksMetric extends Metric<
           }
           commitContributionsByRepository {
             contributions(first: 100) {
-              nodes {
-                occurredAt
-              }
+              totalCount
             }
             repository {
               licenseInfo {
@@ -50,9 +44,7 @@ export class ActiveContributionWeeksMetric extends Metric<
           }
           issueContributionsByRepository {
             contributions(first: 100) {
-              nodes {
-                occurredAt
-              }
+              totalCount
             }
             repository {
               licenseInfo {
@@ -64,9 +56,7 @@ export class ActiveContributionWeeksMetric extends Metric<
           }
           pullRequestContributionsByRepository {
             contributions(first: 100) {
-              nodes {
-                occurredAt
-              }
+              totalCount
             }
             repository {
               licenseInfo {
@@ -81,42 +71,39 @@ export class ActiveContributionWeeksMetric extends Metric<
     `;
   }
 
-  parseResult(
-    result: ActiveContributionWeeksResult,
-  ): ActiveContributionWeeksData {
-    // Repository
-    const repositoryWeeks: WeekObject[] = getWeeksOfCreatedRepositories(
-      result.activeContributionWeeks.contributionsCollection
-        .repositoryContributions.nodes,
-    );
+  parseResult(result: TotalContributionsResult): TotalContributionsData {
+    // Repositories
+    const repositoriesContributions: RepositoriesQuery[] =
+      getOpenSourceContributionsRepositories(
+        result.totalContributions.contributionsCollection
+          .repositoryContributions.nodes,
+      );
+    const repositoriesContributionsCount = repositoriesContributions.length;
 
     // Commit
-    const commitWeeks: WeekObject[] = getWeeksOfContributions(
-      result.activeContributionWeeks.contributionsCollection
+    const commitContributionsCount: number = getContributionsCount(
+      result.totalContributions.contributionsCollection
         .commitContributionsByRepository,
     );
 
     // Issue
-    const issueWeeks: WeekObject[] = getWeeksOfContributions(
-      result.activeContributionWeeks.contributionsCollection
+    const issueContributionsCount: number = getContributionsCount(
+      result.totalContributions.contributionsCollection
         .issueContributionsByRepository,
     );
 
     // Pull Request
-    const pullRequestWeeks: WeekObject[] = getWeeksOfContributions(
-      result.activeContributionWeeks.contributionsCollection
+    const pullRequestContributionsCount: number = getContributionsCount(
+      result.totalContributions.contributionsCollection
         .pullRequestContributionsByRepository,
     );
 
-    const allWeeks = removeDuplicateWeeks([
-      ...repositoryWeeks,
-      ...commitWeeks,
-      ...issueWeeks,
-      ...pullRequestWeeks,
-    ]);
-
     return {
-      activeContributionWeeks: allWeeks.length,
+      totalContributions:
+        repositoriesContributionsCount +
+        commitContributionsCount +
+        issueContributionsCount +
+        pullRequestContributionsCount,
     };
   }
 }
@@ -124,11 +111,11 @@ export class ActiveContributionWeeksMetric extends Metric<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface ActiveContributionWeeksResult extends GithubGraphResponse {
-  activeContributionWeeks: {
+export interface TotalContributionsResult extends GithubGraphResponse {
+  totalContributions: {
     contributionsCollection: {
       repositoryContributions: {
-        nodes: CreatedRepositories[];
+        nodes: RepositoriesQuery[];
       };
       commitContributionsByRepository: ContributionsByRepository[];
       issueContributionsByRepository: ContributionsByRepository[];
@@ -140,6 +127,6 @@ export interface ActiveContributionWeeksResult extends GithubGraphResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface ActiveContributionWeeksData extends MetricData {
-  activeContributionWeeks: number;
+export interface TotalContributionsData extends MetricData {
+  totalContributions: number;
 }

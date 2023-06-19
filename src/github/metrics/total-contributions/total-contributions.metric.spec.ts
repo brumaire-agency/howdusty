@@ -1,5 +1,5 @@
 import { TotalContributionsMetric } from './total-contributions.metric';
-import response from './query-response.example.json';
+import response from '@/github/metrics/query-response.example.json';
 
 describe('Total Contributions Metric', () => {
   const metric = new TotalContributionsMetric();

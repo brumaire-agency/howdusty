@@ -1,8 +1,5 @@
-import {
-  WeekObject,
-  ContributionsByRepository,
-} from '@/github/metrics/active-contribution-weeks/types';
-import { getOpenSourceRepositories } from '@/github/metrics/helpers';
+import { getOpenSourceContributionsRepositories } from '@/github/metrics/helpers';
+import { WeekObject, ContributionsByRepository } from '../types';
 import { transformToWeekObject } from './transform-to-week-object';
 
 /**
@@ -12,9 +9,8 @@ export function getWeeksOfContributions(
   contributionsByRepositories: ContributionsByRepository[],
 ): WeekObject[] {
   // Get all contributions from open source repositories
-  const openSourceContributionsByRepositories = getOpenSourceRepositories(
-    contributionsByRepositories,
-  );
+  const openSourceContributionsByRepositories =
+    getOpenSourceContributionsRepositories(contributionsByRepositories);
   // Collect and transform weeks
   const weeks: WeekObject[] = [];
   for (const contributionsByRepository of openSourceContributionsByRepositories) {

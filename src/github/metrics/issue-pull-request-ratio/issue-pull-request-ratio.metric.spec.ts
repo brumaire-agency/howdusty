@@ -1,5 +1,5 @@
 import { IssuePullRequestRatioMetric } from './issue-pull-request-ratio.metric';
-import response from './query-response.example.json';
+import response from '@/github/metrics/query-response.example.json';
 
 describe('Issue Pull Request Ratio Metric', () => {
   const metric = new IssuePullRequestRatioMetric();
