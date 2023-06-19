@@ -2,7 +2,7 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install --ignore-scripts
 COPY . .
 
 # build stage
@@ -13,7 +13,7 @@ RUN npm run build
 FROM node:20-alpine AS release
 WORKDIR /app
 COPY --from=build /app/package*.json ./
-RUN npm ci --only=production
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 EXPOSE 3000
 CMD ["node", "dist/main"]
