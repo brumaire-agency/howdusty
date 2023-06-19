@@ -1,0 +1,51 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
+  USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+  PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+  VERSION: staging
+  APP_NAME: howdusty
+
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the source code
+      - name: checkout code
+        uses: actions/checkout@v3
+      # build the docker image
+      - name: build image
+        run: docker build --tag=registry.h8l.io/brumaire/$APP_NAME:$VERSION .
+      # login to the docker registry
+      - name: login to registry
+        run: echo $PASSWORD | docker login registry.h8l.io --username=$USERNAME --password-stdin
+      # push the image to the registry
+      - name: push image to registry
+        run: docker push registry.h8l.io/brumaire/$APP_NAME:$VERSION
+
+  deploy:
+    needs: build-container
+    runs-on: ubuntu-latest
+    steps:
+      # set up the kubernetes context
+      - name: setup context
+        uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: https://kube-api.h8l.io
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      # Checkout the source code
+      - name: checkout code
+        uses: actions/checkout@v3
+      # deploy the manifests
+      - name: deploy manifests
+        run: kubectl --insecure-skip-tls-verify apply -f k8s/staging
+      # ensures deployments have been refreshed
+      - name: rollout deployments
+        run: kubectl --insecure-skip-tls-verify --namespace=brumaire-howdusty-staging rollout restart deployment $APP_NAME
