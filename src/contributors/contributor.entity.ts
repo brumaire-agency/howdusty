@@ -9,7 +9,7 @@ export class Contributor implements Metricable {
   @Column()
   username: string;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
   @Column({ name: 'avatar_url' })
