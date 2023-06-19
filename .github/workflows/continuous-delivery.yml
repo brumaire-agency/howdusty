@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - ci/setup-continuous-delivery
 
 env:
   HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
