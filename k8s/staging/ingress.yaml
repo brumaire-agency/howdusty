@@ -14,7 +14,7 @@ spec:
           namespace: traefik
       services:
         - name: howdusty
-          port: 8055
+          port: 3000
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -29,6 +29,6 @@ spec:
       match: Host(`howdusty.stagedenv.com`)
       services:
         - name: howdusty
-          port: 8055
+          port: 3000
   tls:
     certResolver: default
