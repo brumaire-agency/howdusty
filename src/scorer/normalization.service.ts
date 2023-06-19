@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Contributor } from '@/contributors';
 import { StandardScaler } from './standard-scaler.service';
+import { MetricName } from '@/github/metrics';
 
 /**
  * The normalization service.
@@ -23,10 +24,13 @@ export class NormalizationService {
   /**
    * Normalize a set of contributors.
    */
-  public normalize(contributors: Contributor[]): Record<string, number>[] {
+  public normalize(
+    contributors: Contributor[],
+    metrics: MetricName[],
+  ): Record<string, number>[] {
     // convert the set of contributor to a dataset of scalars
     const dataset = contributors.map((contributor) =>
-      this.contributorToRecord(contributor),
+      this.contributorToRecord(contributor, metrics),
     );
 
     // scale the dataset
@@ -41,9 +45,10 @@ export class NormalizationService {
    */
   private contributorToRecord(
     contributor: Contributor,
+    metrics: MetricName[],
   ): Record<string, number> {
     return Object.keys(contributor)
-      .filter((key) => typeof contributor[key] === 'number')
+      .filter((key) => metrics.includes(key as MetricName))
       .reduce((record, key) => ({ ...record, [key]: contributor[key] }), {});
   }
 }

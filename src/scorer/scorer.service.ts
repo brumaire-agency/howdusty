@@ -23,7 +23,11 @@ export class ScorerService {
    * Score a set of contributors.
    */
   score(contributors: Contributor[]): Contributor[] {
-    const normalized = this.normalizer.normalize(contributors);
+    const metrics = Object.keys(this.weights);
+    const normalized = this.normalizer.normalize(
+      contributors,
+      metrics as MetricName[],
+    );
 
     const scored = normalized.map((row, index) => ({
       ...contributors[index],
