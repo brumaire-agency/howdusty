@@ -2,6 +2,7 @@ import { NormalizationService } from '@/scorer/normalization.service';
 import { Test } from '@nestjs/testing';
 import { StandardScaler } from '@/scorer/standard-scaler.service';
 import { ContributorFactory } from '@/contributors';
+import { MetricName } from '@/github/metrics';
 
 describe('NormalizationService', () => {
   /**
@@ -24,7 +25,10 @@ describe('NormalizationService', () => {
     it('should normalize a set of contributors', async () => {
       const contributors = ContributorFactory.generateMany(10);
 
-      const normalizedContributors = service.normalize(contributors);
+      const normalizedContributors = service.normalize(
+        contributors,
+        Object.values(MetricName) as MetricName[],
+      );
 
       // ensures there is the correct count of normalized contributors
       expect(contributors.length).toEqual(normalizedContributors.length);
