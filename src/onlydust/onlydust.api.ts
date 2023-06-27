@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Client } from 'pg';
+import { OnlydustUser } from './types';
 
 @Injectable()
 export class OnlydustApi {
   constructor(private readonly config: ConfigService) {}
 
   /**
-   * Gets users from OnlyDust.
+   * Gets all users from OnlyDust.
    */
-  async getUsers() {
+  async getUsers(): Promise<OnlydustUser[]> {
     const { host, port, database, username, password } =
       this.config.get('onlydust');
     const client = new Client({
@@ -24,8 +25,12 @@ export class OnlydustApi {
     });
     await client.connect();
 
-    const res = await client.query('SELECT NOW()');
-    console.log(res);
+    const result = await client.query(
+      'SELECT "id" FROM "public"."github_users"',
+    );
+
     await client.end();
+
+    return result.rows;
   }
 }
