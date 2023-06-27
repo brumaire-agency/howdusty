@@ -26,8 +26,9 @@ export class OnlydustApi {
     await client.connect();
 
     const result = await client.query(
-      'SELECT "id" FROM "public"."github_users"',
+      'SELECT id, login FROM "public"."github_users"',
     );
+    console.log(result);
 
     await client.end();
 

@@ -4,9 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '@/config/configuration';
 import { Contributor, ContributorsModule } from '@/contributors';
 import { GithubModule } from '@/github';
+import { OnlydustModule } from '@/onlydust';
 import { SynchronizationModule } from '@/synchronization';
 import { CommandsModule } from '@/commands';
-import { OnlydustModule } from './onlydust/onlydust.module';
 
 @Module({
   imports: [

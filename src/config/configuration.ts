@@ -11,10 +11,10 @@ export default () => ({
     access_token: process.env.GITHUB_ACCESS_TOKEN,
   },
   onlydust: {
-    host: process.env.ONLYDUST_HOST,
-    port: process.env.ONLYDUST_PORT,
-    database: process.env.ONLYDUST_DATABASE,
-    username: process.env.ONLYDUST_USERNAME,
-    password: process.env.ONLYDUST_PASSWORD,
+    host: process.env.ONLYDUST_DB_HOST,
+    port: process.env.ONLYDUST_DB_PORT,
+    database: process.env.ONLYDUST_DB_DATABASE,
+    username: process.env.ONLYDUST_DB_USERNAME,
+    password: process.env.ONLYDUST_DB_PASSWORD,
   },
 });
