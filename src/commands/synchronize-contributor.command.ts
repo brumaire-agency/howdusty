@@ -11,6 +11,6 @@ export class SynchronizeContributorCommand extends CommandRunner {
 
   async run(usernames?: string[]) {
     const users = await this.synchronization.synchronizeUsers(usernames);
-    console.log(users);
+    console.log(`${users.length} users have been synchronized`);
   }
 }

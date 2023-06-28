@@ -56,9 +56,7 @@ describe('SynchronizeContributorCommand', () => {
   it('should synchronize a user', async () => {
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run([githubApi.user.username]);
-    expect(logSpy).toHaveBeenCalledWith([
-      { syncronized: true, username: githubApi.user.username },
-    ]);
+    expect(logSpy).toHaveBeenCalledWith('1 users have been synchronized');
     logSpy.mockRestore();
   });
 
@@ -67,20 +65,9 @@ describe('SynchronizeContributorCommand', () => {
     await contributorsRepository.save(ContributorFactory.generateMany(3));
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run();
-    expect(logSpy).toHaveBeenCalledWith([
-      {
-        syncronized: true,
-        username: contributorsRepository.contributors[0].username,
-      },
-      {
-        syncronized: true,
-        username: contributorsRepository.contributors[1].username,
-      },
-      {
-        syncronized: true,
-        username: contributorsRepository.contributors[2].username,
-      },
-    ]);
+    expect(logSpy).toHaveBeenCalledWith(
+      `${contributorsRepository.contributors.length} users have been synchronized`,
+    );
     logSpy.mockRestore();
   });
 });

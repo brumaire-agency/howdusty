@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { GithubService } from '@/github';
+import { GithubService, User } from '@/github';
 import { ContributorsService } from '@/contributors';
 import { ScorerService } from '@/scorer';
-import { SynchronizedUser } from './types';
 
 @Injectable()
 export class SynchronizationService {
@@ -12,33 +11,19 @@ export class SynchronizationService {
     private scorer: ScorerService,
   ) {}
 
-  async synchronizeUser(username: string): Promise<SynchronizedUser> {
-    const githubUserInfo = await this.github.getContributorInfo(username);
-    if (githubUserInfo) {
-      const user = await this.contributors.save(githubUserInfo);
-      if (user) {
-        return { syncronized: true, username: username };
-      } else {
-        return { syncronized: false, username: username };
-      }
-    }
+  async synchronizeUser(username: string): Promise<User> {
+    return await this.github.getContributorInfo(username);
   }
 
-  async synchronizeUsers(usernames?: string[]): Promise<SynchronizedUser[]> {
-    const users: SynchronizedUser[] = [];
-    if (usernames && usernames.length > 0) {
-      for (const username of usernames) {
-        const user = await this.synchronizeUser(username);
-        users.push(user);
-      }
-    } else {
-      const allUsers = await this.contributors.findAll();
-      for (const { username } of allUsers) {
-        const user = await this.synchronizeUser(username);
-        users.push(user);
-      }
+  async synchronizeUsers(usernames: string[] = []): Promise<User[]> {
+    if (usernames.length === 0) {
+      usernames = (await this.contributors.findAll()).map(
+        (user) => user.username,
+      );
     }
-    return users;
+    return Promise.all(
+      usernames.map((username) => this.synchronizeUser(username)),
+    );
   }
 
   async scoreUsers(): Promise<void> {
