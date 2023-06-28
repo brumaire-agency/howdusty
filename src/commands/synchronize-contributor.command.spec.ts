@@ -18,7 +18,6 @@ import { SynchronizeContributorCommand } from './synchronize-contributor.command
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;
   let contributorsRepository: ContributorsRepositoryMock;
-  let githubApi: GithubApiMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
 
@@ -50,12 +49,11 @@ describe('SynchronizeContributorCommand', () => {
 
     command = module.get(SynchronizeContributorCommand);
     contributorsRepository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
-    githubApi = module.get(GithubApi);
   });
 
   it('should synchronize a user', async () => {
     const logSpy = jest.spyOn(global.console, 'log');
-    await command.run([githubApi.user.username]);
+    await command.run(['username']);
     expect(logSpy).toHaveBeenCalledWith('1 users have been synchronized');
     logSpy.mockRestore();
   });
