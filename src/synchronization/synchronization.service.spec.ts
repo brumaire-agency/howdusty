@@ -46,10 +46,10 @@ describe('SynchronizationService', () => {
     githubApi = module.get(GithubApi);
   });
 
-  describe('githubUser', () => {
+  describe('synchronizeUser', () => {
     it("should add a new contributor if it doesn't exist", async () => {
       expect(contributorsRepository.contributors.length).toBe(0);
-      await synchronization.githubUser(githubApi.user.username);
+      await synchronization.synchronizeUser(githubApi.user.username);
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual(
         githubApi.user,
@@ -63,7 +63,7 @@ describe('SynchronizationService', () => {
         },
       ];
       expect(contributorsRepository.contributors.length).toBe(1);
-      await synchronization.githubUser(githubApi.user.username);
+      await synchronization.synchronizeUser(githubApi.user.username);
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual(
         githubApi.user,

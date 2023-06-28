@@ -9,14 +9,8 @@ export class SynchronizeContributorCommand extends CommandRunner {
     super();
   }
 
-  async run(usernames: string[]) {
-    for (const username of usernames) {
-      const user = await this.synchronization.githubUser(username);
-      if (user) {
-        console.log(`The user ${username} has been synchronized`);
-      } else {
-        console.log(`The user ${username} could not been synchronized`);
-      }
-    }
+  async run(usernames?: string[]) {
+    const users = await this.synchronization.synchronizeUsers(usernames);
+    console.log(users);
   }
 }
