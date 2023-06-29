@@ -1,3 +1,4 @@
+import { ContributorsService } from '@/contributors';
 import { OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
 import { Command, CommandRunner } from 'nest-commander';
@@ -7,6 +8,7 @@ import { Command, CommandRunner } from 'nest-commander';
 })
 export class OnlydustImportCommand extends CommandRunner {
   constructor(
+    private contributors: ContributorsService,
     private onlydust: OnlydustService,
     private synchronization: SynchronizationService,
   ) {
@@ -15,11 +17,15 @@ export class OnlydustImportCommand extends CommandRunner {
 
   async run() {
     const onlydustUsers = await this.onlydust.getUsers();
-    const users = await this.synchronization.synchronizeUsers(
-      onlydustUsers.map((user) => user.login),
+    const contributors = (await this.contributors.findAll()).map(
+      (user) => user.username,
     );
-    console.log(users.length);
+    // Only import onlydust users not present on our database
+    const newOnlydustUsers = onlydustUsers
+      .filter((user) => !contributors.includes(user.login))
+      .map((user) => user.login);
 
+    const users = await this.synchronization.synchronizeUsers(newOnlydustUsers);
     console.log(`${users.length} users have been imported and synchronized`);
   }
 }
