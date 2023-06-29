@@ -61,8 +61,10 @@ export class IssuePullRequestRatioMetric extends Metric<
 
     return {
       issuePullRequestRatio:
-        issueContributionsCount /
-        (issueContributionsCount + pullRequestContributionsCount),
+        issueContributionsCount === 0 && pullRequestContributionsCount === 0
+          ? 0
+          : issueContributionsCount /
+            (issueContributionsCount + pullRequestContributionsCount),
     };
   }
 }
