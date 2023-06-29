@@ -59,7 +59,7 @@ describe('OnlydustImportCommand', () => {
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run();
     expect(logSpy).toHaveBeenCalledWith(
-      `${onlydustApi.users.length} users have been synchronized`,
+      `${onlydustApi.users.length} users have been imported and synchronized`,
     );
     logSpy.mockRestore();
   });
