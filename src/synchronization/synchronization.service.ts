@@ -24,6 +24,7 @@ export class SynchronizationService {
         (user) => user.username,
       );
     }
+
     return Promise.all(
       usernames.map((username) => this.synchronizeUser(username)),
     );
