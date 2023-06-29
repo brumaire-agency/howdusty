@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GithubService } from '@/github';
-import { ContributorsService } from '@/contributors';
+import { Contributor, ContributorsService } from '@/contributors';
 import { ScorerService } from '@/scorer';
 
 @Injectable()
@@ -11,11 +11,22 @@ export class SynchronizationService {
     private scorer: ScorerService,
   ) {}
 
-  async githubUser(username: string) {
+  async synchronizeUser(username: string): Promise<Contributor> {
     const githubUserInfo = await this.github.getContributorInfo(username);
     if (githubUserInfo) {
       return await this.contributors.save(githubUserInfo);
     }
+  }
+
+  async synchronizeUsers(usernames: string[] = []): Promise<Contributor[]> {
+    if (usernames.length === 0) {
+      usernames = (await this.contributors.findAll()).map(
+        (user) => user.username,
+      );
+    }
+    return Promise.all(
+      usernames.map((username) => this.synchronizeUser(username)),
+    );
   }
 
   async scoreUsers(): Promise<void> {

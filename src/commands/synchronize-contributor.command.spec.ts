@@ -2,6 +2,7 @@ import { TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CommandTestFactory } from 'nest-commander-testing';
+import { faker } from '@faker-js/faker';
 import configuration from '@/config/configuration';
 import { GithubApiMock, GithubApi, GithubService } from '@/github';
 import { ScorerModule } from '@/scorer';
@@ -9,13 +10,14 @@ import {
   Contributor,
   ContributorsService,
   ContributorsRepositoryMock,
+  ContributorFactory,
 } from '@/contributors';
 import { SynchronizationService } from '@/synchronization';
 import { SynchronizeContributorCommand } from './synchronize-contributor.command';
 
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;
-  let githubApi: GithubApiMock;
+  let contributorsRepository: ContributorsRepositoryMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
 
@@ -46,14 +48,23 @@ describe('SynchronizeContributorCommand', () => {
     ).compile();
 
     command = module.get(SynchronizeContributorCommand);
-    githubApi = module.get(GithubApi);
+    contributorsRepository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
   });
 
   it('should synchronize a user', async () => {
     const logSpy = jest.spyOn(global.console, 'log');
-    await command.run([githubApi.user.username]);
+    await command.run(['username']);
+    expect(logSpy).toHaveBeenCalledWith('1 users have been synchronized');
+    logSpy.mockRestore();
+  });
+
+  it('should synchronize all users from database', async () => {
+    faker.seed(42);
+    await contributorsRepository.save(ContributorFactory.generateMany(3));
+    const logSpy = jest.spyOn(global.console, 'log');
+    await command.run();
     expect(logSpy).toHaveBeenCalledWith(
-      `The user ${githubApi.user.username} has been synchronized`,
+      `${contributorsRepository.contributors.length} users have been synchronized`,
     );
     logSpy.mockRestore();
   });
