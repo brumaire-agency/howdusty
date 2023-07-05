@@ -32,13 +32,17 @@ export class OnlydustImportCommand extends CommandRunner {
       const user = await this.synchronization.synchronizeUser(
         newOnlydustUsernames[key],
       );
-      user
-        ? console.log(
-            `synchronizing ${user.username}, ${key}/${newOnlydustUsernames.length}`,
-          )
-        : console.log(
-            `not synchronizing ${newOnlydustUsernames[key]}, ${key}/${newOnlydustUsernames.length}`,
-          );
+      if (user) {
+        console.log(
+          `synchronizing ${user.username}, ${parseInt(key) + 1}/${
+            newOnlydustUsernames.length
+          }`,
+        );
+      } else {
+        console.log(
+          `warning: could not synchronize ${newOnlydustUsernames[key]}`,
+        );
+      }
     }
   }
 }
