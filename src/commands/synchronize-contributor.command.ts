@@ -1,6 +1,9 @@
 import { Command, CommandRunner } from 'nest-commander';
 import { SynchronizationService } from '@/synchronization';
 
+/**
+ * Synchronize contributors with the github API.
+ */
 @Command({
   name: 'contributors:sync',
 })
