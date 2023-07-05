@@ -11,6 +11,7 @@ import {
   ActiveContributionWeeksMetric,
 } from './metrics';
 import { User } from './types';
+import { UserNotFound } from './exceptions';
 
 @Injectable()
 export class GithubApi {
@@ -63,7 +64,11 @@ export class GithubApi {
       return data as User;
     } catch (errors) {
       errors.response.errors.forEach((error) => {
-        console.log(`${error.path[0]}: ${error.message}`);
+        if (error.type === 'NOT_FOUND') {
+          console.log(new UserNotFound(contributorUsername));
+        } else {
+          console.log('GraphQL error');
+        }
       });
     }
   }
