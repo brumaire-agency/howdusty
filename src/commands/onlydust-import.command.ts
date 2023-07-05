@@ -24,11 +24,21 @@ export class OnlydustImportCommand extends CommandRunner {
       (user) => user.username,
     );
     // Only import onlydust users not present on our database
-    const newOnlydustUsers = onlydustUsers
+    const newOnlydustUsernames = onlydustUsers
       .filter((user) => !contributors.includes(user.login))
       .map((user) => user.login);
 
-    const users = await this.synchronization.synchronizeUsers(newOnlydustUsers);
-    console.log(`${users.length} users have been imported and synchronized`);
+    for (const key in newOnlydustUsernames) {
+      const user = await this.synchronization.synchronizeUser(
+        newOnlydustUsernames[key],
+      );
+      user
+        ? console.log(
+            `synchronizing ${user.username}, ${key}/${newOnlydustUsernames.length}`,
+          )
+        : console.log(
+            `not synchronizing ${newOnlydustUsernames[key]}, ${key}/${newOnlydustUsernames.length}`,
+          );
+    }
   }
 }

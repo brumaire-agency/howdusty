@@ -45,22 +45,24 @@ export class GithubApi {
       '',
     );
 
-    const result = await graphQLClient.request(
-      gql`
+    try {
+      const result = await graphQLClient.request(
+        gql`
         query {
           ${query}
         }
       `,
-    );
-
-    const data = this.metrics.reduce(
-      (accumulator, currentValue) => ({
-        ...accumulator,
-        ...currentValue.parseResult(result),
-      }),
-      {},
-    );
-
-    return data as User;
+      );
+      const data = this.metrics.reduce(
+        (accumulator, currentValue) => ({
+          ...accumulator,
+          ...currentValue.parseResult(result),
+        }),
+        {},
+      );
+      return data as User;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }
