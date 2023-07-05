@@ -3,6 +3,9 @@ import { OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
 import { Command, CommandRunner } from 'nest-commander';
 
+/**
+ * Import new OnlyDust users in the database.
+ */
 @Command({
   name: 'onlydust:import',
 })

@@ -1,6 +1,9 @@
 import { Command, CommandRunner } from 'nest-commander';
 import { SynchronizationService } from '@/synchronization';
 
+/**
+ * Calculate the score for every contributor in the database.
+ */
 @Command({
   name: 'contributors:score',
 })

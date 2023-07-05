@@ -33,7 +33,7 @@ ONLYDUST_DB_USERNAME=
 ONLYDUST_DB_PASSWORD=
 ```
 
-Then, lunch the app
+Then, launch the app
 
 ```bash
 npm install
