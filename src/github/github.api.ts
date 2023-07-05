@@ -61,8 +61,10 @@ export class GithubApi {
         {},
       );
       return data as User;
-    } catch (error) {
-      console.log(error.message);
+    } catch (errors) {
+      errors.response.errors.forEach((error) => {
+        console.log(`${error.path[0]}: ${error.message}`);
+      });
     }
   }
 }
