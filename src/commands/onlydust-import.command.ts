@@ -1,5 +1,5 @@
 import { ContributorsService } from '@/contributors';
-import { UserNotFound } from '@/github';
+import { UserNotFoundException } from '@/github';
 import { OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
 import { Command, CommandRunner } from 'nest-commander';
@@ -40,8 +40,8 @@ export class OnlydustImportCommand extends CommandRunner {
           }`,
         );
       } catch (error) {
-        if (error instanceof UserNotFound) {
-          console.log(error.getResponse());
+        if (error instanceof UserNotFoundException) {
+          console.log(error.message);
           console.log(
             `warning: could not synchronize ${newOnlydustUsernames[key]}`,
           );

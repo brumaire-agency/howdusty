@@ -11,7 +11,7 @@ import {
   ActiveContributionWeeksMetric,
 } from './metrics';
 import { User } from './types';
-import { UserNotFound } from './exceptions';
+import { UserNotFoundException } from './exceptions';
 
 @Injectable()
 export class GithubApi {
@@ -66,7 +66,7 @@ export class GithubApi {
       if (error.response.errors) {
         error.response.errors.forEach((error) => {
           if (error.type === 'NOT_FOUND') {
-            throw new UserNotFound(contributorUsername);
+            throw new UserNotFoundException(contributorUsername);
           } else {
             throw error;
           }

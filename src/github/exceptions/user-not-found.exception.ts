@@ -1,10 +1,7 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
-
-export class UserNotFound extends HttpException {
+export class UserNotFoundException extends Error {
   constructor(username: string) {
     super(
       `github failed to return a user matching the given username (${username})`,
-      HttpStatus.NOT_FOUND,
     );
   }
 }
