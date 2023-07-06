@@ -1,4 +1,5 @@
 import { ContributorsService } from '@/contributors';
+import { UserNotFound } from '@/github';
 import { OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
 import { Command, CommandRunner } from 'nest-commander';
@@ -29,19 +30,24 @@ export class OnlydustImportCommand extends CommandRunner {
       .map((user) => user.login);
 
     for (const key in newOnlydustUsernames) {
-      const user = await this.synchronization.synchronizeUser(
-        newOnlydustUsernames[key],
-      );
-      if (user) {
+      try {
+        const user = await this.synchronization.synchronizeUser(
+          newOnlydustUsernames[key],
+        );
         console.log(
           `synchronizing ${user.username}, ${parseInt(key) + 1}/${
             newOnlydustUsernames.length
           }`,
         );
-      } else {
-        console.log(
-          `warning: could not synchronize ${newOnlydustUsernames[key]}`,
-        );
+      } catch (error) {
+        if (error instanceof UserNotFound) {
+          console.log(error.getResponse());
+          console.log(
+            `warning: could not synchronize ${newOnlydustUsernames[key]}`,
+          );
+        } else {
+          throw error;
+        }
       }
     }
   }

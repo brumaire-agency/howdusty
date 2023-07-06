@@ -62,14 +62,18 @@ export class GithubApi {
         {},
       );
       return data as User;
-    } catch (errors) {
-      errors.response.errors.forEach((error) => {
-        if (error.type === 'NOT_FOUND') {
-          console.log(new UserNotFound(contributorUsername).getResponse());
-        } else {
-          console.log('GraphQL error');
-        }
-      });
+    } catch (error) {
+      if (error.response.errors) {
+        error.response.errors.forEach((error) => {
+          if (error.type === 'NOT_FOUND') {
+            throw new UserNotFound(contributorUsername);
+          } else {
+            throw error;
+          }
+        });
+      } else {
+        throw error;
+      }
     }
   }
 }
