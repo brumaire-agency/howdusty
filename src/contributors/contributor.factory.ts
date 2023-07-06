@@ -21,6 +21,7 @@ export class ContributorFactory {
           precision: 0.01,
         }),
         activeContributionWeeks: faker.number.int(10),
+        collectedGrant: faker.number.int(1000),
       },
       preset,
     );

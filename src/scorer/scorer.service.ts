@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { NormalizationService } from '@/scorer/normalization.service';
 import { Contributor } from '@/contributors';
 import { orderBy } from 'lodash';
-import { Metricable, MetricName } from '@/github/metrics';
+import { Metricable, MetricName } from '@/metrics';
 
 @Injectable()
 export class ScorerService {
@@ -12,6 +12,7 @@ export class ScorerService {
     [MetricName.maintainedRepositoryCount]: 1,
     [MetricName.issuePullRequestRatio]: 1,
     [MetricName.activeContributionWeeks]: 1,
+    [MetricName.collectedGrant]: 1,
   };
 
   /**

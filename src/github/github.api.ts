@@ -9,7 +9,7 @@ import {
   MaintainedRepositoryCountMetric,
   IssuePullRequestRatioMetric,
   ActiveContributionWeeksMetric,
-} from './metrics';
+} from '@/metrics';
 import { User } from './types';
 import { UserNotFoundException } from './exceptions';
 

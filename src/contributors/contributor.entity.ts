@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Metricable } from '@/github/metrics';
+import { Metricable } from '@/metrics';
 
 @Entity('contributors')
 export class Contributor implements Metricable {
@@ -34,6 +34,9 @@ export class Contributor implements Metricable {
 
   @Column({ name: 'active_contribution_weeks' })
   activeContributionWeeks: number;
+
+  @Column({ name: 'collected_grant' })
+  collectedGrant: number;
 
   @Column({
     name: 'score',
