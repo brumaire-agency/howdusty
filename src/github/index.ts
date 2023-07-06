@@ -1,3 +1,4 @@
+export * from './exceptions';
 export * from './types';
 export * from './github.api.mock';
 export * from './github.api';

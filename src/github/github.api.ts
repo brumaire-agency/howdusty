@@ -11,6 +11,7 @@ import {
   ActiveContributionWeeksMetric,
 } from './metrics';
 import { User } from './types';
+import { UserNotFoundException } from './exceptions';
 
 @Injectable()
 export class GithubApi {
@@ -45,22 +46,34 @@ export class GithubApi {
       '',
     );
 
-    const result = await graphQLClient.request(
-      gql`
+    try {
+      const result = await graphQLClient.request(
+        gql`
         query {
           ${query}
         }
       `,
-    );
-
-    const data = this.metrics.reduce(
-      (accumulator, currentValue) => ({
-        ...accumulator,
-        ...currentValue.parseResult(result),
-      }),
-      {},
-    );
-
-    return data as User;
+      );
+      const data = this.metrics.reduce(
+        (accumulator, currentValue) => ({
+          ...accumulator,
+          ...currentValue.parseResult(result),
+        }),
+        {},
+      );
+      return data as User;
+    } catch (error) {
+      if (error.response.errors) {
+        error.response.errors.forEach((error) => {
+          if (error.type === 'NOT_FOUND') {
+            throw new UserNotFoundException(contributorUsername);
+          } else {
+            throw error;
+          }
+        });
+      } else {
+        throw error;
+      }
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { ContributorsService } from '@/contributors';
+import { UserNotFoundException } from '@/github';
 import { OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
 import { Command, CommandRunner } from 'nest-commander';
@@ -24,11 +25,30 @@ export class OnlydustImportCommand extends CommandRunner {
       (user) => user.username,
     );
     // Only import onlydust users not present on our database
-    const newOnlydustUsers = onlydustUsers
+    const newOnlydustUsernames = onlydustUsers
       .filter((user) => !contributors.includes(user.login))
       .map((user) => user.login);
 
-    const users = await this.synchronization.synchronizeUsers(newOnlydustUsers);
-    console.log(`${users.length} users have been imported and synchronized`);
+    for (const key in newOnlydustUsernames) {
+      try {
+        const user = await this.synchronization.synchronizeUser(
+          newOnlydustUsernames[key],
+        );
+        console.log(
+          `synchronizing ${user.username}, ${parseInt(key) + 1}/${
+            newOnlydustUsernames.length
+          }`,
+        );
+      } catch (error) {
+        if (error instanceof UserNotFoundException) {
+          console.log(error.message);
+          console.log(
+            `warning: could not synchronize ${newOnlydustUsernames[key]}`,
+          );
+        } else {
+          throw error;
+        }
+      }
+    }
   }
 }
