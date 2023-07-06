@@ -65,7 +65,7 @@ export class GithubApi {
     } catch (errors) {
       errors.response.errors.forEach((error) => {
         if (error.type === 'NOT_FOUND') {
-          console.log(new UserNotFound(contributorUsername));
+          console.log(new UserNotFound(contributorUsername).getResponse());
         } else {
           console.log('GraphQL error');
         }
