@@ -21,6 +21,7 @@ export class OnlydustImportCommand extends CommandRunner {
 
   async run() {
     const onlydustUsers = await this.onlydust.getUsers();
+
     const contributors = (await this.contributors.findAll()).map(
       (user) => user.username,
     );

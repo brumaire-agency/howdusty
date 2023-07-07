@@ -2,10 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Client } from 'pg';
 import { OnlydustUser } from './types';
+import { CollectedGrantMetric } from '@/metrics';
 
 @Injectable()
 export class OnlydustApi {
-  constructor(private readonly config: ConfigService) {}
+  private collectedGrantMetric: CollectedGrantMetric;
+
+  constructor(private readonly config: ConfigService) {
+    this.collectedGrantMetric = new CollectedGrantMetric();
+  }
 
   /**
    * Gets all users from OnlyDust.
@@ -27,19 +32,40 @@ export class OnlydustApi {
 
     const result = await client.query(
       `
-      SELECT id, login, SUM(money_granted) AS amount_of_grant
-      FROM (
-        SELECT users.id, users.login, payments.money_granted
-        FROM public.github_users AS users 
-        LEFT JOIN public.payment_stats AS payments 
-        ON users.id = payments.github_user_id
-      ) AS onlydust
-      GROUP BY id, login
+      SELECT id, login
+      FROM public.github_users
       `,
     );
 
     await client.end();
 
     return result.rows;
+  }
+
+  async getContributorsInfo(usernames: string[]) {
+    const { host, port, database, username, password } =
+      this.config.get('onlydust');
+    const client = new Client({
+      user: username,
+      host: host,
+      database: database,
+      password: password,
+      port: port,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
+    await client.connect();
+
+    const collectedGrantResult = await client.query(
+      this.collectedGrantMetric.buildQuery(usernames),
+    );
+    const collectedGrantData = this.collectedGrantMetric.parseResult(
+      collectedGrantResult.rows,
+    );
+
+    await client.end();
+
+    return collectedGrantData;
   }
 }

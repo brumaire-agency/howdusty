@@ -8,4 +8,8 @@ export class OnlydustService {
   async getUsers() {
     return await this.api.getUsers();
   }
+
+  async getContributorsInfo(usernames: string[]) {
+    return await this.api.getContributorsInfo(usernames);
+  }
 }

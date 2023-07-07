@@ -6,7 +6,7 @@ export type GithubGraphResponse = Record<string, any>;
 /**
  * Represents the data associated with a given metric.
  */
-export type MetricData = Record<string, number | string>;
+export type MetricData = Record<string, any>;
 
 /**
  * A base metric.
@@ -18,7 +18,7 @@ export abstract class Metric<
   /**
    * Builds a query for fetching the given metric.
    */
-  abstract buildQuery(username: string): string;
+  abstract buildQuery(username: string | string[]): string;
 
   /**
    * Parses the query result into an exploitable metric.
