@@ -7,6 +7,7 @@ import { GithubModule } from '@/github';
 import { OnlydustModule } from '@/onlydust';
 import { SynchronizationModule } from '@/synchronization';
 import { CommandsModule } from '@/commands';
+import { MetricsModule } from './metrics/metrics.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { CommandsModule } from '@/commands';
     SynchronizationModule,
     CommandsModule,
     OnlydustModule,
+    MetricsModule,
   ],
 })
 export class AppModule {}

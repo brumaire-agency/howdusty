@@ -2,7 +2,7 @@ import { NormalizationService } from '@/scorer/normalization.service';
 import { Test } from '@nestjs/testing';
 import { StandardScaler } from '@/scorer/standard-scaler.service';
 import { ContributorFactory } from '@/contributors';
-import { MetricName } from '@/github/metrics';
+import { MetricName } from '@/metrics';
 
 describe('NormalizationService', () => {
   /**

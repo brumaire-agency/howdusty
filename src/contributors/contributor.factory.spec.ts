@@ -1,5 +1,5 @@
 import { ContributorFactory } from './contributor.factory';
-import { MetricName } from '@/github/metrics';
+import { MetricName } from '@/metrics';
 import { faker } from '@faker-js/faker';
 
 describe('ContributorFactory', () => {
