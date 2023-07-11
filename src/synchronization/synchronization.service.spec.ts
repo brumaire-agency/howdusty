@@ -1,18 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigModule } from '@nestjs/config';
-import configuration from '@/config/configuration';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import {
   Contributor,
   ContributorFactory,
   ContributorsRepositoryMock,
-  ContributorsService,
 } from '@/contributors';
-import { GithubApiMock, GithubApi, GithubService } from '@/github';
 import { SynchronizationService } from './synchronization.service';
-import { ScorerModule } from '@/scorer';
 import { faker } from '@faker-js/faker';
-import { MetricsModule } from '@/metrics';
+import { SynchronizationTestingModule } from '@/synchronization/synchronization.testing-module';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;
@@ -22,26 +17,7 @@ describe('SynchronizationService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          load: [configuration],
-        }),
-        ScorerModule,
-        MetricsModule,
-      ],
-      providers: [
-        SynchronizationService,
-        ContributorsService,
-        {
-          provide: CONTRIBUTOR_REPOSITORY_TOKEN,
-          useClass: ContributorsRepositoryMock,
-        },
-        GithubService,
-        {
-          provide: GithubApi,
-          useClass: GithubApiMock,
-        },
-      ],
+      imports: [SynchronizationTestingModule],
     }).compile();
 
     synchronization = module.get(SynchronizationService);

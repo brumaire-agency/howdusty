@@ -1,32 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MetricsService } from './metrics.service';
-import {
-  GithubApi,
-  GithubApiMock,
-  GithubModule,
-  GithubService,
-} from '@/github';
-import configuration from '@/config/configuration';
-import { ConfigModule } from '@nestjs/config';
+import { GithubTestingModule } from '@/github';
 
 describe('MetricsService', () => {
   let metrics: MetricsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          load: [configuration],
-        }),
-      ],
-      providers: [
-        MetricsService,
-        GithubService,
-        { provide: GithubApi, useClass: GithubApiMock },
-      ],
+      imports: [GithubTestingModule],
+      providers: [MetricsService],
     }).compile();
 
-    metrics = module.get<MetricsService>(MetricsService);
+    metrics = module.get(MetricsService);
   });
 
   describe('getMetricsForUsers', () => {

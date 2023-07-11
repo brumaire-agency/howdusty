@@ -1,58 +1,32 @@
 import { TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
 import { CommandTestFactory } from 'nest-commander-testing';
-import configuration from '@/config/configuration';
-import { GithubApiMock, GithubApi, GithubService } from '@/github';
+import { ContributorsTestingModule } from '@/contributors';
 import {
-  Contributor,
-  ContributorsService,
-  ContributorsRepositoryMock,
-} from '@/contributors';
-import { OnlydustApi, OnlydustApiMock, OnlydustService } from '@/onlydust';
-import { SynchronizationService } from '@/synchronization';
+  OnlydustApi,
+  OnlydustApiMock,
+  OnlydustTestingModule,
+} from '@/onlydust';
+import { SynchronizationTestingModule } from '@/synchronization';
 import { OnlydustImportCommand } from './onlydust-import.command';
-import { MetricsService } from '@/metrics';
 
 describe('OnlydustImportCommand', () => {
   let command: OnlydustImportCommand;
   let onlydustApi: OnlydustApiMock;
 
-  const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
-
   beforeEach(async () => {
     const module: TestingModule = await CommandTestFactory.createTestingCommand(
       {
         imports: [
-          ConfigModule.forRoot({
-            load: [configuration],
-          }),
+          ContributorsTestingModule,
+          OnlydustTestingModule,
+          SynchronizationTestingModule,
         ],
-        providers: [
-          OnlydustImportCommand,
-          ContributorsService,
-          {
-            provide: CONTRIBUTOR_REPOSITORY_TOKEN,
-            useClass: ContributorsRepositoryMock,
-          },
-          MetricsService,
-          GithubService,
-          {
-            provide: GithubApi,
-            useClass: GithubApiMock,
-          },
-          OnlydustService,
-          {
-            provide: OnlydustApi,
-            useClass: OnlydustApiMock,
-          },
-          SynchronizationService,
-        ],
+        providers: [OnlydustImportCommand],
       },
     ).compile();
 
     command = module.get(OnlydustImportCommand);
-    onlydustApi = module.get<OnlydustApiMock>(OnlydustApi);
+    onlydustApi = module.get(OnlydustApi);
   });
 
   it('should get onlydust users and synchronizes them', async () => {
