@@ -15,6 +15,7 @@ import { ScorerModule } from '@/scorer';
 import { SynchronizationService } from '@/synchronization';
 import { faker } from '@faker-js/faker';
 import { ScoreContributorsCommand } from './score-contributors.command';
+import { MetricsModule } from '@/metrics';
 
 describe('ScoreContributorsCommand', () => {
   let command: SynchronizeContributorCommand;
@@ -30,6 +31,7 @@ describe('ScoreContributorsCommand', () => {
             load: [configuration],
           }),
           ScorerModule,
+          MetricsModule,
         ],
         providers: [
           ScoreContributorsCommand,

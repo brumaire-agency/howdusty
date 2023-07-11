@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Contributor } from '@/contributors';
 import { StandardScaler } from './standard-scaler.service';
-import { MetricName } from '@/github/metrics';
+import { MetricName } from '@/metrics';
 
 /**
  * The normalization service.

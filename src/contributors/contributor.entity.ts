@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Metricable } from '@/github/metrics';
+import { Metricable } from '@/metrics';
 
 @Entity('contributors')
 export class Contributor implements Metricable {

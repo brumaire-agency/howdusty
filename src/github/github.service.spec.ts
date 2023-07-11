@@ -7,7 +7,6 @@ import { GithubService } from './github.service';
 
 describe('GithubService', () => {
   let github: GithubService;
-  let api: GithubApiMock;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,11 +22,26 @@ describe('GithubService', () => {
     }).compile();
 
     github = module.get<GithubService>(GithubService);
-    api = module.get<GithubApiMock>(GithubApi);
   });
 
   describe('getContributorInfo', () => {
     it('should return a User', async () => {
+      expect(await github.getContributorInfo('username')).toStrictEqual({
+        id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
+        username: 'username',
+        name: 'Nancy Leffler',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
+        totalContributions: 139,
+        contributedRepositoryCount: 0,
+        maintainedRepositoryCount: 3,
+        issuePullRequestRatio: 0.97,
+        activeContributionWeeks: 4,
+      });
+    });
+  });
+
+  describe('getMetricsForUser', () => {
+    it('should return a User with metrics', async () => {
       expect(await github.getContributorInfo('username')).toStrictEqual({
         id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
         username: 'username',

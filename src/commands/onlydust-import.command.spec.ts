@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { CommandTestFactory } from 'nest-commander-testing';
 import configuration from '@/config/configuration';
 import { GithubApiMock, GithubApi, GithubService } from '@/github';
-import { ScorerModule } from '@/scorer';
 import {
   Contributor,
   ContributorsService,
@@ -13,6 +12,7 @@ import {
 import { OnlydustApi, OnlydustApiMock, OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
 import { OnlydustImportCommand } from './onlydust-import.command';
+import { MetricsService } from '@/metrics';
 
 describe('OnlydustImportCommand', () => {
   let command: OnlydustImportCommand;
@@ -27,16 +27,15 @@ describe('OnlydustImportCommand', () => {
           ConfigModule.forRoot({
             load: [configuration],
           }),
-          ScorerModule,
         ],
         providers: [
           OnlydustImportCommand,
-          SynchronizationService,
           ContributorsService,
           {
             provide: CONTRIBUTOR_REPOSITORY_TOKEN,
             useClass: ContributorsRepositoryMock,
           },
+          MetricsService,
           GithubService,
           {
             provide: GithubApi,
@@ -47,6 +46,7 @@ describe('OnlydustImportCommand', () => {
             provide: OnlydustApi,
             useClass: OnlydustApiMock,
           },
+          SynchronizationService,
         ],
       },
     ).compile();

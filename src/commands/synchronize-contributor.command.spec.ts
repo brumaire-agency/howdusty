@@ -14,6 +14,7 @@ import {
 } from '@/contributors';
 import { SynchronizationService } from '@/synchronization';
 import { SynchronizeContributorCommand } from './synchronize-contributor.command';
+import { MetricsModule } from '@/metrics';
 
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;
@@ -29,6 +30,7 @@ describe('SynchronizeContributorCommand', () => {
             load: [configuration],
           }),
           ScorerModule,
+          MetricsModule,
         ],
         providers: [
           SynchronizeContributorCommand,

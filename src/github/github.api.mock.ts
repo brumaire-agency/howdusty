@@ -1,16 +1,16 @@
 import { faker } from '@faker-js/faker';
-import { User } from './types';
 import { ContributorFactory } from '@/contributors';
+import { GithubQuery } from './queries';
 
 export class GithubApiMock {
   /**
-   * Gets contributor info from github.
+   * Gets info from github.
    */
-  getContributorInfo(contributorUsername: string): Promise<User> {
+  getInfo(username: string, queries: GithubQuery[]) {
     faker.seed(42);
     return Promise.resolve(
       ContributorFactory.generate({
-        username: contributorUsername,
+        username: username,
       }),
     );
   }

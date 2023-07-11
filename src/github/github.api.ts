@@ -1,37 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { gql, GraphQLClient } from 'graphql-request';
-import {
-  Metric,
-  TotalContributionsMetric,
-  UserInfoMetric,
-  ContributedRepositoryCountMetric,
-  MaintainedRepositoryCountMetric,
-  IssuePullRequestRatioMetric,
-  ActiveContributionWeeksMetric,
-} from './metrics';
 import { User } from './types';
 import { UserNotFoundException } from './exceptions';
+import { GithubQuery } from './queries/github.query';
 
 @Injectable()
 export class GithubApi {
-  private metrics: Metric[];
-
-  constructor(private readonly config: ConfigService) {
-    this.metrics = [
-      new UserInfoMetric(),
-      new TotalContributionsMetric(),
-      new ContributedRepositoryCountMetric(),
-      new MaintainedRepositoryCountMetric(),
-      new IssuePullRequestRatioMetric(),
-      new ActiveContributionWeeksMetric(),
-    ];
-  }
+  constructor(private readonly config: ConfigService) {}
 
   /**
-   * Gets contributor info from github.
+   * Gets info from github.
    */
-  async getContributorInfo(contributorUsername: string): Promise<User> {
+  async getInfo(username: string, queries: GithubQuery[]): Promise<User> {
     const ACCESS_TOKEN = this.config.get('github.access_token');
 
     const graphQLClient = new GraphQLClient('https://api.github.com/graphql', {
@@ -40,9 +21,9 @@ export class GithubApi {
       },
     });
 
-    const query = this.metrics.reduce(
+    const query = queries.reduce(
       (accumulator, currentValue) =>
-        `${accumulator} ${currentValue.buildQuery(contributorUsername)}`,
+        `${accumulator} ${currentValue.buildQuery(username)}`,
       '',
     );
 
@@ -54,7 +35,7 @@ export class GithubApi {
         }
       `,
       );
-      const data = this.metrics.reduce(
+      const data = queries.reduce(
         (accumulator, currentValue) => ({
           ...accumulator,
           ...currentValue.parseResult(result),
@@ -66,7 +47,7 @@ export class GithubApi {
       if (error.response.errors) {
         error.response.errors.forEach((error) => {
           if (error.type === 'NOT_FOUND') {
-            throw new UserNotFoundException(contributorUsername);
+            throw new UserNotFoundException(username);
           } else {
             throw error;
           }
