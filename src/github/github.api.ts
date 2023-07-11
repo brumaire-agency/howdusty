@@ -12,7 +12,7 @@ export class GithubApi {
   /**
    * Gets info from github.
    */
-  async getInfo(username: string, queries: GithubQuery[]) {
+  async getInfo(username: string, queries: GithubQuery[]): Promise<User> {
     const ACCESS_TOKEN = this.config.get('github.access_token');
 
     const graphQLClient = new GraphQLClient('https://api.github.com/graphql', {

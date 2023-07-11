@@ -12,11 +12,11 @@ import { GithubApiMock, GithubApi, GithubService } from '@/github';
 import { SynchronizationService } from './synchronization.service';
 import { ScorerModule } from '@/scorer';
 import { faker } from '@faker-js/faker';
+import { MetricsModule } from '@/metrics';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;
   let contributorsRepository: ContributorsRepositoryMock;
-  let githubApi: GithubApiMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
 
@@ -27,6 +27,7 @@ describe('SynchronizationService', () => {
           load: [configuration],
         }),
         ScorerModule,
+        MetricsModule,
       ],
       providers: [
         SynchronizationService,
@@ -45,7 +46,6 @@ describe('SynchronizationService', () => {
 
     synchronization = module.get(SynchronizationService);
     contributorsRepository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
-    githubApi = module.get(GithubApi);
   });
 
   describe('synchronizeUser', () => {

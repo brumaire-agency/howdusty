@@ -3,10 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '@/config/configuration';
 import { Contributor, ContributorsModule } from '@/contributors';
-import { GithubModule } from '@/github';
-import { MetricsModule } from '@/metrics';
-import { OnlydustModule } from '@/onlydust';
-import { SynchronizationModule } from '@/synchronization';
 import { CommandsModule } from '@/commands';
 
 @Module({
@@ -33,11 +29,7 @@ import { CommandsModule } from '@/commands';
       },
     }),
     ContributorsModule,
-    MetricsModule,
-    GithubModule,
-    SynchronizationModule,
     CommandsModule,
-    OnlydustModule,
   ],
 })
 export class AppModule {}

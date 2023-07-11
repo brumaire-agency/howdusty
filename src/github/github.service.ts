@@ -10,6 +10,7 @@ import {
   UserInfoQuery,
   GithubQueries,
 } from './queries';
+import { User } from './types';
 
 @Injectable()
 export class GithubService {
@@ -32,12 +33,14 @@ export class GithubService {
     return await this.api.getInfo(username, [this.allQueries['userInfo']]);
   }
 
-  async getMetricsForUser(username: string, metrics: MetricName[]) {
+  async getMetricsForUser(
+    username: string,
+    metrics: MetricName[],
+  ): Promise<User> {
     // Get queries that match the metrics
     const queries = Object.keys(this.allQueries)
       .filter((key) => metrics.includes(key as MetricName))
       .reduce((record, key) => [...record, this.allQueries[key]], []);
-    console.log(queries);
 
     return await this.api.getInfo(username, queries);
   }

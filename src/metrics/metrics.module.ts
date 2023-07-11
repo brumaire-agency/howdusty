@@ -5,5 +5,6 @@ import { MetricsService } from './metrics.service';
 @Module({
   imports: [GithubModule],
   providers: [MetricsService],
+  exports: [MetricsService],
 })
 export class MetricsModule {}
