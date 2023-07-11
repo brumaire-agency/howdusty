@@ -7,31 +7,38 @@ import {
   IssuePullRequestRatioQuery,
   MaintainedRepositoryCountQuery,
   TotalContributionsQuery,
-  GithubQuery,
   UserInfoQuery,
+  GithubQueries,
 } from './queries';
 
 @Injectable()
 export class GithubService {
-  private allQueries: GithubQuery[];
+  private allQueries: GithubQueries;
 
   constructor(private api: GithubApi) {
-    this.allQueries = [
-      new ActiveContributionWeeksQuery(),
-      new ContributedRepositoryCountQuery(),
-      new IssuePullRequestRatioQuery(),
-      new MaintainedRepositoryCountQuery(),
-      new TotalContributionsQuery(),
-      new UserInfoQuery(),
-    ];
+    this.allQueries = {
+      [MetricName.activeContributionWeeks]: new ActiveContributionWeeksQuery(),
+      [MetricName.contributedRepositoryCount]:
+        new ContributedRepositoryCountQuery(),
+      [MetricName.issuePullRequestRatio]: new IssuePullRequestRatioQuery(),
+      [MetricName.maintainedRepositoryCount]:
+        new MaintainedRepositoryCountQuery(),
+      [MetricName.totalContributions]: new TotalContributionsQuery(),
+      ['userInfo']: new UserInfoQuery(),
+    };
   }
 
   async getContributorInfo(username: string) {
-    // Only use UserInfoQuery in this function
-    return await this.api.getInfo(username, [this.allQueries[5]]);
+    return await this.api.getInfo(username, [this.allQueries['userInfo']]);
   }
 
   async getMetricsForUser(username: string, metrics: MetricName[]) {
-    return await this.api.getInfo(username, this.allQueries);
+    // Get queries that match the metrics
+    const queries = Object.keys(this.allQueries)
+      .filter((key) => metrics.includes(key as MetricName))
+      .reduce((record, key) => [...record, this.allQueries[key]], []);
+    console.log(queries);
+
+    return await this.api.getInfo(username, queries);
   }
 }

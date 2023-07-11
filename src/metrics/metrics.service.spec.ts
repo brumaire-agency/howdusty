@@ -1,11 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MetricsService } from './metrics.service';
-import { GithubModule } from '@/github';
+import {
+  GithubApi,
+  GithubApiMock,
+  GithubModule,
+  GithubService,
+} from '@/github';
 import configuration from '@/config/configuration';
 import { ConfigModule } from '@nestjs/config';
 
 describe('MetricsService', () => {
-  let service: MetricsService;
+  let metrics: MetricsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -13,15 +18,32 @@ describe('MetricsService', () => {
         ConfigModule.forRoot({
           load: [configuration],
         }),
-        GithubModule,
       ],
-      providers: [MetricsService],
+      providers: [
+        MetricsService,
+        GithubService,
+        { provide: GithubApi, useClass: GithubApiMock },
+      ],
     }).compile();
 
-    service = module.get<MetricsService>(MetricsService);
+    metrics = module.get<MetricsService>(MetricsService);
   });
 
-  // it('should be defined', async () => {
-  //   await service.getMetricsForUsers(['zoemeriet', 'robinstraub']);
-  // });
+  describe('getMetricsForUsers', () => {
+    it('should return metrics for users', async () => {
+      expect(await metrics.getMetricsForUsers(['username'])).toStrictEqual({
+        username: {
+          id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
+          username: 'username',
+          name: 'Nancy Leffler',
+          avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
+          totalContributions: 139,
+          contributedRepositoryCount: 0,
+          maintainedRepositoryCount: 3,
+          issuePullRequestRatio: 0.97,
+          activeContributionWeeks: 4,
+        },
+      });
+    });
+  });
 });

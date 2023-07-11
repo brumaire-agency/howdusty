@@ -7,7 +7,6 @@ import { GithubService } from './github.service';
 
 describe('GithubService', () => {
   let github: GithubService;
-  let api: GithubApiMock;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,7 +22,6 @@ describe('GithubService', () => {
     }).compile();
 
     github = module.get<GithubService>(GithubService);
-    api = module.get<GithubApiMock>(GithubApi);
   });
 
   describe('getContributorInfo', () => {

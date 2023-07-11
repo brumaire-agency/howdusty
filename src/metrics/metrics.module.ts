@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MetricsService } from './metrics.service';
 import { GithubModule } from '@/github';
+import { MetricsService } from './metrics.service';
 
 @Module({
   imports: [GithubModule],

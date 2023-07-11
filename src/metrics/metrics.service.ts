@@ -10,6 +10,10 @@ export class MetricsService {
     usernames: string[],
     metrics: MetricName[] = [],
   ): Promise<Record<string, Record<string, number>>> {
+    if (metrics.length === 0) {
+      metrics = Object.values(MetricName) as MetricName[];
+    }
+
     // Get github metrics
     const githubMetrics = await usernames.reduce(
       async (accumulator, username) => {

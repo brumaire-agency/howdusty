@@ -25,3 +25,10 @@ export abstract class GithubQuery<
    */
   abstract parseResult(result: T): U;
 }
+
+/**
+ * A list of GraphQL queries
+ */
+export type GithubQueries = {
+  [name: string]: GithubQuery;
+};
