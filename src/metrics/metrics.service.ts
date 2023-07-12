@@ -19,26 +19,32 @@ export class MetricsService {
     }
 
     // Get github metrics
-    // const githubMetrics = await usernames.reduce(
-    //   async (accumulator, username) => {
-    //     const metricsForUser = await this.github.getMetricsForUser(
-    //       username,
-    //       metrics,
-    //     );
-    //     return { ...(await accumulator), [username]: metricsForUser };
-    //   },
-    //   Promise.resolve({}),
-    // );
-
-    // TODO: get onlydust metrics
-    const onlydustMetrics = await this.onlydust.getMetricForAll(
-      usernames,
-      metrics,
+    const githubMetrics = await usernames.reduce(
+      async (accumulator, username) => {
+        const metricsForUser = await this.github.getMetricsForUser(
+          username,
+          metrics,
+        );
+        return { ...(await accumulator), [username]: metricsForUser };
+      },
+      Promise.resolve({}),
     );
-    console.log(onlydustMetrics);
 
-    // TODO: aggregate metrics and return it
+    // Get onlydust metrics
+    const onlydustMetrics = await this.onlydust.getMetricsForAll(usernames);
 
-    return {};
+    // Aggregate metrics
+    const allMetrics = usernames.reduce(
+      (record, username) => ({
+        ...record,
+        [username]: {
+          ...githubMetrics[username],
+          collectedGrant: onlydustMetrics['collectedGrant'][username],
+        },
+      }),
+      {},
+    );
+
+    return allMetrics;
   }
 }

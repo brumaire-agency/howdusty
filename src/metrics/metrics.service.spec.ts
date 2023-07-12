@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MetricsService } from './metrics.service';
 import { GithubTestingModule } from '@/github';
+import { OnlydustTestingModule } from '@/onlydust';
 
 describe('MetricsService', () => {
   let metrics: MetricsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [GithubTestingModule],
+      imports: [GithubTestingModule, OnlydustTestingModule],
       providers: [MetricsService],
     }).compile();
 
@@ -27,6 +28,7 @@ describe('MetricsService', () => {
           maintainedRepositoryCount: 3,
           issuePullRequestRatio: 0.97,
           activeContributionWeeks: 4,
+          collectedGrant: 100,
         },
       });
     });

@@ -36,6 +36,7 @@ describe('GithubService', () => {
         maintainedRepositoryCount: 3,
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
+        collectedGrant: 1164,
       });
     });
   });
@@ -52,6 +53,7 @@ describe('GithubService', () => {
         maintainedRepositoryCount: 3,
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
+        collectedGrant: 1164,
       });
     });
   });

@@ -29,7 +29,6 @@ describe('SynchronizationService', () => {
       expect(contributorsRepository.contributors.length).toBe(0);
       await synchronization.synchronizeUser('username');
       expect(contributorsRepository.contributors.length).toBe(1);
-      console.log(contributorsRepository.contributors[0]);
       expect(contributorsRepository.contributors[0]).toStrictEqual({
         id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
         username: 'username',
@@ -40,6 +39,7 @@ describe('SynchronizationService', () => {
         maintainedRepositoryCount: 3,
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
+        collectedGrant: 100,
       });
     });
     it('should update a contributor if it does exist', async () => {
@@ -61,6 +61,7 @@ describe('SynchronizationService', () => {
         maintainedRepositoryCount: 3,
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
+        collectedGrant: 100,
       });
     });
   });

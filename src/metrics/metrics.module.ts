@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { GithubModule } from '@/github';
 import { MetricsService } from './metrics.service';
-import { OnlydustService } from '@/onlydust';
+import { OnlydustModule } from '@/onlydust';
 
 @Module({
-  imports: [GithubModule, OnlydustService],
+  imports: [GithubModule, OnlydustModule],
   providers: [MetricsService],
   exports: [MetricsService],
 })
