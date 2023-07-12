@@ -1,20 +1,14 @@
 import { TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
 import { CommandTestFactory } from 'nest-commander-testing';
 import { faker } from '@faker-js/faker';
-import configuration from '@/config/configuration';
-import { GithubApiMock, GithubApi, GithubService } from '@/github';
-import { ScorerModule } from '@/scorer';
 import {
   Contributor,
-  ContributorsService,
   ContributorsRepositoryMock,
   ContributorFactory,
 } from '@/contributors';
-import { SynchronizationService } from '@/synchronization';
+import { SynchronizationTestingModule } from '@/synchronization';
 import { SynchronizeContributorCommand } from './synchronize-contributor.command';
-import { MetricsModule } from '@/metrics';
 
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;
@@ -25,27 +19,8 @@ describe('SynchronizeContributorCommand', () => {
   beforeEach(async () => {
     const module: TestingModule = await CommandTestFactory.createTestingCommand(
       {
-        imports: [
-          ConfigModule.forRoot({
-            load: [configuration],
-          }),
-          ScorerModule,
-          MetricsModule,
-        ],
-        providers: [
-          SynchronizeContributorCommand,
-          SynchronizationService,
-          ContributorsService,
-          {
-            provide: CONTRIBUTOR_REPOSITORY_TOKEN,
-            useClass: ContributorsRepositoryMock,
-          },
-          GithubService,
-          {
-            provide: GithubApi,
-            useClass: GithubApiMock,
-          },
-        ],
+        imports: [SynchronizationTestingModule],
+        providers: [SynchronizeContributorCommand],
       },
     ).compile();
 

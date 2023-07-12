@@ -1,24 +1,17 @@
-import { SynchronizeContributorCommand } from '@/commands/synchronize-contributor.command';
-import { GithubApi, GithubApiMock, GithubService } from '@/github';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import {
   Contributor,
   ContributorFactory,
   ContributorsRepositoryMock,
-  ContributorsService,
 } from '@/contributors';
 import { TestingModule } from '@nestjs/testing';
 import { CommandTestFactory } from 'nest-commander-testing';
-import { ConfigModule } from '@nestjs/config';
-import configuration from '@/config/configuration';
-import { ScorerModule } from '@/scorer';
-import { SynchronizationService } from '@/synchronization';
+import { SynchronizationTestingModule } from '@/synchronization';
 import { faker } from '@faker-js/faker';
 import { ScoreContributorsCommand } from './score-contributors.command';
-import { MetricsModule } from '@/metrics';
 
 describe('ScoreContributorsCommand', () => {
-  let command: SynchronizeContributorCommand;
+  let command: ScoreContributorsCommand;
   let repository: ContributorsRepositoryMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
@@ -26,27 +19,8 @@ describe('ScoreContributorsCommand', () => {
   beforeEach(async () => {
     const module: TestingModule = await CommandTestFactory.createTestingCommand(
       {
-        imports: [
-          ConfigModule.forRoot({
-            load: [configuration],
-          }),
-          ScorerModule,
-          MetricsModule,
-        ],
-        providers: [
-          ScoreContributorsCommand,
-          SynchronizationService,
-          ContributorsService,
-          {
-            provide: CONTRIBUTOR_REPOSITORY_TOKEN,
-            useClass: ContributorsRepositoryMock,
-          },
-          GithubService,
-          {
-            provide: GithubApi,
-            useClass: GithubApiMock,
-          },
-        ],
+        imports: [SynchronizationTestingModule],
+        providers: [ScoreContributorsCommand],
       },
     ).compile();
 
@@ -58,7 +32,7 @@ describe('ScoreContributorsCommand', () => {
     faker.seed(42);
     await repository.save(ContributorFactory.generateMany(5));
 
-    await command.run([]);
+    await command.run();
 
     expect(repository.contributors.length).toEqual(5);
 
