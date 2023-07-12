@@ -12,6 +12,7 @@ export class ScorerService {
     [MetricName.maintainedRepositoryCount]: 1,
     [MetricName.issuePullRequestRatio]: 1,
     [MetricName.activeContributionWeeks]: 1,
+    [MetricName.collectedGrant]: 1,
   };
 
   /**
