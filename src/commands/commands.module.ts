@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { OnlydustModule } from '@/onlydust';
 import { SynchronizationModule } from '@/synchronization';
 import { SynchronizeContributorCommand } from './synchronize-contributor.command';
 import { ScoreContributorsCommand } from './score-contributors.command';
 import { OnlydustImportCommand } from './onlydust-import.command';
 import { ContributorsModule } from '@/contributors';
+import { OnlydustModule } from '@/onlydust';
 
 @Module({
   imports: [ContributorsModule, OnlydustModule, SynchronizationModule],

@@ -1,10 +1,14 @@
 import { GithubService } from '@/github';
 import { Injectable } from '@nestjs/common';
 import { MetricName } from './metric-name';
+import { OnlydustService } from '@/onlydust';
 
 @Injectable()
 export class MetricsService {
-  constructor(private github: GithubService) {}
+  constructor(
+    private github: GithubService,
+    private onlydust: OnlydustService,
+  ) {}
 
   async getMetricsForUsers(
     usernames: string[],
@@ -26,10 +30,27 @@ export class MetricsService {
       Promise.resolve({}),
     );
 
-    // TODO: get onlydust metrics
+    // Get onlydust metrics
+    const onlydustMetrics = await this.onlydust.getMetricsForAll(usernames);
 
-    // TODO: aggregate metrics and return it
+    // Aggregate metrics
+    const allMetrics = usernames.reduce(
+      (record, username) => ({
+        ...record,
+        [username]: {
+          ...githubMetrics[username],
+          ...Object.keys(onlydustMetrics).reduce(
+            (recordOnlydust, metric) => ({
+              ...recordOnlydust,
+              [metric]: (onlydustMetrics as object)[metric][username],
+            }),
+            {},
+          ),
+        },
+      }),
+      {},
+    );
 
-    return githubMetrics;
+    return allMetrics;
   }
 }

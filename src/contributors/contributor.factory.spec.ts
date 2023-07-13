@@ -33,6 +33,7 @@ describe('ContributorFactory', () => {
         maintainedRepositoryCount: 3,
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
+        collectedGrant: 1164,
       });
     });
   });

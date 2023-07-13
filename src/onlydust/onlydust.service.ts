@@ -8,4 +8,11 @@ export class OnlydustService {
   async getUsers() {
     return await this.api.getUsers();
   }
+
+  async getMetricsForAll(usernames: string[]) {
+    const collectedGrants = await this.api.getCollectedGrants(usernames);
+    const allMetrics = { ...collectedGrants };
+
+    return allMetrics;
+  }
 }

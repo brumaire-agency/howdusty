@@ -14,6 +14,7 @@ describe('OnlydustService', () => {
       imports: [ConfigModule.forRoot({ load: [configuration] })],
       providers: [
         OnlydustService,
+        OnlydustApi,
         { provide: OnlydustApi, useClass: OnlydustApiMock },
       ],
     }).compile();
@@ -27,6 +28,19 @@ describe('OnlydustService', () => {
       const result = await onlydust.getUsers();
       expect(result).toStrictEqual(api.users);
       expect(result.length).toBe(3);
+    });
+  });
+
+  describe('getMetricsForAll', () => {
+    it('should return all metrics for onlydust users', async () => {
+      const result = await onlydust.getMetricsForAll([
+        'username1',
+        'username2',
+        'username3',
+      ]);
+      expect(result).toStrictEqual({
+        collectedGrant: { username1: 100, username2: 100, username3: 100 },
+      });
     });
   });
 });
