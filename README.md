@@ -40,6 +40,17 @@ npm install
 npm run start
 ```
 
+## Modules
+
+- `commands`: Define commands of the app. See the commands section for more informations.
+- `config`: Define the configuration to communicate with our database, github and onlydust.
+- `contributors`: Define the contributor entity and expose api endpoints to interact with them.
+- `github`: Communicate with the github graphQL API.
+- `metrics`: Define and get the metrics (from github and onlydust) for contributors.
+- `onlydust`: Communicate with the onlydust database.
+- `scorer`: Calculate the score from metrics for contributors.
+- `synchronization`: Synchronize all informations (metrics, score, contributor info, etc) in our database.
+
 ## Commands
 
 - `onlydust:import`: Import new OnlyDust users in the database
