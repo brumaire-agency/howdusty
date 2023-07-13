@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { GithubQuery } from './queries';
+import { ContributorFactory } from '@/contributors';
 
 export class GithubApiMock {
   /**
@@ -7,16 +8,18 @@ export class GithubApiMock {
    */
   getInfo(username: string, queries: GithubQuery[]) {
     faker.seed(42);
+    const contributor = ContributorFactory.generate({ username });
+
     return Promise.resolve({
-      id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
-      username: username,
-      name: 'Nancy Leffler',
-      avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
-      totalContributions: 139,
-      contributedRepositoryCount: 0,
-      maintainedRepositoryCount: 3,
-      issuePullRequestRatio: 0.97,
-      activeContributionWeeks: 4,
+      id: contributor.id,
+      username: contributor.username,
+      name: contributor.name,
+      avatarUrl: contributor.avatarUrl,
+      totalContributions: contributor.totalContributions,
+      contributedRepositoryCount: contributor.contributedRepositoryCount,
+      maintainedRepositoryCount: contributor.maintainedRepositoryCount,
+      issuePullRequestRatio: contributor.issuePullRequestRatio,
+      activeContributionWeeks: contributor.activeContributionWeeks,
     });
   }
 }
