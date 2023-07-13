@@ -39,7 +39,13 @@ export class MetricsService {
         ...record,
         [username]: {
           ...githubMetrics[username],
-          collectedGrant: onlydustMetrics['collectedGrant'][username],
+          ...Object.keys(onlydustMetrics).reduce(
+            (recordOnlydust, metric) => ({
+              ...recordOnlydust,
+              [metric]: (onlydustMetrics as object)[metric][username],
+            }),
+            {},
+          ),
         },
       }),
       {},
