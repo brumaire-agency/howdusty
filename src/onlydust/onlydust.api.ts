@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Client } from 'pg';
+import { Client, ClientConfig } from 'pg';
 import { OnlydustUser } from './types';
 
 @Injectable()
 export class OnlydustApi {
-  private client;
+  private readonly clientConfig: ClientConfig;
 
   constructor(private readonly config: ConfigService) {
     const { host, port, database, username, password } =
       this.config.get('onlydust');
-    this.client = new Client({
+
+    this.clientConfig = {
       user: username,
       host: host,
       database: database,
@@ -19,20 +20,20 @@ export class OnlydustApi {
       ssl: {
         rejectUnauthorized: false,
       },
-    });
+    };
   }
 
   /**
    * Gets all users from OnlyDust.
    */
   async getUsers(): Promise<OnlydustUser[]> {
-    await this.client.connect();
+    const client = await this.getClient();
 
-    const result = await this.client.query(
+    const result = await client.query(
       'SELECT id, login FROM "public"."github_users"',
     );
 
-    await this.client.end();
+    await client.end();
 
     return result.rows;
   }
@@ -43,6 +44,8 @@ export class OnlydustApi {
   async getCollectedGrants(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
+    const client = await this.getClient();
+
     const usernamesList = usernames.reduce(
       (accumulator, currentValue) =>
         accumulator +
@@ -53,9 +56,7 @@ export class OnlydustApi {
       '',
     );
 
-    await this.client.connect();
-
-    const result = await this.client.query(`
+    const result = await client.query(`
       SELECT id, login, SUM(money_granted) AS collected_grant
       FROM (
         SELECT users.id, users.login, payments.money_granted
@@ -67,7 +68,7 @@ export class OnlydustApi {
       GROUP BY id, login
     `);
 
-    await this.client.end();
+    await client.end();
 
     return {
       collectedGrant: result.rows.reduce(
@@ -78,5 +79,11 @@ export class OnlydustApi {
         {},
       ),
     };
+  }
+
+  private async getClient(): Promise<Client> {
+    const client = new Client(this.clientConfig);
+    await client.connect();
+    return client;
   }
 }
