@@ -35,6 +35,12 @@ describe('ContributorsService', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should return an contributor', async () => {
+      expect(await contributorsService.findOne('john')).toBe(undefined);
+    });
+  });
+
   describe('save', () => {
     it("should add a new contributor if it doesn't exist", async () => {
       faker.seed(42);

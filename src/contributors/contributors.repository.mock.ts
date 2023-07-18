@@ -7,6 +7,10 @@ export class ContributorsRepositoryMock {
     return Promise.resolve(this.contributors);
   }
 
+  findOne(): Promise<Contributor> {
+    return Promise.resolve(this.contributors[0]);
+  }
+
   save<T>(contributor: T): Promise<T> {
     const contributors = Array.isArray(contributor)
       ? contributor
