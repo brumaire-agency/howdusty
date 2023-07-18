@@ -38,4 +38,13 @@ describe('ContributorsController', () => {
       expect(response).toEqual(repository.contributors);
     });
   });
+
+  describe('findOne', () => {
+    it('should return an contributor', async () => {
+      await repository.save(ContributorFactory.generateMany(3));
+      const response = await controller.findAll();
+      const newResponse = await controller.findOne(response[0].username);
+      expect(response[0]).toEqual(newResponse);
+    });
+  });
 });
