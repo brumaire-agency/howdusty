@@ -11,8 +11,13 @@ export class OnlydustService {
 
   async getMetricsForAll(usernames: string[]) {
     const collectedGrants = await this.api.getCollectedGrants(usernames);
-    const allMetrics = { ...collectedGrants };
-
+    const meanGrantPerProject = await this.api.getMeanGrantPerProject(
+      usernames,
+    );
+    const allMetrics = {
+      ...collectedGrants,
+      ...meanGrantPerProject,
+    };
     return allMetrics;
   }
 }

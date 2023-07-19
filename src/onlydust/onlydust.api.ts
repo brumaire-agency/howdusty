@@ -81,6 +81,50 @@ export class OnlydustApi {
     };
   }
 
+  /**
+   * Gets the mean of collected grants per project for all users from OnlyDust.
+   */
+  async getMeanGrantPerProject(
+    usernames: string[],
+  ): Promise<Record<string, number>> {
+    const client = await this.getClient();
+
+    const usernamesList = usernames.reduce(
+      (accumulator, currentValue) =>
+        accumulator +
+        (accumulator.length ? ', ' : '') +
+        "'" +
+        currentValue +
+        "'",
+      '',
+    );
+
+    const result = await client.query(`
+      SELECT users.id, users.login, COUNT(projects.id) AS project_count, SUM(payments.money_granted) AS total_grants
+      FROM public.github_users AS users 
+      LEFT JOIN public.payment_stats AS payments 
+      ON users.id = payments.github_user_id
+      LEFT JOIN public.projects AS projects
+      ON payments.project_id = projects.id
+      WHERE users.login IN (${usernamesList})
+      GROUP BY users.id, users.login
+    `);
+
+    await client.end();
+
+    return {
+      meanGrantPerProject: result.rows.reduce(
+        (record, item) => ({
+          ...record,
+          [item.login]: item.total_grants
+            ? item.total_grants / item.project_count
+            : 0,
+        }),
+        {},
+      ),
+    };
+  }
+
   private async getClient(): Promise<Client> {
     const client = new Client(this.clientConfig);
     await client.connect();
