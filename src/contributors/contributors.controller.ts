@@ -12,7 +12,9 @@ export class ContributorsController {
   }
 
   @Get(':username')
-  async findOne(@Param('username') username: string): Promise<Contributor> {
-    return this.service.findOne(username);
+  async findOneByUsername(
+    @Param('username') username: string,
+  ): Promise<Contributor> {
+    return this.service.findOneByUsername(username);
   }
 }

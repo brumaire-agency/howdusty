@@ -40,11 +40,25 @@ describe('ContributorsController', () => {
   });
 
   describe('findOne', () => {
-    it('should return an contributor', async () => {
-      await repository.save(ContributorFactory.generateMany(3));
-      const response = await controller.findAll();
-      const newResponse = await controller.findOne(response[0].username);
-      expect(response[0]).toEqual(newResponse);
+    it('should return a contributor', async () => {
+      const expectedContributor: Contributor = {
+        id: 'MDQ6VX',
+        username: 'john',
+        name: 'john doe',
+        avatarUrl: 'https://avatars.gi',
+        activeContributionWeeks: 5,
+        contributedRepositoryCount: 10,
+        issuePullRequestRatio: 0.8,
+        maintainedRepositoryCount: 3,
+        totalContributions: 50,
+        collectedGrant: 1000,
+        score: 123,
+        rank: 12,
+      };
+      await repository.save([expectedContributor]);
+      const response = await controller.findOneByUsername('john');
+      expect(expectedContributor).toEqual(response);
+      expect(await controller.findOneByUsername('bob')).toEqual(undefined);
     });
   });
 });

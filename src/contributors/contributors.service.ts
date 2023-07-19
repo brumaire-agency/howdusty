@@ -15,7 +15,7 @@ export class ContributorsService {
     return this.contributorsRepository.find();
   }
 
-  findOne(username: string): Promise<Contributor> {
+  findOneByUsername(username: string): Promise<Contributor> {
     return this.contributorsRepository.findOne({
       where: { username: username },
     });

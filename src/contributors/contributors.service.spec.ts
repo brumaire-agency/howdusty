@@ -36,8 +36,10 @@ describe('ContributorsService', () => {
   });
 
   describe('findOne', () => {
-    it('should return an contributor', async () => {
-      expect(await contributorsService.findOne('john')).toBe(undefined);
+    it('should return a contributor', async () => {
+      expect(await contributorsService.findOneByUsername('john')).toBe(
+        undefined,
+      );
     });
   });
 
