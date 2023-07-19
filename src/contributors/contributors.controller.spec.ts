@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { Contributor } from './contributor.entity';
 import { ContributorFactory } from './contributor.factory';
@@ -58,7 +59,17 @@ describe('ContributorsController', () => {
       await repository.save([expectedContributor]);
       const response = await controller.findOneByUsername('john');
       expect(expectedContributor).toEqual(response);
-      expect(await controller.findOneByUsername('bob')).toEqual(undefined);
+    });
+
+    it('should return 404 error for non-existing contributor', async () => {
+      try {
+        await controller.findOneByUsername('bob');
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+        const exceptionResponse = error.getResponse();
+        expect(exceptionResponse.statusCode).toBe(404);
+        expect(exceptionResponse.message).toBe('Contributor not found');
+      }
     });
   });
 });
