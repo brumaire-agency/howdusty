@@ -12,7 +12,8 @@ export class ContributorsRepositoryMock {
     const contributorWhere = options.where as FindOptionsWhere<Contributor>;
     return Promise.resolve(
       this.contributors.find(
-        (item) => item.username == contributorWhere.username,
+        (contributor: Contributor) =>
+          contributor.username == contributorWhere.username,
       ),
     );
   }
