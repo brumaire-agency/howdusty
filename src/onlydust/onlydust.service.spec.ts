@@ -40,6 +40,7 @@ describe('OnlydustService', () => {
       ]);
       expect(result).toStrictEqual({
         collectedGrant: { username1: 100, username2: 100, username3: 100 },
+        meanGrantPerProject: { username1: 10, username2: 10, username3: 10 },
       });
     });
   });
