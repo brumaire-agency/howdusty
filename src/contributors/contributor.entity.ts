@@ -38,6 +38,9 @@ export class Contributor implements Metricable {
   @Column({ name: 'collected_grant' })
   collectedGrant: number;
 
+  @Column({ name: 'mean_grant_per_project' })
+  meanGrantPerProject: number;
+
   @Column({ name: 'contributed_project_count' })
   contributedProjectCount: number;
 

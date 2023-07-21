@@ -1,3 +1,4 @@
+import { FindOneOptions, FindOptionsWhere } from 'typeorm';
 import { Contributor } from './contributor.entity';
 
 export class ContributorsRepositoryMock {
@@ -5,6 +6,16 @@ export class ContributorsRepositoryMock {
 
   find(): Promise<Contributor[]> {
     return Promise.resolve(this.contributors);
+  }
+
+  findOne(options: FindOneOptions<Contributor>): Promise<Contributor> {
+    const contributorWhere = options.where as FindOptionsWhere<Contributor>;
+    return Promise.resolve(
+      this.contributors.find(
+        (contributor: Contributor) =>
+          contributor.username == contributorWhere.username,
+      ),
+    );
   }
 
   save<T>(contributor: T): Promise<T> {

@@ -15,6 +15,12 @@ export class ContributorsService {
     return this.contributorsRepository.find();
   }
 
+  findOneByUsername(username: string): Promise<Contributor> {
+    return this.contributorsRepository.findOne({
+      where: { username: username },
+    });
+  }
+
   async save(contributorDto) {
     return await this.contributorsRepository.save(contributorDto);
   }
