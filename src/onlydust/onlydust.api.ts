@@ -81,6 +81,46 @@ export class OnlydustApi {
     };
   }
 
+  /**
+   * Gets the number of unique projects each contributor has contributed to.
+   */
+  async getContributedProjectCount(
+    usernames: string[],
+  ): Promise<Record<string, number>> {
+    const client = await this.getClient();
+
+    const usernamesList = usernames.reduce(
+      (accumulator, currentValue) =>
+        accumulator +
+        (accumulator.length ? ', ' : '') +
+        "'" +
+        currentValue +
+        "'",
+      '',
+    );
+
+    const result = await client.query(`
+      SELECT users.id, users.login, Count(projects.github_user_id) as project_count
+      FROM public.github_users AS users
+      LEFT JOIN public.projects_contributors AS projects
+      ON users.id = projects.github_user_id
+      WHERE users.login IN (${usernamesList})
+      GROUP BY users.id, users.login
+    `);
+
+    await client.end();
+
+    return {
+      contributedProjectCount: result.rows.reduce(
+        (record, item) => ({
+          ...record,
+          [item.login]: item.project_count || 0,
+        }),
+        {},
+      ),
+    };
+  }
+
   private async getClient(): Promise<Client> {
     const client = new Client(this.clientConfig);
     await client.connect();

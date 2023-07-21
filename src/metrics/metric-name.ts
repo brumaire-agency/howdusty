@@ -5,4 +5,5 @@ export enum MetricName {
   maintainedRepositoryCount = 'maintainedRepositoryCount',
   totalContributions = 'totalContributions',
   collectedGrant = 'collectedGrant',
+  contributedProjectCount = 'contributedProjectCount',
 }
