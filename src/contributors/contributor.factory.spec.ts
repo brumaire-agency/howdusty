@@ -34,6 +34,7 @@ describe('ContributorFactory', () => {
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
         collectedGrant: 1164,
+        missionCount: 9,
       });
     });
   });

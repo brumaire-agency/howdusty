@@ -29,6 +29,7 @@ describe('MetricsService', () => {
           issuePullRequestRatio: 0.97,
           activeContributionWeeks: 4,
           collectedGrant: 100,
+          missionCount: 20,
         },
       });
     });

@@ -38,6 +38,9 @@ export class Contributor implements Metricable {
   @Column({ name: 'collected_grant' })
   collectedGrant: number;
 
+  @Column({ name: 'mission_count' })
+  missionCount: number;
+
   @Column({
     name: 'score',
     type: 'decimal',

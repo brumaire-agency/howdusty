@@ -9,4 +9,5 @@ export class ContributorDto {
   issuePullRequestRatio: number;
   activeContributionWeeks: number;
   collectedGrant: number;
+  missionCount: number;
 }

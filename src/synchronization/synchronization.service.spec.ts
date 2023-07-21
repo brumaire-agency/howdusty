@@ -40,6 +40,7 @@ describe('SynchronizationService', () => {
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
         collectedGrant: 100,
+        missionCount: 20,
       });
     });
     it('should update a contributor if it does exist', async () => {
@@ -62,6 +63,7 @@ describe('SynchronizationService', () => {
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
         collectedGrant: 100,
+        missionCount: 20,
       });
     });
   });
