@@ -53,6 +53,8 @@ describe('ContributorsController', () => {
         maintainedRepositoryCount: 3,
         totalContributions: 50,
         collectedGrant: 1000,
+        meanGrantPerProject: 500,
+        contributedProjectCount: 5,
         score: 123,
         rank: 12,
       };

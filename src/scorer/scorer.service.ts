@@ -14,6 +14,7 @@ export class ScorerService {
     [MetricName.activeContributionWeeks]: 1,
     [MetricName.collectedGrant]: 1,
     [MetricName.meanGrantPerProject]: 1,
+    [MetricName.contributedProjectCount]: 1,
   };
 
   /**

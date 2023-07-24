@@ -14,9 +14,13 @@ export class OnlydustService {
     const meanGrantPerProject = await this.api.getMeanGrantPerProject(
       usernames,
     );
+    const contributedProjectCount = await this.api.getContributedProjectCount(
+      usernames,
+    );
     const allMetrics = {
       ...collectedGrants,
       ...meanGrantPerProject,
+      ...contributedProjectCount,
     };
     return allMetrics;
   }

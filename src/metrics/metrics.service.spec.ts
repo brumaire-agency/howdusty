@@ -30,6 +30,7 @@ describe('MetricsService', () => {
           activeContributionWeeks: 4,
           collectedGrant: 100,
           meanGrantPerProject: 10,
+          contributedProjectCount: 5,
         },
       });
     });

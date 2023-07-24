@@ -55,4 +55,21 @@ export class OnlydustApiMock {
       ),
     });
   }
+
+  /**
+   * Gets the number of unique projects each contributor has contributed to.
+   */
+  getContributedProjectCount(
+    usernames: string[],
+  ): Promise<Record<string, Record<string, number>>> {
+    return Promise.resolve({
+      contributedProjectCount: usernames.reduce(
+        (record, username) => ({
+          ...record,
+          [username]: 5,
+        }),
+        {},
+      ),
+    });
+  }
 }

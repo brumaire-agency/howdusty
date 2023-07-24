@@ -41,6 +41,7 @@ describe('SynchronizationService', () => {
         activeContributionWeeks: 4,
         collectedGrant: 100,
         meanGrantPerProject: 10,
+        contributedProjectCount: 5,
       });
     });
     it('should update a contributor if it does exist', async () => {
@@ -64,6 +65,7 @@ describe('SynchronizationService', () => {
         activeContributionWeeks: 4,
         collectedGrant: 100,
         meanGrantPerProject: 10,
+        contributedProjectCount: 5,
       });
     });
   });
