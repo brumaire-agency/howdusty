@@ -11,4 +11,5 @@ export class ContributorDto {
   collectedGrant: number;
   meanGrantPerProject: number;
   contributedProjectCount: number;
+  missionCount: number;
 }

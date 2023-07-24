@@ -36,6 +36,7 @@ describe('ContributorFactory', () => {
         collectedGrant: 1164,
         meanGrantPerProject: 228,
         contributedProjectCount: 0,
+        missionCount: 16,
       });
     });
   });

@@ -55,6 +55,7 @@ describe('ContributorsController', () => {
         collectedGrant: 1000,
         meanGrantPerProject: 500,
         contributedProjectCount: 5,
+        missionCount: 20,
         score: 123,
         rank: 12,
       };

@@ -157,6 +157,38 @@ export class OnlydustApi {
     };
   }
 
+  /**
+   * Gets the number of missions each contributor.
+   */
+  async getMissionCount(
+    usernames: string[],
+  ): Promise<Record<string, Record<string, number>>> {
+    const client = await this.getClient();
+
+    const query = `
+      SELECT users.id, users.login, SUM(projects.link_count) as mission_count
+      FROM public.github_users AS users
+      LEFT JOIN public.projects_contributors AS projects
+      ON users.id = projects.github_user_id
+      WHERE users.login IN ($1)
+      GROUP BY users.id, users.login
+    `;
+
+    const result = await client.query(query, usernames);
+
+    await client.end();
+
+    return {
+      missionCount: result.rows.reduce(
+        (record, item) => ({
+          ...record,
+          [item.login]: item.mission_count ? item.mission_count : 0,
+        }),
+        {},
+      ),
+    };
+  }
+
   private async getClient(): Promise<Client> {
     const client = new Client(this.clientConfig);
     await client.connect();

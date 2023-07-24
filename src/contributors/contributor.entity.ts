@@ -44,6 +44,9 @@ export class Contributor implements Metricable {
   @Column({ name: 'contributed_project_count' })
   contributedProjectCount: number;
 
+  @Column({ name: 'mission_count' })
+  missionCount: number;
+
   @Column({
     name: 'score',
     type: 'decimal',
