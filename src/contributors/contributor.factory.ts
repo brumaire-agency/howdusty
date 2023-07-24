@@ -23,6 +23,7 @@ export class ContributorFactory {
         activeContributionWeeks: faker.number.int(10),
         collectedGrant: faker.number.int(5000),
         meanGrantPerProject: faker.number.int(500),
+        contributedProjectCount: faker.number.int(10),
         missionCount: faker.number.int(20),
       },
       preset,

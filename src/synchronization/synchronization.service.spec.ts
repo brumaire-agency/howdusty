@@ -41,6 +41,7 @@ describe('SynchronizationService', () => {
         activeContributionWeeks: 4,
         collectedGrant: 100,
         meanGrantPerProject: 10,
+        contributedProjectCount: 5,
         missionCount: 20,
       });
     });
@@ -65,6 +66,7 @@ describe('SynchronizationService', () => {
         activeContributionWeeks: 4,
         collectedGrant: 100,
         meanGrantPerProject: 10,
+        contributedProjectCount: 5,
         missionCount: 20,
       });
     });

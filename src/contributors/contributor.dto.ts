@@ -10,5 +10,6 @@ export class ContributorDto {
   activeContributionWeeks: number;
   collectedGrant: number;
   meanGrantPerProject: number;
+  contributedProjectCount: number;
   missionCount: number;
 }
