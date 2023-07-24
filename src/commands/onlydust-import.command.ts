@@ -19,22 +19,22 @@ export class OnlydustImportCommand extends CommandRunner {
     super();
   }
 
-  // Helper function to check if a username is a GitHub bot
-  isGitHubBot(username: string): boolean {
-    return /\[bot\]$/.test(username);
-  }
-
   async run() {
     const onlydustUsers = await this.onlydust.getUsers();
     const contributors = (await this.contributors.findAll()).map(
       (user) => user.username,
     );
 
+    // Helper function to check if a username is a GitHub bot
+    function isGitHubBot(username: string): boolean {
+      return /\[bot\]$/.test(username);
+    }
+
     // Only import onlydust users not present on our database and not GitHub bots
     const newOnlydustUsernames = onlydustUsers
       .filter(
         (user) =>
-          !contributors.includes(user.login) && !this.isGitHubBot(user.login),
+          !contributors.includes(user.login) && !isGitHubBot(user.login),
       )
       .map((user) => user.login);
 
