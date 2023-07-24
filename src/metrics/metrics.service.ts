@@ -1,4 +1,4 @@
-import { GithubService } from '@/github';
+import { GithubService, User } from '@/github';
 import { Injectable } from '@nestjs/common';
 import { MetricName } from './metric-name';
 import { OnlydustService } from '@/onlydust';
@@ -18,17 +18,15 @@ export class MetricsService {
       metrics = Object.values(MetricName) as MetricName[];
     }
 
-    // Get github metrics
-    const githubMetrics = await usernames.reduce(
-      async (accumulator, username) => {
-        const metricsForUser = await this.github.getMetricsForUser(
-          username,
-          metrics,
-        );
-        return { ...(await accumulator), [username]: metricsForUser };
-      },
-      Promise.resolve({}),
-    );
+    // Get github metrics sequentially
+    const githubMetrics: Record<string, User> = {};
+    for (const username of usernames) {
+      const metricsForUser = await this.github.getMetricsForUser(
+        username,
+        metrics,
+      );
+      githubMetrics[username] = metricsForUser;
+    }
 
     // Get onlydust metrics
     const onlydustMetrics = await this.onlydust.getMetricsForAll(usernames);
