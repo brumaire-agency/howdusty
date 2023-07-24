@@ -35,7 +35,7 @@ describe('ContributorFactory', () => {
         activeContributionWeeks: 4,
         collectedGrant: 1164,
         meanGrantPerProject: 228,
-        missionCount: 9,
+        missionCount: 1,
       });
     });
   });

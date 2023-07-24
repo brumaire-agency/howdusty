@@ -133,24 +133,16 @@ export class OnlydustApi {
   ): Promise<Record<string, Record<string, number>>> {
     const client = await this.getClient();
 
-    const usernamesList = usernames.reduce(
-      (accumulator, currentValue) =>
-        accumulator +
-        (accumulator.length ? ', ' : '') +
-        "'" +
-        currentValue +
-        "'",
-      '',
-    );
-
-    const result = await client.query(`
+    const query = `
       SELECT users.id, users.login, SUM(projects.link_count) as mission_count
       FROM public.github_users AS users
       LEFT JOIN public.projects_contributors AS projects
       ON users.id = projects.github_user_id
-      WHERE users.login IN (${usernamesList})
+      WHERE users.login IN ($1)
       GROUP BY users.id, users.login
-    `);
+    `;
+
+    const result = await client.query(query, usernames);
 
     await client.end();
 

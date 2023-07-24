@@ -48,6 +48,8 @@ describe('ContributorsService', () => {
         maintainedRepositoryCount: 3,
         totalContributions: 50,
         collectedGrant: 1000,
+        meanGrantPerProject: 500,
+        missionCount: 20,
         score: 123,
         rank: 12,
       };
