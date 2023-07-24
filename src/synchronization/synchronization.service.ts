@@ -28,13 +28,16 @@ export class SynchronizationService {
     }
     const usersMetrics = await this.metrics.getMetricsForUsers(usernames);
 
-    return Promise.all(
-      Object.keys(usersMetrics).map(async (username) => {
-        const userInfo = await this.github.getContributorInfo(username);
-        const user = { ...userInfo, ...usersMetrics[username] };
-        return await this.contributors.save(user);
-      }),
-    );
+    const contributors: Contributor[] = [];
+
+    for (const username of Object.keys(usersMetrics)) {
+      const userInfo = await this.github.getContributorInfo(username);
+      const user = { ...userInfo, ...usersMetrics[username] };
+      const savedUser = await this.contributors.save(user);
+      contributors.push(savedUser);
+    }
+
+    return contributors;
   }
 
   async scoreUsers(): Promise<void> {
