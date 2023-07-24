@@ -40,6 +40,23 @@ export class OnlydustApiMock {
   }
 
   /**
+   * Gets meanGrantPerProject for all users from OnlyDust.
+   */
+  getMeanGrantPerProject(
+    usernames: string[],
+  ): Promise<Record<string, Record<string, number>>> {
+    return Promise.resolve({
+      meanGrantPerProject: usernames.reduce(
+        (record, username) => ({
+          ...record,
+          [username]: 10,
+        }),
+        {},
+      ),
+    });
+  }
+
+  /**
    * Gets the number of missions each contributor.
    */
   getMissionCount(

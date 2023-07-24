@@ -35,6 +35,33 @@ describe('ContributorsService', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should return a contributor', async () => {
+      const expectedContributor: Contributor = {
+        id: 'MDQ6VX',
+        username: 'john',
+        name: 'john doe',
+        avatarUrl: 'https://avatars.gi',
+        activeContributionWeeks: 5,
+        contributedRepositoryCount: 10,
+        issuePullRequestRatio: 0.8,
+        maintainedRepositoryCount: 3,
+        totalContributions: 50,
+        collectedGrant: 1000,
+        score: 123,
+        rank: 12,
+      };
+      await contributorsRepository.save([expectedContributor]);
+      const response = await contributorsService.findOneByUsername('john');
+      expect(expectedContributor).toEqual(response);
+    });
+
+    it('should return undefined for non-existing contributor', async () => {
+      const response = await contributorsService.findOneByUsername('bob');
+      expect(response).toBeUndefined();
+    });
+  });
+
   describe('save', () => {
     it("should add a new contributor if it doesn't exist", async () => {
       faker.seed(42);

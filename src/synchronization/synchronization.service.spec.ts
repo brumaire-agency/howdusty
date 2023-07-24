@@ -40,6 +40,7 @@ describe('SynchronizationService', () => {
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
         collectedGrant: 100,
+        meanGrantPerProject: 10,
         missionCount: 20,
       });
     });
@@ -63,6 +64,7 @@ describe('SynchronizationService', () => {
         issuePullRequestRatio: 0.97,
         activeContributionWeeks: 4,
         collectedGrant: 100,
+        meanGrantPerProject: 10,
         missionCount: 20,
       });
     });
