@@ -15,11 +15,6 @@ export class GithubApiMock {
       username: contributor.username,
       name: contributor.name,
       avatarUrl: contributor.avatarUrl,
-      totalContributions: contributor.totalContributions,
-      contributedRepositoryCount: contributor.contributedRepositoryCount,
-      maintainedRepositoryCount: contributor.maintainedRepositoryCount,
-      issuePullRequestRatio: contributor.issuePullRequestRatio,
-      activeContributionWeeks: contributor.activeContributionWeeks,
     });
   }
 }

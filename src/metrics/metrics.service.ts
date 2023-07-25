@@ -2,10 +2,16 @@ import { GithubService, User } from '@/github';
 import { Injectable } from '@nestjs/common';
 import { MetricName } from './metric-name';
 import { OnlydustService } from '@/onlydust';
+import { Metrics } from './metrics.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Contributor, ContributorDto } from '@/contributors';
 
 @Injectable()
 export class MetricsService {
   constructor(
+    @InjectRepository(Metrics)
+    private metricsRepository: Repository<Metrics>,
     private github: GithubService,
     private onlydust: OnlydustService,
   ) {}
@@ -50,5 +56,35 @@ export class MetricsService {
     );
 
     return allMetrics;
+  }
+
+  async save(metricDto) {
+    return await this.metricsRepository.save(metricDto);
+  }
+
+  async findAll(): Promise<ContributorDto[]> {
+    const results = await this.metricsRepository
+      .createQueryBuilder('metrics')
+      .leftJoinAndSelect('metrics.contributor', 'contributor')
+      .getMany();
+    return results.map((item: Metrics) => {
+      const { contributor, ...rest } = item;
+      return {
+        ...contributor,
+        ...rest,
+      };
+    });
+  }
+
+  async findOneByUsername(username: string): Promise<ContributorDto> {
+    const { contributor, ...rest } = await this.metricsRepository
+      .createQueryBuilder('metrics')
+      .leftJoinAndSelect('metrics.contributor', 'contributor')
+      .where('contributor.username = :username', { username })
+      .getOne();
+    return {
+      ...contributor,
+      ...rest,
+    };
   }
 }

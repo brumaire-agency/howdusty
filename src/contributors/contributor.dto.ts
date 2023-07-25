@@ -12,4 +12,6 @@ export class ContributorDto {
   meanGrantPerProject: number;
   contributedProjectCount: number;
   missionCount: number;
+  score?: number;
+  rank?: number;
 }

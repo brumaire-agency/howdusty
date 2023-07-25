@@ -4,6 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '@/config/configuration';
 import { Contributor, ContributorsModule } from '@/contributors';
 import { CommandsModule } from '@/commands';
+import { Metrics } from './metrics/metrics.entity';
+import { MetricsModule } from './metrics';
 
 @Module({
   imports: [
@@ -23,12 +25,13 @@ import { CommandsModule } from '@/commands';
           database,
           username,
           password,
-          entities: [Contributor],
+          entities: [Contributor, Metrics],
           synchronize: true,
         };
       },
     }),
     ContributorsModule,
+    MetricsModule,
     CommandsModule,
   ],
 })
