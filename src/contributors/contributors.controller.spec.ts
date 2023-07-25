@@ -7,6 +7,7 @@ import { ContributorFactory } from './contributor.factory';
 import { ContributorsController } from './contributors.controller';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 import { ContributorsService } from './contributors.service';
+import { MetricsTestingModule } from '@/metrics';
 
 describe('ContributorsController', () => {
   let controller: ContributorsController;
@@ -16,6 +17,7 @@ describe('ContributorsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [MetricsTestingModule],
       providers: [
         ContributorsService,
         {

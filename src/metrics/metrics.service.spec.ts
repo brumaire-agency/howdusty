@@ -14,11 +14,7 @@ describe('MetricsService', () => {
   const METRICS_REPOSITORY_TOKEN = getRepositoryToken(Metrics);
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        MetricsRepositoryMock,
-        GithubTestingModule,
-        OnlydustTestingModule,
-      ],
+      imports: [GithubTestingModule, OnlydustTestingModule],
       providers: [
         MetricsService,
         {
