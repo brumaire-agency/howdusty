@@ -138,11 +138,11 @@ export class OnlydustApi {
       FROM public.github_users AS users
       LEFT JOIN public.projects_contributors AS projects
       ON users.id = projects.github_user_id
-      WHERE users.login IN ($1)
+      WHERE users.login = ANY($1)
       GROUP BY users.id, users.login
     `;
 
-    const result = await client.query(query, usernames);
+    const result = await client.query(query, [usernames]);
 
     await client.end();
 
@@ -170,11 +170,11 @@ export class OnlydustApi {
       FROM public.github_users AS users
       LEFT JOIN public.projects_contributors AS projects
       ON users.id = projects.github_user_id
-      WHERE users.login IN ($1)
+      WHERE users.login = ANY($1)
       GROUP BY users.id, users.login
     `;
 
-    const result = await client.query(query, usernames);
+    const result = await client.query(query, [usernames]);
 
     await client.end();
 
