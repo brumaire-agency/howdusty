@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Contributor } from './contributor.entity';
 import { ContributorsService } from './contributors.service';
 import { ContributorsController } from './contributors.controller';
-import { Metrics, MetricsModule } from '@/metrics';
+import { MetricsModule } from '@/metrics';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Contributor, Metrics]), MetricsModule],
+  imports: [TypeOrmModule.forFeature([Contributor]), MetricsModule],
   providers: [ContributorsService],
   exports: [ContributorsService],
   controllers: [ContributorsController],

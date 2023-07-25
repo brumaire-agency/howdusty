@@ -58,8 +58,8 @@ export class MetricsService {
     return allMetrics;
   }
 
-  async save(metricDto) {
-    return await this.metricsRepository.save(metricDto);
+  async save(metric) {
+    return await this.metricsRepository.save(metric);
   }
 
   async findAll(): Promise<ContributorDto[]> {

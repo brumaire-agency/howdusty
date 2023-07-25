@@ -2,17 +2,34 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MetricsService } from './metrics.service';
 import { GithubTestingModule } from '@/github';
 import { OnlydustTestingModule } from '@/onlydust';
+import { MetricsRepositoryMock } from './metrics.repository.mocks';
+import { ContributorsRepositoryMock } from '@/contributors';
+import { Metrics } from './metrics.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('MetricsService', () => {
   let metrics: MetricsService;
+  let repository: ContributorsRepositoryMock;
 
+  const METRICS_REPOSITORY_TOKEN = getRepositoryToken(Metrics);
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [GithubTestingModule, OnlydustTestingModule],
-      providers: [MetricsService],
+      imports: [
+        MetricsRepositoryMock,
+        GithubTestingModule,
+        OnlydustTestingModule,
+      ],
+      providers: [
+        MetricsService,
+        {
+          provide: METRICS_REPOSITORY_TOKEN,
+          useClass: MetricsRepositoryMock,
+        },
+      ],
     }).compile();
 
     metrics = module.get(MetricsService);
+    repository = module.get(METRICS_REPOSITORY_TOKEN);
   });
 
   describe('getMetricsForUsers', () => {
