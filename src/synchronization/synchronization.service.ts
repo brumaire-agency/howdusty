@@ -28,7 +28,10 @@ export class SynchronizationService {
 
     const metrics: Metrics[] = [];
     const usersMetrics = await this.metrics.getMetricsForUsers(usernames);
-    for (const username of Object.keys(usersMetrics)) {
+    for (const [index, username] of usernames.entries()) {
+      console.log(
+        `[${index}/${usernames.length}] syncing info for user ${username}`,
+      );
       const userInfo = await this.contributors.findOneByUsername(username);
       const user = {
         id: userInfo.id,

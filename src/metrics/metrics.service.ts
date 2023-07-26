@@ -26,7 +26,10 @@ export class MetricsService {
 
     // Get github metrics sequentially
     const githubMetrics: Record<string, User> = {};
-    for (const username of usernames) {
+    for (const [index, username] of usernames.entries()) {
+      console.log(
+        `[${index}/${usernames.length}] syncing github metrics for user ${username}`,
+      );
       const metricsForUser = await this.github.getMetricsForUser(
         username,
         metrics,
@@ -35,6 +38,7 @@ export class MetricsService {
     }
 
     // Get onlydust metrics
+    console.log(`syncing onlydust metrics for every user`);
     const onlydustMetrics = await this.onlydust.getMetricsForAll(usernames);
 
     // Aggregate metrics
@@ -54,6 +58,7 @@ export class MetricsService {
       }),
       {},
     );
+    console.log(`all metrics fetched`);
 
     return allMetrics;
   }

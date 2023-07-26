@@ -11,3 +11,8 @@ data:
   DB_USERNAME: 'howdusty'
   DB_PASSWORD: ''
   GITHUB_ACCESS_TOKEN: ''
+  ONLYDUST_DB_HOST: 'ec2-34-249-163-145.eu-west-1.compute.amazonaws.com'
+  ONLYDUST_DB_PORT: '5432'
+  ONLYDUST_DB_DATABASE: 'd5oesjuaoonpcv'
+  ONLYDUST_DB_USERNAME: 'external-crm'
+  ONLYDUST_DB_PASSWORD: ''
