@@ -77,11 +77,18 @@ export class MetricsService {
   }
 
   async findOneByUsername(username: string): Promise<ContributorDto> {
-    const { contributor, ...rest } = await this.metricsRepository
+    const result = await this.metricsRepository
       .createQueryBuilder('metrics')
       .leftJoinAndSelect('metrics.contributor', 'contributor')
       .where('contributor.username = :username', { username })
       .getOne();
+
+    if (!result) {
+      return null;
+    }
+
+    const { contributor, ...rest } = result;
+
     return {
       ...contributor,
       ...rest,

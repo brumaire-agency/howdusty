@@ -34,20 +34,11 @@ describe('SynchronizationService', () => {
         username: 'username',
         name: 'Nancy Leffler',
         avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
-        totalContributions: 139,
-        contributedRepositoryCount: 0,
-        maintainedRepositoryCount: 3,
-        issuePullRequestRatio: 0.97,
-        activeContributionWeeks: 4,
-        collectedGrant: 100,
-        meanGrantPerProject: 10,
-        contributedProjectCount: 5,
-        missionCount: 20,
       });
     });
     it('should update a contributor if it does exist', async () => {
       faker.seed(42);
-      const contributor = ContributorFactory.generate({
+      const contributor = ContributorFactory.generateUserInfo({
         username: 'username',
       });
       contributorsRepository.contributors.push(contributor);
@@ -59,15 +50,6 @@ describe('SynchronizationService', () => {
         username: 'username',
         name: 'Nancy Leffler',
         avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
-        totalContributions: 139,
-        contributedRepositoryCount: 0,
-        maintainedRepositoryCount: 3,
-        issuePullRequestRatio: 0.97,
-        activeContributionWeeks: 4,
-        collectedGrant: 100,
-        meanGrantPerProject: 10,
-        contributedProjectCount: 5,
-        missionCount: 20,
       });
     });
   });

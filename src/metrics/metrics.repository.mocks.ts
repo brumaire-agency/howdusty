@@ -3,14 +3,31 @@ import { Metrics } from './metrics.entity';
 import { ContributorDto } from '@/contributors';
 
 export class MetricsRepositoryMock {
-  contributorsMetrics: ContributorDto[] = [];
+  contributorsMetrics: any[] = [];
 
-  find(): Promise<ContributorDto[]> {
-    return Promise.resolve(this.contributorsMetrics);
-  }
+  createQueryBuilder(alias: string): any {
+    // Simulate the behavior of TypeORM's createQueryBuilder
+    const queryBuilder = {
+      username: '',
+      alias,
+      leftJoinAndSelect: () => queryBuilder,
+      getMany: () => {
+        return this.contributorsMetrics;
+      },
+      where: (conditions: any, userName: { username: string }): any => {
+        const username = userName.username;
+        queryBuilder.username = username;
+        return queryBuilder;
+      },
+      getOne: () => {
+        const result = this.contributorsMetrics.find(
+          (item) => item.contributor.username === queryBuilder.username,
+        );
+        return result;
+      },
+    };
 
-  findOne(options: any): Promise<ContributorDto> {
-    return Promise.resolve(this.contributorsMetrics[0]);
+    return queryBuilder;
   }
 
   save<T>(contributor: T): Promise<T> {

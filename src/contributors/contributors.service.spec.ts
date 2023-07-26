@@ -68,8 +68,10 @@ describe('ContributorsService', () => {
     });
     it('should update a contributor if it does exist', async () => {
       faker.seed(42);
-      const contributor = ContributorFactory.generate({ id: '1' });
-      const updatedContributor = ContributorFactory.generate({ id: '1' });
+      const contributor = ContributorFactory.generateUserInfo({ id: '1' });
+      const updatedContributor = ContributorFactory.generateUserInfo({
+        id: '1',
+      });
       contributorsRepository.contributors.push(contributor);
 
       expect(contributorsRepository.contributors.length).toBe(1);

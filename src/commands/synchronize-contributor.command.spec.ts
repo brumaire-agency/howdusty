@@ -29,6 +29,9 @@ describe('SynchronizeContributorCommand', () => {
   });
 
   it('should synchronize a user', async () => {
+    await contributorsRepository.save(
+      ContributorFactory.generateUserInfo({ username: 'username' }),
+    );
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run(['username']);
     expect(logSpy).toHaveBeenCalledWith('1 users have been synchronized');
@@ -37,7 +40,9 @@ describe('SynchronizeContributorCommand', () => {
 
   it('should synchronize all users from database', async () => {
     faker.seed(42);
-    await contributorsRepository.save(ContributorFactory.generateMany(3));
+    await contributorsRepository.save(
+      ContributorFactory.generateManyUserInfo(3),
+    );
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run();
     expect(logSpy).toHaveBeenCalledWith(
