@@ -30,7 +30,7 @@ export class SynchronizationService {
     const usersMetrics = await this.metrics.getMetricsForUsers(usernames);
     for (const [index, username] of usernames.entries()) {
       console.log(
-        `[${index}/${usernames.length}] syncing info for user ${username}`,
+        `[${index + 1}/${usernames.length}] syncing info for user ${username}`,
       );
       const userInfo = await this.contributors.findOneByUsername(username);
       const user = {

@@ -28,7 +28,9 @@ export class MetricsService {
     const githubMetrics: Record<string, User> = {};
     for (const [index, username] of usernames.entries()) {
       console.log(
-        `[${index}/${usernames.length}] syncing github metrics for user ${username}`,
+        `[${index + 1}/${
+          usernames.length
+        }] syncing github metrics for user ${username}`,
       );
       const metricsForUser = await this.github.getMetricsForUser(
         username,
