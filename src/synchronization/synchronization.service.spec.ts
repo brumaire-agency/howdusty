@@ -8,12 +8,16 @@ import {
 import { SynchronizationService } from './synchronization.service';
 import { faker } from '@faker-js/faker';
 import { SynchronizationTestingModule } from '@/synchronization/synchronization.testing-module';
+import { Metrics } from '@/metrics';
+import { MetricsRepositoryMock } from '@/metrics/metrics.repository.mocks';
 
 describe('SynchronizationService', () => {
   let synchronization: SynchronizationService;
   let contributorsRepository: ContributorsRepositoryMock;
+  let metricsRepository: MetricsRepositoryMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
+  const METRICS_REPOSITORY_TOKEN = getRepositoryToken(Metrics);
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,6 +26,7 @@ describe('SynchronizationService', () => {
 
     synchronization = module.get(SynchronizationService);
     contributorsRepository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
+    metricsRepository = module.get(METRICS_REPOSITORY_TOKEN);
   });
 
   describe('synchronizeUser', () => {
@@ -51,6 +56,21 @@ describe('SynchronizationService', () => {
         name: 'Nancy Leffler',
         avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
       });
+    });
+  });
+
+  describe('synchronizeUsersMetrics', () => {
+    it('should update all users metrics', async () => {
+      faker.seed(42);
+      expect(contributorsRepository.contributors.length).toBe(0);
+      await contributorsRepository.save(
+        ContributorFactory.generateManyUserInfo(3),
+      );
+      expect(contributorsRepository.contributors.length).toBe(3);
+      expect(metricsRepository.contributorsMetrics.length).toBe(0);
+
+      await synchronization.synchronizeUsersMetrics();
+      expect(metricsRepository.contributorsMetrics.length).toBe(3);
     });
   });
 });

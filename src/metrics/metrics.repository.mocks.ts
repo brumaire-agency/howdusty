@@ -1,7 +1,3 @@
-import { FindOneOptions, FindOptionsWhere } from 'typeorm';
-import { Metrics } from './metrics.entity';
-import { ContributorDto } from '@/contributors';
-
 export class MetricsRepositoryMock {
   contributorsMetrics: any[] = [];
 
