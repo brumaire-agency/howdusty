@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: howdusty
+  namespace: brumaire-howdusty-staging
+spec:
+  schedule: '* * * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: hello
+              image: registry.h8l.io/brumaire/howdusty:staging
+              imagePullPolicy: Always
+              envFrom:
+                - configMapRef:
+                    name: howdusty-configmap
+                - secretRef:
+                    name: howdusty-secret
+              command:
+                - /bin/sh
+                - -c
+                - node dist/main-cli.js contributors:sync robinstraub zoemeriet
+          restartPolicy: OnFailure
+          imagePullSecrets:
+            - name: harbor-registry

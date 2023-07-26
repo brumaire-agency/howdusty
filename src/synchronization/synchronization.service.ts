@@ -30,7 +30,10 @@ export class SynchronizationService {
 
     const contributors: Contributor[] = [];
 
-    for (const username of Object.keys(usersMetrics)) {
+    for (const [index, username] of usernames.entries()) {
+      console.log(
+        `[${index}/${usernames.length}] syncing info for user ${username}`,
+      );
       const userInfo = await this.github.getContributorInfo(username);
       const user = { ...userInfo, ...usersMetrics[username] };
       const savedUser = await this.contributors.save(user);
