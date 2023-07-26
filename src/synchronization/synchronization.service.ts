@@ -46,7 +46,7 @@ export class SynchronizationService {
   }
 
   async scoreUsers(): Promise<void> {
-    const contributors = await this.metrics.findAll();
+    const contributors = await this.contributors.findAll();
     const scoredContributors = this.scorer.score(contributors);
     await this.contributors.save(
       scoredContributors.map((contributor) => ({

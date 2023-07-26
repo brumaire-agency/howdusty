@@ -43,7 +43,7 @@ describe('SynchronizationService', () => {
     });
     it('should update a contributor if it does exist', async () => {
       faker.seed(42);
-      const contributor = ContributorFactory.generateUserInfo({
+      const contributor = ContributorFactory.generateContributorInfo({
         username: 'username',
       });
       contributorsRepository.contributors.push(contributor);

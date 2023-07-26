@@ -7,56 +7,42 @@ import { ContributorFactory } from './contributor.factory';
 import { ContributorsController } from './contributors.controller';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 import { ContributorsService } from './contributors.service';
-import { Metrics, MetricsService, MetricsTestingModule } from '@/metrics';
-import { MetricsRepositoryMock } from '@/metrics/metrics.repository.mocks';
+import { ContributorDto } from './contributor.dto';
 
 describe('ContributorsController', () => {
   let controller: ContributorsController;
-  let metricsRepository: MetricsRepositoryMock;
-  let metricsService: MetricsService;
+  let repository: ContributorsRepositoryMock;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
-  const METRICS_REPOSITORY_TOKEN = getRepositoryToken(Metrics);
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [MetricsTestingModule],
       providers: [
         ContributorsService,
         {
           provide: CONTRIBUTOR_REPOSITORY_TOKEN,
           useClass: ContributorsRepositoryMock,
         },
-        {
-          provide: METRICS_REPOSITORY_TOKEN,
-          useClass: MetricsRepositoryMock,
-        },
       ],
       controllers: [ContributorsController],
     }).compile();
 
     controller = module.get(ContributorsController);
-    metricsRepository = module.get(METRICS_REPOSITORY_TOKEN);
-    metricsService = module.get(MetricsService);
+    repository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
   });
 
   describe('findAll', () => {
     it('should return an array of contributors', async () => {
       faker.seed(42);
-      const contributorInfo = ContributorFactory.generateManyUserInfo(2);
-      const contributors = ContributorFactory.generateManyContributorMetrics(
-        contributorInfo.length,
-        contributorInfo,
-      );
-      await metricsService.save(contributors);
+      await repository.save(ContributorFactory.generateMany(3));
       const response = await controller.findAll();
-      expect(response.length).toEqual(2);
+      expect(response.length).toEqual(3);
       expect(response).toEqual(
-        metricsRepository.contributorsMetrics.map((item: Metrics) => {
-          const { contributor, ...rest } = item;
+        repository.contributors.map((contributor: Contributor) => {
+          const { metric, ...rest } = contributor;
           return {
-            ...contributor,
             ...rest,
+            ...metric,
           };
         }),
       );
@@ -67,31 +53,33 @@ describe('ContributorsController', () => {
     it('should return a contributor', async () => {
       const expectedContributor = {
         id: 'MDQ6VX',
-        activeContributionWeeks: 5,
-        contributedRepositoryCount: 10,
-        issuePullRequestRatio: 0.8,
-        maintainedRepositoryCount: 3,
-        totalContributions: 50,
-        collectedGrant: 1000,
-        meanGrantPerProject: 500,
-        contributedProjectCount: 5,
-        missionCount: 20,
-        contributor: {
-          id: 'MDQ6VX',
-          username: 'john',
-          name: 'john doe',
-          avatarUrl: 'https://avatars.gi',
-          score: 123,
-          rank: 12,
+        username: 'john',
+        name: 'john doe',
+        avatarUrl: 'https://avatars.gi',
+        metric: {
+          totalContributions: faker.number.int(1000),
+          contributedRepositoryCount: faker.number.int(10),
+          maintainedRepositoryCount: faker.number.int(10),
+          issuePullRequestRatio: faker.number.float({
+            min: 0.01,
+            max: 0.99,
+            precision: 0.01,
+          }),
+          activeContributionWeeks: faker.number.int(10),
+          collectedGrant: faker.number.int(5000),
+          meanGrantPerProject: faker.number.int(500),
+          contributedProjectCount: faker.number.int(10),
+          missionCount: faker.number.int(20),
         },
       };
-      await metricsService.save([expectedContributor]);
-      const response = await controller.findOneByUsername('john');
-      const { contributor, ...rest } = expectedContributor;
-      expect(response).toEqual({
+      await repository.save([expectedContributor]);
+      const contributor = await controller.findOneByUsername('john');
+      const { metric, ...rest } = expectedContributor;
+      const newExpectedContributor = {
         ...rest,
-        ...contributor,
-      });
+        ...metric,
+      };
+      expect(newExpectedContributor).toEqual(contributor);
     });
 
     it('should return 404 error for non-existing contributor', async () => {

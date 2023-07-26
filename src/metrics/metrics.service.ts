@@ -69,36 +69,8 @@ export class MetricsService {
     return await this.metricsRepository.save(metric);
   }
 
-  async findAll(): Promise<ContributorDto[]> {
-    const results = await this.metricsRepository
-      .createQueryBuilder('metrics')
-      .leftJoinAndSelect('metrics.contributor', 'contributor')
-      .getMany();
-    return results.map((item: Metrics) => {
-      const { contributor, ...rest } = item;
-      return {
-        ...contributor,
-        ...rest,
-      };
-    });
-  }
-
-  async findOneByUsername(username: string): Promise<ContributorDto> {
-    const result = await this.metricsRepository
-      .createQueryBuilder('metrics')
-      .leftJoinAndSelect('metrics.contributor', 'contributor')
-      .where('contributor.username = :username', { username })
-      .getOne();
-
-    if (!result) {
-      return null;
-    }
-
-    const { contributor, ...rest } = result;
-
-    return {
-      ...contributor,
-      ...rest,
-    };
+  async findAll() {
+    const results = await this.metricsRepository.find();
+    return results;
   }
 }

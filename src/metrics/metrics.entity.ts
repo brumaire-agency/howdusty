@@ -1,5 +1,12 @@
-import { Column, Entity, OneToOne, PrimaryColumn, JoinColumn } from 'typeorm';
-import { Contributor } from '@/contributors';
+import {
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryColumn,
+  JoinColumn,
+  Relation,
+} from 'typeorm';
+import { Contributor } from '../contributors/contributor.entity';
 import { Metricable } from './metricable';
 
 @Entity('metrics')
@@ -39,7 +46,7 @@ export class Metrics implements Metricable {
   @Column({ name: 'mission_count' })
   missionCount: number;
 
-  @OneToOne(() => Contributor)
+  @OneToOne(() => Contributor, (contributor) => contributor.metric)
   @JoinColumn()
-  contributor: Contributor;
+  contributor: Relation<Contributor>;
 }

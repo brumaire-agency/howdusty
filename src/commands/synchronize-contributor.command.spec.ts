@@ -30,7 +30,7 @@ describe('SynchronizeContributorCommand', () => {
 
   it('should synchronize a user', async () => {
     await contributorsRepository.save(
-      ContributorFactory.generateUserInfo({ username: 'username' }),
+      ContributorFactory.generateContributorInfo({ username: 'username' }),
     );
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run(['username']);

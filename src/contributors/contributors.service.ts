@@ -11,17 +11,37 @@ export class ContributorsService {
     private contributorsRepository: Repository<Contributor>,
   ) {}
 
-  findAll(): Promise<Contributor[]> {
-    return this.contributorsRepository.find();
+  async findAll() {
+    const results = await this.contributorsRepository.find({
+      relations: { metric: true },
+    });
+    return results.map((contributor: Contributor) =>
+      this.contributorOldModel(contributor),
+    );
   }
 
-  findOneByUsername(username: string): Promise<Contributor> {
-    return this.contributorsRepository.findOne({
+  async findOneByUsername(username: string) {
+    const contributor = await this.contributorsRepository.findOne({
       where: { username: username },
+      relations: { metric: true },
     });
+
+    if (!contributor) {
+      return null;
+    }
+
+    return this.contributorOldModel(contributor);
   }
 
   async save(contributorDto) {
     return await this.contributorsRepository.save(contributorDto);
+  }
+
+  private contributorOldModel(contributor: Contributor) {
+    const { metric, ...rest } = contributor;
+    return {
+      ...rest,
+      ...metric,
+    };
   }
 }

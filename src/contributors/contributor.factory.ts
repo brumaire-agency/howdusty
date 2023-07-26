@@ -6,11 +6,11 @@ export class ContributorFactory {
   /**
    * Generates a contributor from a preset.
    */
-  public static generate(preset: Partial<ContributorDto> = {}): ContributorDto {
+  public static generate(preset: Partial<ContributorDto> = {}) {
     return Object.assign(
       {
-        ...this.generateUserInfo(),
-        ...this.generateMetrics(),
+        ...this.generateContributorInfo(),
+        metric: this.generateMetrics(),
       },
       preset,
     );
@@ -22,13 +22,13 @@ export class ContributorFactory {
   public static generateMany(
     count: number,
     preset: Partial<ContributorDto> = {},
-  ): ContributorDto[] {
+  ) {
     return Array.from(new Array(count)).map(() =>
       ContributorFactory.generate(preset),
     );
   }
 
-  public static generateUserInfo(preset: Partial<ContributorDto> = {}) {
+  public static generateContributorInfo(preset: Partial<ContributorDto> = {}) {
     return Object.assign(
       {
         id: faker.string.uuid(),
@@ -62,14 +62,12 @@ export class ContributorFactory {
   }
 
   public static genrerateContributorMetrics(
-    contributor: Contributor,
     preset: Partial<ContributorDto> = {},
   ) {
     return Object.assign(
       {
         id: faker.string.uuid(),
         ...this.generateMetrics(),
-        contributor,
       },
       preset,
     );
@@ -80,20 +78,16 @@ export class ContributorFactory {
     preset: Partial<ContributorDto> = {},
   ): any[] {
     return Array.from(new Array(count)).map(() =>
-      ContributorFactory.generateUserInfo(preset),
+      ContributorFactory.generateContributorInfo(preset),
     );
   }
 
   public static generateManyContributorMetrics(
     count: number,
-    contributors: Contributor[],
     preset: Partial<ContributorDto> = {},
   ): any[] {
-    return Array.from(new Array(count)).map((_, index) =>
-      ContributorFactory.genrerateContributorMetrics(
-        contributors[index],
-        preset,
-      ),
+    return Array.from(new Array(count)).map(() =>
+      ContributorFactory.genrerateContributorMetrics(preset),
     );
   }
 }

@@ -1,21 +1,19 @@
 import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
-import { MetricsService } from '@/metrics';
-import { ContributorDto } from './contributor.dto';
+import { ContributorsService } from './contributors.service';
+import { Contributor } from './contributor.entity';
 
 @Controller('contributors')
 export class ContributorsController {
-  constructor(private readonly metricsService: MetricsService) {}
+  constructor(private readonly service: ContributorsService) {}
 
   @Get()
-  async findAll(): Promise<ContributorDto[]> {
-    return await this.metricsService.findAll();
+  async findAll() {
+    return this.service.findAll();
   }
 
   @Get(':username')
-  async findOneByUsername(
-    @Param('username') username: string,
-  ): Promise<ContributorDto> {
-    const contributor = await this.metricsService.findOneByUsername(username);
+  async findOneByUsername(@Param('username') username: string) {
+    const contributor = await this.service.findOneByUsername(username);
     if (!contributor) {
       throw new NotFoundException('Contributor not found');
     }

@@ -1,29 +1,8 @@
 export class MetricsRepositoryMock {
   contributorsMetrics: any[] = [];
 
-  createQueryBuilder(alias: string): any {
-    // Simulate the behavior of TypeORM's createQueryBuilder
-    const queryBuilder = {
-      username: '',
-      alias,
-      leftJoinAndSelect: () => queryBuilder,
-      getMany: () => {
-        return this.contributorsMetrics;
-      },
-      where: (conditions: any, userName: { username: string }): any => {
-        const username = userName.username;
-        queryBuilder.username = username;
-        return queryBuilder;
-      },
-      getOne: () => {
-        const result = this.contributorsMetrics.find(
-          (item) => item.contributor.username === queryBuilder.username,
-        );
-        return result;
-      },
-    };
-
-    return queryBuilder;
+  find() {
+    return Promise.resolve(this.contributorsMetrics);
   }
 
   save<T>(contributor: T): Promise<T> {

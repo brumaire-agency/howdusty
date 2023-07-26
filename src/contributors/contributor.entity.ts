@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Metricable } from '@/metrics';
+import { Column, Entity, OneToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Metrics } from '../metrics/metrics.entity';
 
 @Entity('contributors')
 export class Contributor {
@@ -26,4 +26,7 @@ export class Contributor {
 
   @Column({ nullable: true })
   rank?: number;
+
+  @OneToOne(() => Metrics, (metric) => metric.contributor)
+  metric: Relation<Metrics>;
 }

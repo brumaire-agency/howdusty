@@ -5,6 +5,7 @@ import { ContributorsService } from './contributors.service';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 import { faker } from '@faker-js/faker';
 import { ContributorFactory } from '@/contributors/contributor.factory';
+import { ContributorDto } from './contributor.dto';
 
 describe('ContributorsService', () => {
   let contributorsService: ContributorsService;
@@ -29,30 +30,57 @@ describe('ContributorsService', () => {
 
   describe('findAll', () => {
     it('should return an array of contributors', async () => {
-      expect(await contributorsService.findAll()).toBe(
-        contributorsRepository.contributors,
+      await contributorsRepository.save(ContributorFactory.generateMany(10));
+      expect(await contributorsService.findAll()).toEqual(
+        contributorsRepository.contributors.map((contributor: Contributor) => {
+          const { metric, ...rest } = contributor;
+          return {
+            ...rest,
+            ...metric,
+          };
+        }),
       );
     });
   });
 
   describe('findOne', () => {
     it('should return a contributor', async () => {
-      const expectedContributor: Contributor = {
+      const expectedContributor = {
         id: 'MDQ6VX',
         username: 'john',
         name: 'john doe',
         avatarUrl: 'https://avatars.gi',
         score: 123,
         rank: 12,
+        metric: {
+          totalContributions: faker.number.int(1000),
+          contributedRepositoryCount: faker.number.int(10),
+          maintainedRepositoryCount: faker.number.int(10),
+          issuePullRequestRatio: faker.number.float({
+            min: 0.01,
+            max: 0.99,
+            precision: 0.01,
+          }),
+          activeContributionWeeks: faker.number.int(10),
+          collectedGrant: faker.number.int(5000),
+          meanGrantPerProject: faker.number.int(500),
+          contributedProjectCount: faker.number.int(10),
+          missionCount: faker.number.int(20),
+        },
       };
       await contributorsRepository.save([expectedContributor]);
-      const response = await contributorsService.findOneByUsername('john');
-      expect(expectedContributor).toEqual(response);
+      const contributor = await contributorsService.findOneByUsername('john');
+      const { metric, ...rest } = expectedContributor;
+      const newExpectedContributor = {
+        ...rest,
+        ...metric,
+      };
+      expect(newExpectedContributor).toEqual(contributor);
     });
 
     it('should return undefined for non-existing contributor', async () => {
       const response = await contributorsService.findOneByUsername('bob');
-      expect(response).toBeUndefined();
+      expect(response).toBeNull();
     });
   });
 
@@ -68,8 +96,10 @@ describe('ContributorsService', () => {
     });
     it('should update a contributor if it does exist', async () => {
       faker.seed(42);
-      const contributor = ContributorFactory.generateUserInfo({ id: '1' });
-      const updatedContributor = ContributorFactory.generateUserInfo({
+      const contributor = ContributorFactory.generateContributorInfo({
+        id: '1',
+      });
+      const updatedContributor = ContributorFactory.generateContributorInfo({
         id: '1',
       });
       contributorsRepository.contributors.push(contributor);

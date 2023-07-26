@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NormalizationService } from '@/scorer/normalization.service';
-import { ContributorDto } from '@/contributors';
+import { Contributor } from '@/contributors';
 import { orderBy } from 'lodash';
 import { Metricable, MetricName } from '@/metrics';
 
@@ -26,7 +26,7 @@ export class ScorerService {
   /**
    * Score a set of contributors.
    */
-  score(contributors: ContributorDto[]): ContributorDto[] {
+  score(contributors: any[]): any[] {
     const metrics = Object.keys(this.weights);
     const normalized = this.normalizer.normalize(
       contributors,
