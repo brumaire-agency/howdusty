@@ -3,7 +3,7 @@ import { Contributor } from './contributor.entity';
 import { ContributorDto } from './contributor.dto';
 
 export class ContributorsRepositoryMock {
-  contributors: ContributorDto[] = [];
+  contributors: any[] = [];
 
   find() {
     return Promise.resolve(this.contributors);
