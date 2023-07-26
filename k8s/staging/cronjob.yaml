@@ -4,7 +4,7 @@ metadata:
   name: howdusty
   namespace: brumaire-howdusty-staging
 spec:
-  schedule: '* * * * *'
+  schedule: '0 4 * * *'
   jobTemplate:
     spec:
       template:
