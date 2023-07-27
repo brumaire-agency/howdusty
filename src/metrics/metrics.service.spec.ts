@@ -2,38 +2,91 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MetricsService } from './metrics.service';
 import { GithubTestingModule } from '@/github';
 import { OnlydustTestingModule } from '@/onlydust';
+import { MetricsRepositoryMock } from './metrics.repository.mocks';
+import { Metrics } from './metrics.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { faker } from '@faker-js/faker';
+import { ContributorFactory } from '@/contributors/contributor.factory';
+import { MetricsFactory } from '@/metrics/metrics.factory';
 
 describe('MetricsService', () => {
-  let metrics: MetricsService;
+  let metricsService: MetricsService;
+  let metricsRepository: MetricsRepositoryMock;
 
+  const METRICS_REPOSITORY_TOKEN = getRepositoryToken(Metrics);
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [GithubTestingModule, OnlydustTestingModule],
-      providers: [MetricsService],
+      providers: [
+        MetricsService,
+        {
+          provide: METRICS_REPOSITORY_TOKEN,
+          useClass: MetricsRepositoryMock,
+        },
+      ],
     }).compile();
 
-    metrics = module.get(MetricsService);
+    metricsService = module.get(MetricsService);
+    metricsRepository = module.get(METRICS_REPOSITORY_TOKEN);
   });
 
   describe('getMetricsForUsers', () => {
     it('should return metrics for users', async () => {
-      expect(await metrics.getMetricsForUsers(['username'])).toStrictEqual({
+      expect(
+        await metricsService.getMetricsForUsers(['username']),
+      ).toStrictEqual({
         username: {
-          id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
-          username: 'username',
-          name: 'Nancy Leffler',
-          avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
-          totalContributions: 139,
-          contributedRepositoryCount: 0,
-          maintainedRepositoryCount: 3,
-          issuePullRequestRatio: 0.97,
-          activeContributionWeeks: 4,
+          totalContributions: 618,
+          contributedRepositoryCount: 3,
+          maintainedRepositoryCount: 6,
+          issuePullRequestRatio: 0.52,
+          activeContributionWeeks: 0,
           collectedGrant: 100,
           meanGrantPerProject: 10,
           contributedProjectCount: 5,
           missionCount: 20,
         },
       });
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return an array of metrics', async () => {
+      const contributors = ContributorFactory.generateMany(2);
+      for (const contributor of contributors) {
+        const metrics = MetricsFactory.generate({ contributor });
+        await metricsService.save(metrics);
+      }
+
+      expect(await metricsService.findAll()).toEqual(
+        metricsRepository.contributorsMetrics,
+      );
+    });
+  });
+
+  describe('save', () => {
+    it("should add a new metrics if it doesn't exist", async () => {
+      faker.seed(42);
+      const contributor = ContributorFactory.generate();
+      const metrics = MetricsFactory.generate({ contributor });
+      expect(metricsRepository.contributorsMetrics.length).toBe(0);
+      await metricsService.save(metrics);
+      expect(metricsRepository.contributorsMetrics.length).toBe(1);
+      expect(metricsRepository.contributorsMetrics[0]).toStrictEqual(metrics);
+    });
+
+    it('should update a metrics if it does exist', async () => {
+      faker.seed(42);
+      const metrics = MetricsFactory.generate({ id: '1' });
+      const updatedMetrics = MetricsFactory.generate({ id: '1' });
+      metricsRepository.contributorsMetrics.push(metrics);
+
+      expect(metricsRepository.contributorsMetrics.length).toBe(1);
+      await metricsService.save(updatedMetrics);
+      expect(metricsRepository.contributorsMetrics.length).toBe(1);
+      expect(metricsRepository.contributorsMetrics[0]).toStrictEqual(
+        updatedMetrics,
+      );
     });
   });
 });

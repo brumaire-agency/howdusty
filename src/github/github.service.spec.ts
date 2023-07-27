@@ -4,6 +4,7 @@ import configuration from '@/config/configuration';
 import { GithubApiMock } from './github.api.mock';
 import { GithubApi } from './github.api';
 import { GithubService } from './github.service';
+import { MetricName } from '@/metrics';
 
 describe('GithubService', () => {
   let github: GithubService;
@@ -27,32 +28,26 @@ describe('GithubService', () => {
   describe('getContributorInfo', () => {
     it('should return a User', async () => {
       expect(await github.getContributorInfo('username')).toStrictEqual({
-        id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
+        id: '7d02e642-ac46-4838-8920-fdc7f6ee9be5',
         username: 'username',
-        name: 'Nancy Leffler',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
-        totalContributions: 139,
-        contributedRepositoryCount: 0,
-        maintainedRepositoryCount: 3,
-        issuePullRequestRatio: 0.97,
-        activeContributionWeeks: 4,
+        name: 'Rosemarie Rogahn',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/53969213',
       });
     });
   });
 
   describe('getMetricsForUser', () => {
     it('should return a User with metrics', async () => {
-      expect(await github.getContributorInfo('username')).toStrictEqual({
-        id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
-        username: 'username',
-        name: 'Nancy Leffler',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
-        totalContributions: 139,
-        contributedRepositoryCount: 0,
-        maintainedRepositoryCount: 3,
-        issuePullRequestRatio: 0.97,
-        activeContributionWeeks: 4,
-      });
+      const metrics = Object.values(MetricName) as MetricName[];
+      expect(await github.getMetricsForUser('username', metrics)).toStrictEqual(
+        {
+          totalContributions: 618,
+          contributedRepositoryCount: 3,
+          maintainedRepositoryCount: 6,
+          issuePullRequestRatio: 0.52,
+          activeContributionWeeks: 0,
+        },
+      );
     });
   });
 });

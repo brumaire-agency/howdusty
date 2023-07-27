@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Metricable } from '@/metrics';
+import { Column, Entity, OneToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Metrics } from '../metrics/metrics.entity';
 
 @Entity('contributors')
-export class Contributor implements Metricable {
+export class Contributor {
   @PrimaryColumn()
   id: string;
 
@@ -15,38 +15,6 @@ export class Contributor implements Metricable {
   @Column({ name: 'avatar_url' })
   avatarUrl: string;
 
-  @Column({ name: 'total_contributions' })
-  totalContributions: number;
-
-  @Column({ name: 'contributed_repository_count' })
-  contributedRepositoryCount: number;
-
-  @Column({ name: 'maintained_repository_count' })
-  maintainedRepositoryCount: number;
-
-  @Column({
-    name: 'issue_pull_request_ratio',
-    type: 'decimal',
-    precision: 6,
-    scale: 2,
-  })
-  issuePullRequestRatio: number;
-
-  @Column({ name: 'active_contribution_weeks' })
-  activeContributionWeeks: number;
-
-  @Column({ name: 'collected_grant' })
-  collectedGrant: number;
-
-  @Column({ name: 'mean_grant_per_project' })
-  meanGrantPerProject: number;
-
-  @Column({ name: 'contributed_project_count' })
-  contributedProjectCount: number;
-
-  @Column({ name: 'mission_count' })
-  missionCount: number;
-
   @Column({
     name: 'score',
     type: 'decimal',
@@ -58,4 +26,7 @@ export class Contributor implements Metricable {
 
   @Column({ nullable: true })
   rank?: number;
+
+  @OneToOne(() => Metrics, (metric) => metric.contributor)
+  metrics?: Relation<Metrics>;
 }

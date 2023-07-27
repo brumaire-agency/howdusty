@@ -1,7 +1,7 @@
 import { NormalizationService } from '@/scorer/normalization.service';
 import { Test } from '@nestjs/testing';
 import { StandardScaler } from '@/scorer/standard-scaler.service';
-import { ContributorFactory } from '@/contributors';
+import { Contributor, ContributorFactory } from '@/contributors';
 import { MetricName } from '@/metrics';
 
 describe('NormalizationService', () => {
@@ -26,7 +26,13 @@ describe('NormalizationService', () => {
       const contributors = ContributorFactory.generateMany(10);
 
       const normalizedContributors = service.normalize(
-        contributors,
+        contributors.map((contributor: Contributor) => {
+          const { metrics, ...rest } = contributor;
+          return {
+            ...metrics,
+            ...rest,
+          };
+        }),
         Object.values(MetricName) as MetricName[],
       );
 

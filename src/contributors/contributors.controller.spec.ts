@@ -36,32 +36,44 @@ describe('ContributorsController', () => {
       await repository.save(ContributorFactory.generateMany(3));
       const response = await controller.findAll();
       expect(response.length).toEqual(3);
-      expect(response).toEqual(repository.contributors);
+      expect(response).toEqual(
+        repository.contributors.map((contributor: Contributor) => {
+          const { metrics, ...rest } = contributor;
+          return {
+            ...rest,
+            ...metrics,
+          };
+        }),
+      );
     });
   });
 
   describe('findOne', () => {
     it('should return a contributor', async () => {
-      const expectedContributor: Contributor = {
+      const expectedContributor = {
         id: 'MDQ6VX',
         username: 'john',
         name: 'john doe',
         avatarUrl: 'https://avatars.gi',
-        activeContributionWeeks: 5,
-        contributedRepositoryCount: 10,
-        issuePullRequestRatio: 0.8,
-        maintainedRepositoryCount: 3,
-        totalContributions: 50,
-        collectedGrant: 1000,
-        meanGrantPerProject: 500,
-        contributedProjectCount: 5,
-        missionCount: 20,
-        score: 123,
-        rank: 12,
+        metric: {
+          totalContributions: faker.number.int(1000),
+          contributedRepositoryCount: faker.number.int(10),
+          maintainedRepositoryCount: faker.number.int(10),
+          issuePullRequestRatio: faker.number.float({
+            min: 0.01,
+            max: 0.99,
+            precision: 0.01,
+          }),
+          activeContributionWeeks: faker.number.int(10),
+          collectedGrant: faker.number.int(5000),
+          meanGrantPerProject: faker.number.int(500),
+          contributedProjectCount: faker.number.int(10),
+          missionCount: faker.number.int(20),
+        },
       };
       await repository.save([expectedContributor]);
-      const response = await controller.findOneByUsername('john');
-      expect(expectedContributor).toEqual(response);
+      const contributor = await controller.findOneByUsername('john');
+      expect(expectedContributor).toEqual(contributor);
     });
 
     it('should return 404 error for non-existing contributor', async () => {

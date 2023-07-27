@@ -2,10 +2,15 @@ import { GithubService, User } from '@/github';
 import { Injectable } from '@nestjs/common';
 import { MetricName } from './metric-name';
 import { OnlydustService } from '@/onlydust';
+import { Metrics } from './metrics.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MetricsService {
   constructor(
+    @InjectRepository(Metrics)
+    private metricsRepository: Repository<Metrics>,
     private github: GithubService,
     private onlydust: OnlydustService,
   ) {}
@@ -22,7 +27,9 @@ export class MetricsService {
     const githubMetrics: Record<string, User> = {};
     for (const [index, username] of usernames.entries()) {
       console.log(
-        `[${index}/${usernames.length}] syncing github metrics for user ${username}`,
+        `[${index + 1}/${
+          usernames.length
+        }] syncing github metrics for user ${username}`,
       );
       const metricsForUser = await this.github.getMetricsForUser(
         username,
@@ -55,5 +62,14 @@ export class MetricsService {
     console.log(`all metrics fetched`);
 
     return allMetrics;
+  }
+
+  async save(metric) {
+    return await this.metricsRepository.save(metric);
+  }
+
+  async findAll(): Promise<Metrics[]> {
+    const results = await this.metricsRepository.find();
+    return results;
   }
 }

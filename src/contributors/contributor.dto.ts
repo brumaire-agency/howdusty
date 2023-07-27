@@ -3,13 +3,4 @@ export class ContributorDto {
   username: string;
   name?: string;
   avatarUrl: string;
-  totalContributions: number;
-  contributedRepositoryCount: number;
-  maintainedRepositoryCount: number;
-  issuePullRequestRatio: number;
-  activeContributionWeeks: number;
-  collectedGrant: number;
-  meanGrantPerProject: number;
-  contributedProjectCount: number;
-  missionCount: number;
 }

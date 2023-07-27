@@ -13,7 +13,7 @@ export class SynchronizeContributorCommand extends CommandRunner {
   }
 
   async run(usernames?: string[]) {
-    const users = await this.synchronization.synchronizeUsers(usernames);
+    const users = await this.synchronization.synchronizeUsersMetrics(usernames);
     console.log(`${users.length} users have been synchronized`);
   }
 }

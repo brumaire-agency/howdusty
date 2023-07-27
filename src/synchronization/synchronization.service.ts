@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Contributor, ContributorsService } from '@/contributors';
 import { ScorerService } from '@/scorer';
-import { MetricsService } from '@/metrics';
+import { MetricsService, Metrics } from '@/metrics';
 import { GithubService } from '@/github';
 
 @Injectable()
@@ -14,33 +14,35 @@ export class SynchronizationService {
   ) {}
 
   async synchronizeUser(username: string): Promise<Contributor> {
-    const usersMetrics = await this.metrics.getMetricsForUsers([username]);
     const userInfo = await this.github.getContributorInfo(username);
-    const user = { ...userInfo, ...usersMetrics[username] };
+    const user = { ...userInfo };
     return await this.contributors.save(user);
   }
 
-  async synchronizeUsers(usernames: string[] = []): Promise<Contributor[]> {
+  async synchronizeUsersMetrics(usernames: string[] = []): Promise<Metrics[]> {
     if (usernames.length === 0) {
       usernames = (await this.contributors.findAll()).map(
         (user) => user.username,
       );
     }
+
+    const metrics: Metrics[] = [];
     const usersMetrics = await this.metrics.getMetricsForUsers(usernames);
-
-    const contributors: Contributor[] = [];
-
     for (const [index, username] of usernames.entries()) {
       console.log(
-        `[${index}/${usernames.length}] syncing info for user ${username}`,
+        `[${index + 1}/${usernames.length}] syncing info for user ${username}`,
       );
-      const userInfo = await this.github.getContributorInfo(username);
-      const user = { ...userInfo, ...usersMetrics[username] };
-      const savedUser = await this.contributors.save(user);
-      contributors.push(savedUser);
+      const userInfo = await this.contributors.findOneByUsername(username);
+      const user = {
+        id: userInfo.id,
+        ...usersMetrics[username],
+        contributor: userInfo,
+      };
+      const savedUser = await this.metrics.save(user);
+      metrics.push(savedUser);
     }
 
-    return contributors;
+    return metrics;
   }
 
   async scoreUsers(): Promise<void> {

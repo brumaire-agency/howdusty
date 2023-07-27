@@ -6,13 +6,17 @@ import {
 } from '@/contributors';
 import { TestingModule } from '@nestjs/testing';
 import { CommandTestFactory } from 'nest-commander-testing';
-import { SynchronizationTestingModule } from '@/synchronization';
+import {
+  SynchronizationService,
+  SynchronizationTestingModule,
+} from '@/synchronization';
 import { faker } from '@faker-js/faker';
 import { ScoreContributorsCommand } from './score-contributors.command';
 
 describe('ScoreContributorsCommand', () => {
   let command: ScoreContributorsCommand;
   let repository: ContributorsRepositoryMock;
+  let synchronization: SynchronizationService;
 
   const CONTRIBUTOR_REPOSITORY_TOKEN = getRepositoryToken(Contributor);
 
@@ -26,12 +30,13 @@ describe('ScoreContributorsCommand', () => {
 
     command = module.get(ScoreContributorsCommand);
     repository = module.get(CONTRIBUTOR_REPOSITORY_TOKEN);
+    synchronization = module.get(SynchronizationService);
   });
 
   it('should score every contributors', async () => {
     faker.seed(42);
-    await repository.save(ContributorFactory.generateMany(5));
-
+    await repository.save(ContributorFactory.generateManyContributorInfo(5));
+    await synchronization.synchronizeUsersMetrics();
     await command.run();
 
     expect(repository.contributors.length).toEqual(5);
