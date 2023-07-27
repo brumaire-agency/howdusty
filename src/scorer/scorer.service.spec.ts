@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { ContributorFactory } from '@/contributors';
+import { Contributor, ContributorFactory } from '@/contributors';
 import { ScorerService } from './scorer.service';
 import { StandardScaler } from './standard-scaler.service';
 import { NormalizationService } from './normalization.service';
@@ -28,7 +28,15 @@ describe('Scorer', () => {
       faker.seed(42);
       const contributors = ContributorFactory.generateMany(10);
 
-      const scored = service.score(contributors);
+      const scored = service.score(
+        contributors.map((contributor: Contributor) => {
+          const { metric, ...rest } = contributor;
+          return {
+            ...metric,
+            ...rest,
+          };
+        }),
+      );
 
       // ensures there is the correct count of normalized contributors
       expect(contributors.length).toEqual(scored.length);
@@ -43,7 +51,15 @@ describe('Scorer', () => {
       faker.seed(42);
       const contributors = ContributorFactory.generateMany(10);
 
-      const scored = service.score(contributors);
+      const scored = service.score(
+        contributors.map((contributor: Contributor) => {
+          const { metric, ...rest } = contributor;
+          return {
+            ...metric,
+            ...rest,
+          };
+        }),
+      );
       const ranks = sortBy(scored.map((contributor) => contributor.rank));
 
       // theoreticalRanks = [1, 2, 3, ..., 9, 10]

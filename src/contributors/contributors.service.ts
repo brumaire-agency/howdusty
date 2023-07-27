@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContributorDto } from './contributor.dto';
 import { Contributor } from './contributor.entity';
+import { ContributorOldModel } from './types';
 
 @Injectable()
 export class ContributorsService {
@@ -11,7 +12,7 @@ export class ContributorsService {
     private contributorsRepository: Repository<Contributor>,
   ) {}
 
-  async findAll() {
+  async findAll(): Promise<ContributorOldModel[]> {
     const results = await this.contributorsRepository.find({
       relations: { metric: true },
     });
@@ -20,7 +21,7 @@ export class ContributorsService {
     );
   }
 
-  async findOneByUsername(username: string) {
+  async findOneByUsername(username: string): Promise<ContributorOldModel> {
     const contributor = await this.contributorsRepository.findOne({
       where: { username: username },
       relations: { metric: true },

@@ -41,7 +41,7 @@ describe('SynchronizeContributorCommand', () => {
   it('should synchronize all users from database', async () => {
     faker.seed(42);
     await contributorsRepository.save(
-      ContributorFactory.generateManyUserInfo(3),
+      ContributorFactory.generateManyContributorInfo(3),
     );
     const logSpy = jest.spyOn(global.console, 'log');
     await command.run();

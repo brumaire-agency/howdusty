@@ -51,7 +51,7 @@ describe('MetricsService', () => {
 
   describe('findAll', () => {
     it('should return an array of contributors', async () => {
-      const contributorInfo = ContributorFactory.generateManyUserInfo(2);
+      const contributorInfo = ContributorFactory.generateManyContributorInfo(2);
       const contributors = ContributorFactory.generateManyContributorMetrics(
         contributorInfo.length,
       );

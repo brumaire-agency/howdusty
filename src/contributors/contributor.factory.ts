@@ -1,12 +1,15 @@
 import { ContributorDto } from './contributor.dto';
 import { Contributor } from './contributor.entity';
 import { faker } from '@faker-js/faker';
+import { ContributorInfo, ContributorMetrics, ContributorModel } from './types';
 
 export class ContributorFactory {
   /**
    * Generates a contributor from a preset.
    */
-  public static generate(preset: Partial<ContributorDto> = {}) {
+  public static generate(
+    preset: Partial<ContributorDto> = {},
+  ): ContributorModel {
     return Object.assign(
       {
         ...this.generateContributorInfo(),
@@ -22,13 +25,15 @@ export class ContributorFactory {
   public static generateMany(
     count: number,
     preset: Partial<ContributorDto> = {},
-  ) {
+  ): ContributorModel[] {
     return Array.from(new Array(count)).map(() =>
       ContributorFactory.generate(preset),
     );
   }
 
-  public static generateContributorInfo(preset: Partial<ContributorDto> = {}) {
+  public static generateContributorInfo(
+    preset: Partial<ContributorDto> = {},
+  ): ContributorInfo {
     return Object.assign(
       {
         id: faker.string.uuid(),
@@ -40,7 +45,18 @@ export class ContributorFactory {
     );
   }
 
-  public static generateMetrics(preset: Partial<ContributorDto> = {}) {
+  public static generateManyContributorInfo(
+    count: number,
+    preset: Partial<ContributorDto> = {},
+  ): ContributorInfo[] {
+    return Array.from(new Array(count)).map(() =>
+      ContributorFactory.generateContributorInfo(preset),
+    );
+  }
+
+  public static generateMetrics(
+    preset: Partial<ContributorDto> = {},
+  ): ContributorMetrics {
     return Object.assign(
       {
         totalContributions: faker.number.int(1000),
@@ -70,15 +86,6 @@ export class ContributorFactory {
         ...this.generateMetrics(),
       },
       preset,
-    );
-  }
-
-  public static generateManyUserInfo(
-    count: number,
-    preset: Partial<ContributorDto> = {},
-  ): any[] {
-    return Array.from(new Array(count)).map(() =>
-      ContributorFactory.generateContributorInfo(preset),
     );
   }
 

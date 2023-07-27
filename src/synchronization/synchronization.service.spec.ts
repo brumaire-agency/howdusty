@@ -64,7 +64,7 @@ describe('SynchronizationService', () => {
       faker.seed(42);
       expect(contributorsRepository.contributors.length).toBe(0);
       await contributorsRepository.save(
-        ContributorFactory.generateManyUserInfo(3),
+        ContributorFactory.generateManyContributorInfo(3),
       );
       expect(contributorsRepository.contributors.length).toBe(3);
       expect(metricsRepository.contributorsMetrics.length).toBe(0);
