@@ -1,15 +1,16 @@
 import { FindOneOptions, FindOptionsWhere } from 'typeorm';
 import { Contributor } from './contributor.entity';
 import { ContributorDto } from './contributor.dto';
+import { ContributorModel } from './types';
 
 export class ContributorsRepositoryMock {
-  contributors: any[] = [];
+  contributors: ContributorModel[] = [];
 
-  find() {
+  find(): Promise<ContributorModel[]> {
     return Promise.resolve(this.contributors);
   }
 
-  findOne(options: FindOneOptions<Contributor>) {
+  findOne(options: FindOneOptions<Contributor>): Promise<ContributorModel> {
     const contributorWhere = options.where as FindOptionsWhere<Contributor>;
     return Promise.resolve(
       this.contributors.find(

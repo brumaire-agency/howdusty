@@ -5,7 +5,6 @@ import { OnlydustService } from '@/onlydust';
 import { Metrics } from './metrics.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Contributor, ContributorDto } from '@/contributors';
 
 @Injectable()
 export class MetricsService {
@@ -69,7 +68,7 @@ export class MetricsService {
     return await this.metricsRepository.save(metric);
   }
 
-  async findAll() {
+  async findAll(): Promise<Metrics[]> {
     const results = await this.metricsRepository.find();
     return results;
   }

@@ -20,7 +20,7 @@ export interface ContributorMetrics {
 }
 
 export interface ContributorModel extends ContributorInfo {
-  metric: ContributorMetrics;
+  metric?: ContributorMetrics;
 }
 
 export type ContributorOldModel = ContributorInfo & ContributorMetrics;
