@@ -1,3 +1,27 @@
+# [1.1.0](https://github.com/brumaire-agency/howdusty/compare/v1.0.0...v1.1.0) (2023-07-27)
+
+
+### Bug Fixes
+
+* ignore github bots in onlydust import ([#87](https://github.com/brumaire-agency/howdusty/issues/87)) ([d1b99ab](https://github.com/brumaire-agency/howdusty/commit/d1b99abe8858600c75ba579d617c65334cc26291))
+* onlydust import failing command ([#77](https://github.com/brumaire-agency/howdusty/issues/77)) ([8b673b2](https://github.com/brumaire-agency/howdusty/commit/8b673b2f81562f1970512993828bb6296a1701e2))
+* the synchronization command fails to fetch user info in parallel ([#91](https://github.com/brumaire-agency/howdusty/issues/91)) ([4094806](https://github.com/brumaire-agency/howdusty/commit/4094806f376637194695789188f35b9334e62e3a))
+* update onlydust import command ([#64](https://github.com/brumaire-agency/howdusty/issues/64)) ([be0ba5d](https://github.com/brumaire-agency/howdusty/commit/be0ba5d3e81d8abf4c39bf8d6c1b5538cd68a3a7))
+
+
+### Features
+
+* add an endpoint for reading a contributor by its username ([#79](https://github.com/brumaire-agency/howdusty/issues/79)) ([75c595b](https://github.com/brumaire-agency/howdusty/commit/75c595b827b447f51ad1ea0d4dcbba896db4bdc5))
+* add collected grant metric ([#72](https://github.com/brumaire-agency/howdusty/issues/72)) ([85fd53d](https://github.com/brumaire-agency/howdusty/commit/85fd53de5903d9c59611e4349768f1bad1642f30))
+* add contributed project count metric ([#81](https://github.com/brumaire-agency/howdusty/issues/81)) ([71e5cd8](https://github.com/brumaire-agency/howdusty/commit/71e5cd81a6219240d8164dfe2a48909e197b4719))
+* add mean grant per project metric ([#80](https://github.com/brumaire-agency/howdusty/issues/80)) ([edc2676](https://github.com/brumaire-agency/howdusty/commit/edc2676d05b0846f9341aba4b68eb42d72c12c11))
+* add mission count metric ([#82](https://github.com/brumaire-agency/howdusty/issues/82)) ([8d80758](https://github.com/brumaire-agency/howdusty/commit/8d807584c44d4663c33158d529cf7c8abb9af822))
+* add onlydust api ([#57](https://github.com/brumaire-agency/howdusty/issues/57)) ([45d01d6](https://github.com/brumaire-agency/howdusty/commit/45d01d66edbea9350d142bc86d225113079fa6a5))
+* add Onlydust import command ([#60](https://github.com/brumaire-agency/howdusty/issues/60)) ([88de3ab](https://github.com/brumaire-agency/howdusty/commit/88de3ab4ff4b5daace862fbabdc88ba1d26e34e8))
+* separate the user model and its metrics in 2 tables ([#92](https://github.com/brumaire-agency/howdusty/issues/92)) ([0a20913](https://github.com/brumaire-agency/howdusty/commit/0a20913c63d4d57fe8b41e73ff21e2b739d58e05))
+* synchronize all users by default ([#58](https://github.com/brumaire-agency/howdusty/issues/58)) ([f8f86aa](https://github.com/brumaire-agency/howdusty/commit/f8f86aa289a3ef057348837bf5b7699948a285be))
+* the synchronization command fails past a given number of users ([#89](https://github.com/brumaire-agency/howdusty/issues/89)) ([2eb4fd2](https://github.com/brumaire-agency/howdusty/commit/2eb4fd2aae7c756837c000d29b1b68afd9eee48a))
+
 # 1.0.0 (2023-06-20)
 
 
