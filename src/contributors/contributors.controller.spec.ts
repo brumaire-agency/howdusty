@@ -7,7 +7,6 @@ import { ContributorFactory } from './contributor.factory';
 import { ContributorsController } from './contributors.controller';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 import { ContributorsService } from './contributors.service';
-import { ContributorDto } from './contributor.dto';
 
 describe('ContributorsController', () => {
   let controller: ContributorsController;
@@ -39,10 +38,10 @@ describe('ContributorsController', () => {
       expect(response.length).toEqual(3);
       expect(response).toEqual(
         repository.contributors.map((contributor: Contributor) => {
-          const { metric, ...rest } = contributor;
+          const { metrics, ...rest } = contributor;
           return {
             ...rest,
-            ...metric,
+            ...metrics,
           };
         }),
       );
@@ -74,12 +73,7 @@ describe('ContributorsController', () => {
       };
       await repository.save([expectedContributor]);
       const contributor = await controller.findOneByUsername('john');
-      const { metric, ...rest } = expectedContributor;
-      const newExpectedContributor = {
-        ...rest,
-        ...metric,
-      };
-      expect(newExpectedContributor).toEqual(contributor);
+      expect(expectedContributor).toEqual(contributor);
     });
 
     it('should return 404 error for non-existing contributor', async () => {

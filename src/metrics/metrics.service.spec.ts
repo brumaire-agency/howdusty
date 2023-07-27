@@ -7,6 +7,7 @@ import { Metrics } from './metrics.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
 import { ContributorFactory } from '@/contributors/contributor.factory';
+import { MetricsFactory } from '@/metrics/metrics.factory';
 
 describe('MetricsService', () => {
   let metricsService: MetricsService;
@@ -35,11 +36,11 @@ describe('MetricsService', () => {
         await metricsService.getMetricsForUsers(['username']),
       ).toStrictEqual({
         username: {
-          totalContributions: 139,
-          contributedRepositoryCount: 0,
-          maintainedRepositoryCount: 3,
-          issuePullRequestRatio: 0.97,
-          activeContributionWeeks: 4,
+          totalContributions: 618,
+          contributedRepositoryCount: 3,
+          maintainedRepositoryCount: 6,
+          issuePullRequestRatio: 0.52,
+          activeContributionWeeks: 0,
           collectedGrant: 100,
           meanGrantPerProject: 10,
           contributedProjectCount: 5,
@@ -50,12 +51,13 @@ describe('MetricsService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of contributors', async () => {
-      const contributorInfo = ContributorFactory.generateManyContributorInfo(2);
-      const contributors = ContributorFactory.generateManyContributorMetrics(
-        contributorInfo.length,
-      );
-      await metricsService.save(contributors);
+    it('should return an array of metrics', async () => {
+      const contributors = ContributorFactory.generateMany(2);
+      for (const contributor of contributors) {
+        const metrics = MetricsFactory.generate({ contributor });
+        await metricsService.save(metrics);
+      }
+
       expect(await metricsService.findAll()).toEqual(
         metricsRepository.contributorsMetrics,
       );
@@ -63,34 +65,27 @@ describe('MetricsService', () => {
   });
 
   describe('save', () => {
-    it("should add a new contributor if it doesn't exist", async () => {
+    it("should add a new metrics if it doesn't exist", async () => {
       faker.seed(42);
-      const contributorInfo = ContributorFactory.generateContributorInfo();
-      const contributor =
-        ContributorFactory.genrerateContributorMetrics(contributorInfo);
-
+      const contributor = ContributorFactory.generate();
+      const metrics = MetricsFactory.generate({ contributor });
       expect(metricsRepository.contributorsMetrics.length).toBe(0);
-      await metricsService.save(contributor);
+      await metricsService.save(metrics);
       expect(metricsRepository.contributorsMetrics.length).toBe(1);
-      expect(metricsRepository.contributorsMetrics[0]).toStrictEqual(
-        contributor,
-      );
+      expect(metricsRepository.contributorsMetrics[0]).toStrictEqual(metrics);
     });
-    it('should update a contributor if it does exist', async () => {
+
+    it('should update a metrics if it does exist', async () => {
       faker.seed(42);
-      const contributor = ContributorFactory.genrerateContributorMetrics({
-        id: '1',
-      });
-      const updatedContributor = ContributorFactory.genrerateContributorMetrics(
-        { id: '1' },
-      );
-      metricsRepository.contributorsMetrics.push(contributor);
+      const metrics = MetricsFactory.generate({ id: '1' });
+      const updatedMetrics = MetricsFactory.generate({ id: '1' });
+      metricsRepository.contributorsMetrics.push(metrics);
 
       expect(metricsRepository.contributorsMetrics.length).toBe(1);
-      await metricsService.save(updatedContributor);
+      await metricsService.save(updatedMetrics);
       expect(metricsRepository.contributorsMetrics.length).toBe(1);
       expect(metricsRepository.contributorsMetrics[0]).toStrictEqual(
-        updatedContributor,
+        updatedMetrics,
       );
     });
   });

@@ -14,7 +14,7 @@ export class ContributorsService {
 
   async findAll(): Promise<ContributorOldModel[]> {
     const results = await this.contributorsRepository.find({
-      relations: { metric: true },
+      relations: { metrics: true },
     });
     return results.map((contributor: Contributor) =>
       this.contributorOldModel(contributor),
@@ -24,7 +24,7 @@ export class ContributorsService {
   async findOneByUsername(username: string): Promise<ContributorOldModel> {
     const contributor = await this.contributorsRepository.findOne({
       where: { username: username },
-      relations: { metric: true },
+      relations: { metrics: true },
     });
 
     if (!contributor) {
@@ -39,10 +39,10 @@ export class ContributorsService {
   }
 
   private contributorOldModel(contributor: Contributor) {
-    const { metric, ...rest } = contributor;
+    const { metrics, ...rest } = contributor;
     return {
       ...rest,
-      ...metric,
+      ...metrics,
     };
   }
 }

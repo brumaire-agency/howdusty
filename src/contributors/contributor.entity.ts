@@ -28,5 +28,5 @@ export class Contributor {
   rank?: number;
 
   @OneToOne(() => Metrics, (metric) => metric.contributor)
-  metric: Relation<Metrics>;
+  metrics?: Relation<Metrics>;
 }

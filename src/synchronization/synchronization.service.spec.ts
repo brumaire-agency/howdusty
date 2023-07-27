@@ -35,15 +35,16 @@ describe('SynchronizationService', () => {
       await synchronization.synchronizeUser('username');
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual({
-        id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
+        id: '7d02e642-ac46-4838-8920-fdc7f6ee9be5',
         username: 'username',
-        name: 'Nancy Leffler',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
+        name: 'Rosemarie Rogahn',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/53969213',
       });
     });
     it('should update a contributor if it does exist', async () => {
       faker.seed(42);
-      const contributor = ContributorFactory.generateContributorInfo({
+      const contributor = ContributorFactory.generate({
+        id: '7d02e642-ac46-4838-8920-fdc7f6ee9be5',
         username: 'username',
       });
       contributorsRepository.contributors.push(contributor);
@@ -51,10 +52,10 @@ describe('SynchronizationService', () => {
       await synchronization.synchronizeUser('username');
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual({
-        id: '5cf2bc99-2721-407d-8592-ba00fbdf302f',
+        id: '7d02e642-ac46-4838-8920-fdc7f6ee9be5',
         username: 'username',
-        name: 'Nancy Leffler',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
+        name: 'Rosemarie Rogahn',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/53969213',
       });
     });
   });
@@ -63,9 +64,7 @@ describe('SynchronizationService', () => {
     it('should update all users metrics', async () => {
       faker.seed(42);
       expect(contributorsRepository.contributors.length).toBe(0);
-      await contributorsRepository.save(
-        ContributorFactory.generateManyContributorInfo(3),
-      );
+      await contributorsRepository.save(ContributorFactory.generateMany(3));
       expect(contributorsRepository.contributors.length).toBe(3);
       expect(metricsRepository.contributorsMetrics.length).toBe(0);
 

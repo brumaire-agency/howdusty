@@ -30,9 +30,9 @@ describe('Scorer', () => {
 
       const scored = service.score(
         contributors.map((contributor: Contributor) => {
-          const { metric, ...rest } = contributor;
+          const { metrics, ...rest } = contributor;
           return {
-            ...metric,
+            ...metrics,
             ...rest,
           };
         }),
@@ -53,9 +53,9 @@ describe('Scorer', () => {
 
       const scored = service.score(
         contributors.map((contributor: Contributor) => {
-          const { metric, ...rest } = contributor;
+          const { metrics, ...rest } = contributor;
           return {
-            ...metric,
+            ...metrics,
             ...rest,
           };
         }),

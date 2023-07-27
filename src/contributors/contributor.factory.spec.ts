@@ -1,5 +1,4 @@
 import { ContributorFactory } from './contributor.factory';
-import { MetricName } from '@/metrics';
 import { faker } from '@faker-js/faker';
 
 describe('ContributorFactory', () => {
@@ -13,10 +12,6 @@ describe('ContributorFactory', () => {
       expect(contributor.id).toBeDefined();
       expect(contributor.name).toBeDefined();
       expect(contributor.avatarUrl).toBeDefined();
-
-      for (const metric in MetricName) {
-        expect(contributor.metric[metric]).toBeDefined();
-      }
     });
 
     it('should generate predictable values through faker', () => {
@@ -28,17 +23,6 @@ describe('ContributorFactory', () => {
         avatarUrl: 'https://avatars.githubusercontent.com/u/39986098',
         username: 'Lia.Moore',
         name: 'Nancy Leffler',
-        metric: {
-          totalContributions: 139,
-          contributedRepositoryCount: 0,
-          maintainedRepositoryCount: 3,
-          issuePullRequestRatio: 0.97,
-          activeContributionWeeks: 4,
-          collectedGrant: 1164,
-          meanGrantPerProject: 228,
-          contributedProjectCount: 0,
-          missionCount: 16,
-        },
       });
     });
   });

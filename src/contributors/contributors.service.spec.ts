@@ -33,10 +33,10 @@ describe('ContributorsService', () => {
       await contributorsRepository.save(ContributorFactory.generateMany(10));
       expect(await contributorsService.findAll()).toEqual(
         contributorsRepository.contributors.map((contributor: Contributor) => {
-          const { metric, ...rest } = contributor;
+          const { metrics, ...rest } = contributor;
           return {
             ...rest,
-            ...metric,
+            ...metrics,
           };
         }),
       );
@@ -52,30 +52,10 @@ describe('ContributorsService', () => {
         avatarUrl: 'https://avatars.gi',
         score: 123,
         rank: 12,
-        metric: {
-          totalContributions: faker.number.int(1000),
-          contributedRepositoryCount: faker.number.int(10),
-          maintainedRepositoryCount: faker.number.int(10),
-          issuePullRequestRatio: faker.number.float({
-            min: 0.01,
-            max: 0.99,
-            precision: 0.01,
-          }),
-          activeContributionWeeks: faker.number.int(10),
-          collectedGrant: faker.number.int(5000),
-          meanGrantPerProject: faker.number.int(500),
-          contributedProjectCount: faker.number.int(10),
-          missionCount: faker.number.int(20),
-        },
       };
       await contributorsRepository.save([expectedContributor]);
       const contributor = await contributorsService.findOneByUsername('john');
-      const { metric, ...rest } = expectedContributor;
-      const newExpectedContributor = {
-        ...rest,
-        ...metric,
-      };
-      expect(newExpectedContributor).toEqual(contributor);
+      expect(expectedContributor).toEqual(contributor);
     });
 
     it('should return undefined for non-existing contributor', async () => {

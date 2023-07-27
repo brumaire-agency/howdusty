@@ -27,9 +27,9 @@ describe('NormalizationService', () => {
 
       const normalizedContributors = service.normalize(
         contributors.map((contributor: Contributor) => {
-          const { metric, ...rest } = contributor;
+          const { metrics, ...rest } = contributor;
           return {
-            ...metric,
+            ...metrics,
             ...rest,
           };
         }),
