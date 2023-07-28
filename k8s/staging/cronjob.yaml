@@ -21,7 +21,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - node dist/main-cli.js contributors:sync robinstraub zoemeriet
+                - node dist/main-cli.js contributors:sync
           restartPolicy: OnFailure
           imagePullSecrets:
             - name: harbor-registry
