@@ -31,7 +31,9 @@ export class ContributorsController {
   }
 
   @Post('/contributor')
-  async addContributor(@Body() username: string): Promise<ContributorOldModel> {
+  async addContributor(
+    @Body('username') username: string,
+  ): Promise<ContributorOldModel> {
     const syncedContributor = await this.service.addContributor(username);
     return syncedContributor;
   }
