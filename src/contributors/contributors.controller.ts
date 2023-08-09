@@ -1,4 +1,11 @@
-import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  NotFoundException,
+  Post,
+  Body,
+} from '@nestjs/common';
 import { ContributorsService } from './contributors.service';
 import { Contributor } from './contributor.entity';
 import { ContributorOldModel } from './types';
@@ -21,5 +28,11 @@ export class ContributorsController {
       throw new NotFoundException('Contributor not found');
     }
     return contributor;
+  }
+
+  @Post('/contributor')
+  async addContributor(@Body() username: string): Promise<ContributorOldModel> {
+    const syncedContributor = await this.service.addContributor(username);
+    return syncedContributor;
   }
 }

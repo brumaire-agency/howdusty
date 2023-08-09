@@ -5,6 +5,9 @@ import { ContributorsService } from './contributors.service';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 import { faker } from '@faker-js/faker';
 import { ContributorFactory } from '@/contributors/contributor.factory';
+import { ScorerModule } from '@/scorer';
+import { MetricsTestingModule } from '@/metrics';
+import { GithubTestingModule } from '@/github';
 import { ContributorDto } from './contributor.dto';
 
 describe('ContributorsService', () => {
@@ -15,6 +18,7 @@ describe('ContributorsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [ScorerModule, MetricsTestingModule, GithubTestingModule],
       providers: [
         ContributorsService,
         {
