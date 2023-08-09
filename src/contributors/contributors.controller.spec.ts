@@ -52,6 +52,34 @@ describe('ContributorsController', () => {
     });
   });
 
+  describe('addContributor', () => {
+    it("should add a new contributor if it doesn't exist return this contibutor", async () => {
+      expect(repository.contributors.length).toBe(0);
+      const username = 'john_doe';
+      const response = await controller.addContributor(username);
+      console.log(response);
+      expect(repository.contributors.length).toBe(1);
+      expect(response.username).toEqual(username);
+      expect(response).toHaveProperty('id');
+      expect(response).toHaveProperty('name');
+      expect(response).toHaveProperty('avatarUrl');
+      expect(response).toHaveProperty('rank');
+      expect(response).toHaveProperty('score');
+    });
+
+    it('should return a contributor if it does exist', async () => {
+      expect(repository.contributors.length).toBe(0);
+      const username = 'john_doe';
+      const response = await controller.addContributor(username);
+
+      expect(repository.contributors.length).toBe(1);
+
+      const newResponse = await controller.addContributor(username);
+      expect(repository.contributors.length).toBe(1);
+      expect(response).toEqual(newResponse);
+    });
+  });
+
   describe('findOne', () => {
     it('should return a contributor', async () => {
       const expectedContributor = {

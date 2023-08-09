@@ -96,4 +96,32 @@ describe('ContributorsService', () => {
       );
     });
   });
+
+  describe('addContributor', () => {
+    it("should add a new contributor if it doesn't exist return this contibutor", async () => {
+      expect(contributorsRepository.contributors.length).toBe(0);
+      const username = 'john_doe';
+      const response = await contributorsService.addContributor(username);
+
+      expect(contributorsRepository.contributors.length).toBe(1);
+      expect(response.username).toEqual(username);
+      expect(response).toHaveProperty('id');
+      expect(response).toHaveProperty('name');
+      expect(response).toHaveProperty('avatarUrl');
+      expect(response).toHaveProperty('rank');
+      expect(response).toHaveProperty('score');
+    });
+
+    it('should return a contributor if it does exist', async () => {
+      expect(contributorsRepository.contributors.length).toBe(0);
+      const username = 'john_doe';
+      const response = await contributorsService.addContributor(username);
+
+      expect(contributorsRepository.contributors.length).toBe(1);
+
+      const newResponse = await contributorsService.addContributor(username);
+      expect(contributorsRepository.contributors.length).toBe(1);
+      expect(response).toEqual(newResponse);
+    });
+  });
 });

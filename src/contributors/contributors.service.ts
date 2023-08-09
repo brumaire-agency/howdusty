@@ -56,11 +56,11 @@ export class ContributorsService {
 
     const usersMetrics = await this.metrics.getMetricsForUsers([username]);
 
-    const userNewInfo = await this.findOneByUsername(username);
+    const newUserInfo = await this.findOneByUsername(username);
     const newUser = {
-      id: userNewInfo.id,
+      id: newUserInfo.id,
       ...usersMetrics[username],
-      contributor: userNewInfo,
+      contributor: newUserInfo,
     };
     await this.metrics.save(newUser);
 
