@@ -6,9 +6,7 @@ import { Contributor } from './contributor.entity';
 import { ContributorFactory } from './contributor.factory';
 import { ContributorsController } from './contributors.controller';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
-import { ContributorsService } from './contributors.service';
-import { SynchronizationTestingModule } from '@/synchronization';
-import { MetricsTestingModule } from '@/metrics';
+import { ContributorsTestingModule } from './contributors.testing-module';
 
 describe('ContributorsController', () => {
   let controller: ContributorsController;
@@ -18,14 +16,7 @@ describe('ContributorsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [MetricsTestingModule, SynchronizationTestingModule],
-      providers: [
-        ContributorsService,
-        {
-          provide: CONTRIBUTOR_REPOSITORY_TOKEN,
-          useClass: ContributorsRepositoryMock,
-        },
-      ],
+      imports: [ContributorsTestingModule],
       controllers: [ContributorsController],
     }).compile();
 

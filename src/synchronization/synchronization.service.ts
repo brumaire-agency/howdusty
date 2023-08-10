@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { Contributor, ContributorsService } from '@/contributors';
 import { ScorerService } from '@/scorer';
 import { MetricsService, Metrics } from '@/metrics';
@@ -7,6 +7,7 @@ import { GithubService } from '@/github';
 @Injectable()
 export class SynchronizationService {
   constructor(
+    @Inject(forwardRef(() => ContributorsService))
     private contributors: ContributorsService,
     private github: GithubService,
     private metrics: MetricsService,

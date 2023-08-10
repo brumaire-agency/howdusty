@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Contributor } from './contributor.entity';
 import { ContributorsService } from './contributors.service';
@@ -10,7 +10,7 @@ import { SynchronizationModule } from '@/synchronization';
   imports: [
     TypeOrmModule.forFeature([Contributor]),
     MetricsModule,
-    SynchronizationModule,
+    forwardRef(() => SynchronizationModule),
   ],
   providers: [ContributorsService],
   exports: [ContributorsService],

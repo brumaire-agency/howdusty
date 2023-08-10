@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContributorDto } from './contributor.dto';
@@ -11,6 +11,7 @@ export class ContributorsService {
   constructor(
     @InjectRepository(Contributor)
     private contributorsRepository: Repository<Contributor>,
+    @Inject(forwardRef(() => SynchronizationService))
     private synchronization: SynchronizationService,
   ) {}
 
