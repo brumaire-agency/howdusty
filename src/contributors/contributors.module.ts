@@ -4,16 +4,13 @@ import { Contributor } from './contributor.entity';
 import { ContributorsService } from './contributors.service';
 import { ContributorsController } from './contributors.controller';
 import { MetricsModule } from '@/metrics';
-// import { SynchronizationModule } from '@/synchronization';
-import { ScorerModule } from '@/scorer';
-import { GithubModule } from '@/github';
+import { SynchronizationModule } from '@/synchronization';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Contributor]),
     MetricsModule,
-    ScorerModule,
-    GithubModule,
+    SynchronizationModule,
   ],
   providers: [ContributorsService],
   exports: [ContributorsService],

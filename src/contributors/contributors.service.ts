@@ -4,18 +4,14 @@ import { Repository } from 'typeorm';
 import { ContributorDto } from './contributor.dto';
 import { Contributor } from './contributor.entity';
 import { ContributorOldModel } from './types';
-import { ScorerService } from '@/scorer';
-import { MetricsService } from '@/metrics';
-import { GithubService } from '@/github';
+import { SynchronizationService } from '@/synchronization';
 
 @Injectable()
 export class ContributorsService {
   constructor(
     @InjectRepository(Contributor)
     private contributorsRepository: Repository<Contributor>,
-    private metrics: MetricsService,
-    private scorer: ScorerService,
-    private github: GithubService,
+    private synchronization: SynchronizationService,
   ) {}
 
   async findAll(): Promise<ContributorOldModel[]> {
@@ -50,29 +46,9 @@ export class ContributorsService {
       return contributor;
     }
 
-    const userInfo = await this.github.getContributorInfo(username);
-    const user = { ...userInfo };
-    await this.save(user);
-
-    const usersMetrics = await this.metrics.getMetricsForUsers([username]);
-
-    const newUserInfo = await this.findOneByUsername(username);
-    const newUser = {
-      id: newUserInfo.id,
-      ...usersMetrics[username],
-      contributor: newUserInfo,
-    };
-    await this.metrics.save(newUser);
-
-    const contributors = await this.findAll();
-    const scoredContributors = this.scorer.score(contributors);
-    await this.save(
-      scoredContributors.map((contributor) => ({
-        id: contributor.id,
-        rank: contributor.rank,
-        score: contributor.score,
-      })),
-    );
+    await this.synchronization.synchronizeUser(username);
+    await this.synchronization.synchronizeUsersMetrics([username]);
+    await this.synchronization.scoreUsers();
 
     const syncedContributor = await this.findOneByUsername(username);
     return syncedContributor;
