@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SynchronizationService } from './synchronization.service';
 import { ContributorsTestingModule } from '@/contributors';
 import { GithubTestingModule } from '@/github';
@@ -7,7 +7,7 @@ import { ScorerModule } from '@/scorer';
 
 @Module({
   imports: [
-    ContributorsTestingModule,
+    forwardRef(() => ContributorsTestingModule),
     GithubTestingModule,
     MetricsTestingModule,
     ScorerModule,
