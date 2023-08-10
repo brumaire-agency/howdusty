@@ -1,8 +1,5 @@
 import { GithubData, GithubQuery, GithubResponse } from '../github.query';
-import {
-  getOpenSourceContributionsRepositories,
-  RepositoriesQuery,
-} from '@/github/queries/helpers';
+import { RepositoriesQuery } from '@/github/queries/helpers';
 import { getContributionsCount } from './helpers';
 import { ContributionsByRepository } from './types';
 
@@ -68,20 +65,6 @@ export class TotalContributionsQuery extends GithubQuery<
   }
 
   parseResult(result: TotalContributionsResult): TotalContributionsData {
-    // Repositories
-    const repositoriesContributions: RepositoriesQuery[] =
-      getOpenSourceContributionsRepositories(
-        result.totalContributions.contributionsCollection
-          .repositoryContributions.nodes,
-      );
-    const repositoriesContributionsCount = repositoriesContributions.length;
-
-    // Commit
-    const commitContributionsCount: number = getContributionsCount(
-      result.totalContributions.contributionsCollection
-        .commitContributionsByRepository,
-    );
-
     // Issue
     const issueContributionsCount: number = getContributionsCount(
       result.totalContributions.contributionsCollection
@@ -95,11 +78,8 @@ export class TotalContributionsQuery extends GithubQuery<
     );
 
     return {
-      totalContributions:
-        repositoriesContributionsCount +
-        commitContributionsCount +
-        issueContributionsCount +
-        pullRequestContributionsCount,
+      totalPullRequests: pullRequestContributionsCount,
+      totalIssues: issueContributionsCount,
     };
   }
 }
@@ -124,5 +104,6 @@ export interface TotalContributionsResult extends GithubResponse {
  * Represents the data associated with the metric.
  */
 export interface TotalContributionsData extends GithubData {
-  totalContributions: number;
+  totalPullRequests: number;
+  totalIssues: number;
 }

@@ -3,7 +3,8 @@ export interface User {
   username: string;
   name?: string;
   avatarUrl: string;
-  totalContributions: number;
+  totalPullRequests: number;
+  totalIssues: number;
   contributedRepositoryCount: number;
   maintainedRepositoryCount: number;
   issuePullRequestRatio: number;
