@@ -52,8 +52,12 @@ export class SynchronizationService {
     await this.contributors.save(
       scoredContributors.map((contributor) => ({
         id: contributor.id,
-        rank: contributor.rank,
-        score: contributor.score,
+        globalScore: contributor.globalScore,
+        globalRank: contributor.globalRank,
+        githubScore: contributor.githubScore,
+        githubRank: contributor.githubRank,
+        onlydustScore: contributor.onlydustScore,
+        onlydustRank: contributor.onlydustRank,
       })),
     );
   }

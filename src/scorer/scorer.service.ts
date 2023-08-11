@@ -34,17 +34,61 @@ export class ScorerService {
       metrics as MetricName[],
     );
 
-    const scored = normalized.map((row, index) => ({
-      ...contributors[index],
-      score: Object.keys(row).reduce(
-        (score, label) => score + row[label] * this.weights[label],
-        0,
-      ),
+    const scored = normalized.map((row, index) => {
+      const githubScore = this.calculateScore(row, [
+        MetricName.totalPullRequests,
+        MetricName.totalIssues,
+        MetricName.contributedRepositoryCount,
+        MetricName.maintainedRepositoryCount,
+        MetricName.issuePullRequestRatio,
+        MetricName.activeContributionWeeks,
+      ]);
+      const onlydustScore = this.calculateScore(row, [
+        MetricName.collectedGrant,
+        MetricName.meanGrantPerProject,
+        MetricName.contributedProjectCount,
+        MetricName.contributionCount,
+      ]);
+      const globalScore = this.calculateScore(row, metrics as MetricName[]);
+
+      return {
+        ...contributors[index],
+        githubScore,
+        onlydustScore,
+        globalScore,
+      };
+    });
+
+    const rankedScores = {
+      github: orderBy(scored, 'githubScore', 'desc'),
+      onlydust: orderBy(scored, 'onlydustScore', 'desc'),
+      global: orderBy(scored, 'globalScore', 'desc'),
+    };
+
+    const rankedContributors = scored.map((contributor) => ({
+      ...contributor,
+      githubRank: this.findRank(contributor, rankedScores.github),
+      onlydustRank: this.findRank(contributor, rankedScores.onlydust),
+      globalRank: this.findRank(contributor, rankedScores.global),
     }));
 
-    return orderBy(scored, 'score', 'desc').map((contributor, index) => ({
-      ...contributor,
-      rank: index + 1,
-    }));
+    return rankedContributors;
+  }
+
+  calculateScore(
+    row: Record<string, number>,
+    includedMetrics: MetricName[],
+  ): number {
+    return includedMetrics.reduce(
+      (score, label) => score + row[label] * this.weights[label],
+      0,
+    );
+  }
+
+  findRank(
+    contributor: ContributorOldModel,
+    rankedScores: ContributorOldModel[],
+  ): number {
+    return rankedScores.findIndex((c) => c.id === contributor.id) + 1;
   }
 }
