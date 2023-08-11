@@ -36,20 +36,20 @@ export class ScorerService {
 
     const scored = normalized.map((row, index) => {
       const githubScore = this.calculateScore(row, [
-        MetricName.totalPullRequests,
-        MetricName.totalIssues,
-        MetricName.contributedRepositoryCount,
-        MetricName.maintainedRepositoryCount,
-        MetricName.issuePullRequestRatio,
-        MetricName.activeContributionWeeks,
+        MetricName.githubTotalPullRequests,
+        MetricName.githubTotalIssues,
+        MetricName.githubContributedRepositoryCount,
+        MetricName.githubMaintainedRepositoryCount,
+        MetricName.githubIssuePullRequestRatio,
+        MetricName.githubActiveContributionWeeks,
       ]);
       const onlydustScore = this.calculateScore(row, [
-        MetricName.collectedGrant,
-        MetricName.meanGrantPerProject,
-        MetricName.contributedProjectCount,
-        MetricName.contributionCount,
+        MetricName.onlydustCollectedGrant,
+        MetricName.onlydustMeanGrantPerProject,
+        MetricName.onlydustContributedProjectCount,
+        MetricName.onlydustContributionCount,
       ]);
-      const globalScore = this.calculateScore(row, metrics as MetricName[]);
+      const globalScore = githubScore + onlydustScore;
 
       return {
         ...contributors[index],
