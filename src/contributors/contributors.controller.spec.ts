@@ -7,6 +7,10 @@ import { ContributorFactory } from './contributor.factory';
 import { ContributorsController } from './contributors.controller';
 import { ContributorsRepositoryMock } from './contributors.repository.mock';
 import { ContributorsService } from './contributors.service';
+import { SynchronizationService } from '@/synchronization';
+import { MetricsTestingModule } from '@/metrics';
+import { GithubTestingModule } from '@/github';
+import { ScorerModule } from '@/scorer';
 
 describe('ContributorsController', () => {
   let controller: ContributorsController;
@@ -16,8 +20,10 @@ describe('ContributorsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [GithubTestingModule, MetricsTestingModule, ScorerModule],
       providers: [
         ContributorsService,
+        SynchronizationService,
         {
           provide: CONTRIBUTOR_REPOSITORY_TOKEN,
           useClass: ContributorsRepositoryMock,
@@ -45,6 +51,34 @@ describe('ContributorsController', () => {
           };
         }),
       );
+    });
+  });
+
+  describe('addContributor', () => {
+    it("should add a new contributor if it doesn't exist return this contibutor", async () => {
+      expect(repository.contributors.length).toBe(0);
+      const username = 'john_doe';
+      const response = await controller.addContributor(username);
+      console.log(response);
+      expect(repository.contributors.length).toBe(1);
+      expect(response.username).toEqual(username);
+      expect(response).toHaveProperty('id');
+      expect(response).toHaveProperty('name');
+      expect(response).toHaveProperty('avatarUrl');
+      expect(response).toHaveProperty('rank');
+      expect(response).toHaveProperty('score');
+    });
+
+    it('should return a contributor if it does exist', async () => {
+      expect(repository.contributors.length).toBe(0);
+      const username = 'john_doe';
+      const response = await controller.addContributor(username);
+
+      expect(repository.contributors.length).toBe(1);
+
+      const newResponse = await controller.addContributor(username);
+      expect(repository.contributors.length).toBe(1);
+      expect(response).toEqual(newResponse);
     });
   });
 
