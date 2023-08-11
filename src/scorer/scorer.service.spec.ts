@@ -1,10 +1,15 @@
 import { Test } from '@nestjs/testing';
-import { Contributor, ContributorFactory } from '@/contributors';
+import {
+  Contributor,
+  ContributorFactory,
+  ContributorOldModel,
+} from '@/contributors';
 import { ScorerService } from './scorer.service';
 import { StandardScaler } from './standard-scaler.service';
 import { NormalizationService } from './normalization.service';
 import { faker } from '@faker-js/faker';
 import { sortBy } from 'lodash';
+import { MetricsFactory } from '@/metrics';
 
 describe('Scorer', () => {
   /**
@@ -27,13 +32,13 @@ describe('Scorer', () => {
     it('should score a set of contributors', () => {
       faker.seed(42);
       const contributors = ContributorFactory.generateMany(10);
+      const metrics = MetricsFactory.generateMany(10);
 
       const scored = service.score(
-        contributors.map((contributor: Contributor) => {
-          const { metrics, ...rest } = contributor;
+        contributors.map((contributor: Contributor, index) => {
           return {
-            ...metrics,
-            ...rest,
+            ...contributor,
+            ...metrics[index],
           };
         }),
       );
@@ -43,24 +48,26 @@ describe('Scorer', () => {
 
       for (const contributor of scored) {
         // ensure every contributor gets a positive score
-        expect(contributor.score).toBeGreaterThanOrEqual(0);
+        expect(contributor.githubScore).toBeGreaterThanOrEqual(0);
+        expect(contributor.onlydustScore).toBeGreaterThanOrEqual(0);
+        expect(contributor.globalScore).toBeGreaterThanOrEqual(0);
       }
     });
 
     it('should compute a unique rank for every contributor', () => {
       faker.seed(42);
       const contributors = ContributorFactory.generateMany(10);
+      const metrics = MetricsFactory.generateMany(10);
 
       const scored = service.score(
-        contributors.map((contributor: Contributor) => {
-          const { metrics, ...rest } = contributor;
+        contributors.map((contributor: Contributor, index) => {
           return {
-            ...metrics,
-            ...rest,
+            ...contributor,
+            ...metrics[index],
           };
         }),
       );
-      const ranks = sortBy(scored.map((contributor) => contributor.rank));
+      const ranks = sortBy(scored.map((contributor) => contributor.globalRank));
 
       // theoreticalRanks = [1, 2, 3, ..., 9, 10]
       const theoreticalRanks = Array.from(new Array(contributors.length)).map(

@@ -3,8 +3,12 @@ export interface ContributorInfo {
   username: string;
   name?: string;
   avatarUrl: string;
-  score?: number;
-  rank?: number;
+  githubScore?: number;
+  githubRank?: number;
+  onlydustScore?: number;
+  onlydustRank?: number;
+  globalScore?: number;
+  globalRank?: number;
 }
 
 export interface ContributorMetrics {

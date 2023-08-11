@@ -16,16 +16,40 @@ export class Contributor {
   avatarUrl: string;
 
   @Column({
-    name: 'score',
+    name: 'github_score',
     type: 'decimal',
     precision: 10,
     scale: 8,
     nullable: true,
   })
-  score?: number;
+  githubScore?: number;
 
-  @Column({ nullable: true })
-  rank?: number;
+  @Column({ name: 'github_rank', nullable: true })
+  githubRank?: number;
+
+  @Column({
+    name: 'onlydust_score',
+    type: 'decimal',
+    precision: 10,
+    scale: 8,
+    nullable: true,
+  })
+  onlydustScore?: number;
+
+  @Column({ name: 'onlydust_rank', nullable: true })
+  onlydustRank?: number;
+
+  @Column({
+    name: 'global_score',
+    type: 'decimal',
+    precision: 10,
+    scale: 8,
+    nullable: true,
+  })
+  globalScore?: number;
+
+  @Column({ name: 'global_rank', nullable: true })
+  globalRank?: number;
 
   @OneToOne(() => Metrics, (metric) => metric.contributor)
   metrics?: Relation<Metrics>;

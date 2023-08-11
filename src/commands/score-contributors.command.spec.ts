@@ -42,7 +42,9 @@ describe('ScoreContributorsCommand', () => {
     expect(repository.contributors.length).toEqual(5);
 
     for (const contributor of repository.contributors) {
-      expect(contributor.score).toBeDefined();
+      expect(contributor.githubScore).toBeDefined();
+      expect(contributor.onlydustScore).toBeDefined();
+      expect(contributor.globalScore).toBeDefined();
     }
   });
 });

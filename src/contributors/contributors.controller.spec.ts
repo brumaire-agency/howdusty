@@ -59,14 +59,17 @@ describe('ContributorsController', () => {
       expect(repository.contributors.length).toBe(0);
       const username = 'john_doe';
       const response = await controller.addContributor(username);
-      console.log(response);
       expect(repository.contributors.length).toBe(1);
       expect(response.username).toEqual(username);
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('name');
       expect(response).toHaveProperty('avatarUrl');
-      expect(response).toHaveProperty('rank');
-      expect(response).toHaveProperty('score');
+      expect(response).toHaveProperty('githubRank');
+      expect(response).toHaveProperty('githubScore');
+      expect(response).toHaveProperty('onlydustRank');
+      expect(response).toHaveProperty('onlydustScore');
+      expect(response).toHaveProperty('globalRank');
+      expect(response).toHaveProperty('globalScore');
     });
 
     it('should return a contributor if it does exist', async () => {
