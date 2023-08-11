@@ -24,7 +24,7 @@ export class GithubService {
       [MetricName.issuePullRequestRatio]: new IssuePullRequestRatioQuery(),
       [MetricName.maintainedRepositoryCount]:
         new MaintainedRepositoryCountQuery(),
-      totalPullRequests: new TotalContributionsQuery(),
+      [MetricName.totalPullRequests]: new TotalContributionsQuery(),
       ['userInfo']: new UserInfoQuery(),
     };
   }
