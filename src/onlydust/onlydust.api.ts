@@ -160,7 +160,7 @@ export class OnlydustApi {
   /**
    * Gets the number of missions each contributor.
    */
-  async getcontributionCount(
+  async getContributionCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     const client = await this.getClient();

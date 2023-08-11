@@ -17,7 +17,7 @@ export class OnlydustService {
     const contributedProjectCount = await this.api.getContributedProjectCount(
       usernames,
     );
-    const contributionCount = await this.api.getcontributionCount(usernames);
+    const contributionCount = await this.api.getContributionCount(usernames);
     const allMetrics = {
       ...collectedGrants,
       ...meanGrantPerProject,
