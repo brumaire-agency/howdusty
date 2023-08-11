@@ -11,7 +11,8 @@ export class MetricsFactory {
     return Object.assign(
       {
         id: faker.string.uuid(),
-        [MetricName.totalContributions]: faker.number.int(1000),
+        [MetricName.totalPullRequests]: faker.number.int(1000),
+        [MetricName.totalIssues]: faker.number.int(1000),
         [MetricName.contributedRepositoryCount]: faker.number.int(10),
         [MetricName.maintainedRepositoryCount]: faker.number.int(10),
         [MetricName.issuePullRequestRatio]: faker.number.float({

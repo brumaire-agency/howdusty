@@ -6,7 +6,8 @@ import {
   ContributedRepositoryCountQuery,
   IssuePullRequestRatioQuery,
   MaintainedRepositoryCountQuery,
-  TotalContributionsQuery,
+  TotalPullRequestsQuery,
+  TotalIssuesQuery,
   UserInfoQuery,
   GithubQueries,
 } from './queries';
@@ -24,7 +25,8 @@ export class GithubService {
       [MetricName.issuePullRequestRatio]: new IssuePullRequestRatioQuery(),
       [MetricName.maintainedRepositoryCount]:
         new MaintainedRepositoryCountQuery(),
-      [MetricName.totalContributions]: new TotalContributionsQuery(),
+      [MetricName.totalPullRequests]: new TotalPullRequestsQuery(),
+      [MetricName.totalIssues]: new TotalIssuesQuery(),
       ['userInfo']: new UserInfoQuery(),
     };
   }

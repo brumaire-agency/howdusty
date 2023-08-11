@@ -8,7 +8,8 @@ export interface ContributorInfo {
 }
 
 export interface ContributorMetrics {
-  totalContributions: number;
+  totalPullRequests: number;
+  totalIssues: number;
   contributedRepositoryCount: number;
   maintainedRepositoryCount: number;
   issuePullRequestRatio: number;

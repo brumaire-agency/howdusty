@@ -23,7 +23,8 @@ export class GithubApiMock {
       });
     }
     return Promise.resolve({
-      totalContributions: contributor.metrics.totalContributions,
+      totalPullRequests: contributor.metrics.totalPullRequests,
+      totalIssues: contributor.metrics.totalIssues,
       contributedRepositoryCount:
         contributor.metrics.contributedRepositoryCount,
       maintainedRepositoryCount: contributor.metrics.maintainedRepositoryCount,

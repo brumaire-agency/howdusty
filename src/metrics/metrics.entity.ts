@@ -14,8 +14,11 @@ export class Metrics implements Metricable {
   @PrimaryColumn()
   id: string;
 
-  @Column({ name: 'total_contributions' })
-  totalContributions: number;
+  @Column({ name: 'total_pull_requests' })
+  totalPullRequests: number;
+
+  @Column({ name: 'total_issues' })
+  totalIssues: number;
 
   @Column({ name: 'contributed_repository_count' })
   contributedRepositoryCount: number;

@@ -28,10 +28,10 @@ describe('GithubService', () => {
   describe('getContributorInfo', () => {
     it('should return a User', async () => {
       expect(await github.getContributorInfo('username')).toStrictEqual({
-        id: '7d02e642-ac46-4838-8920-fdc7f6ee9be5',
+        id: 'd02e642a-c468-4389-a20f-dc7f6ee9be51',
         username: 'username',
-        name: 'Rosemarie Rogahn',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/53969213',
+        name: 'Miss Shelia Lindgren',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/35675332',
       });
     });
   });
@@ -41,11 +41,12 @@ describe('GithubService', () => {
       const metrics = Object.values(MetricName) as MetricName[];
       expect(await github.getMetricsForUser('username', metrics)).toStrictEqual(
         {
-          totalContributions: 618,
-          contributedRepositoryCount: 3,
-          maintainedRepositoryCount: 6,
-          issuePullRequestRatio: 0.52,
-          activeContributionWeeks: 0,
+          activeContributionWeeks: 4,
+          contributedRepositoryCount: 6,
+          issuePullRequestRatio: 0.01,
+          maintainedRepositoryCount: 5,
+          totalIssues: 304,
+          totalPullRequests: 618,
         },
       );
     });

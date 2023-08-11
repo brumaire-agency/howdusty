@@ -7,7 +7,8 @@ import { Metricable, MetricName } from '@/metrics';
 @Injectable()
 export class ScorerService {
   private weights: Metricable = {
-    [MetricName.totalContributions]: 1,
+    [MetricName.totalPullRequests]: 1,
+    [MetricName.totalIssues]: 1,
     [MetricName.contributedRepositoryCount]: 1,
     [MetricName.maintainedRepositoryCount]: 1,
     [MetricName.issuePullRequestRatio]: 1,
