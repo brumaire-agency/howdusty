@@ -1,8 +1,8 @@
 import response from '../github-response.example.json';
-import { githubTotalIssuesQuery } from './total-issues.query';
+import { TotalIssuesQuery } from './total-issues.query';
 
 describe('Total Contributions Query', () => {
-  const query = new githubTotalIssuesQuery();
+  const query = new TotalIssuesQuery();
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);

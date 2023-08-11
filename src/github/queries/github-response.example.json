@@ -627,7 +627,7 @@
       ]
     }
   },
-  "githubContributedRepositoryCount": {
+  "contributedRepositoryCount": {
     "repositoriesContributedTo": {
       "nodes": [
         {
@@ -721,7 +721,7 @@
       ]
     }
   },
-  "githubMaintainedRepositoryCount": {
+  "maintainedRepositoryCount": {
     "repositories": {
       "nodes": [
         {
@@ -801,7 +801,7 @@
       ]
     }
   },
-  "githubIssuePullRequestRatio": {
+  "issuePullRequestRatio": {
     "contributionsCollection": {
       "issueContributionsByRepository": [
         {
@@ -1113,7 +1113,7 @@
       ]
     }
   },
-  "githubActiveContributionWeeks": {
+  "activeContributionWeeks": {
     "contributionsCollection": {
       "repositoryContributions": {
         "nodes": [

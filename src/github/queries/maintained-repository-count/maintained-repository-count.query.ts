@@ -4,16 +4,16 @@ import {
   RepositoryQuery,
 } from '@/github/queries/helpers';
 
-export class githubMaintainedRepositoryCountQuery extends GithubQuery<
-  githubMaintainedRepositoryCountResult,
-  githubMaintainedRepositoryCountData
+export class MaintainedRepositoryCountQuery extends GithubQuery<
+  MaintainedRepositoryCountResult,
+  MaintainedRepositoryCountData
 > {
   /**
    * @inheritDoc
    */
   buildQuery(username: string): string {
     return `
-      githubMaintainedRepositoryCount: user(login: "${username}") {
+      maintainedRepositoryCount: user(login: "${username}") {
         repositories(first: 100, privacy: PUBLIC) {
           nodes {
               licenseInfo {
@@ -27,10 +27,10 @@ export class githubMaintainedRepositoryCountQuery extends GithubQuery<
   }
 
   parseResult(
-    result: githubMaintainedRepositoryCountResult,
-  ): githubMaintainedRepositoryCountData {
+    result: MaintainedRepositoryCountResult,
+  ): MaintainedRepositoryCountData {
     const openSourceRepositories = getOpenSourceRepositories(
-      result.githubMaintainedRepositoryCount.repositories.nodes,
+      result.maintainedRepositoryCount.repositories.nodes,
     );
     const totalOpenSourceRepositories = openSourceRepositories.length;
 
@@ -43,8 +43,8 @@ export class githubMaintainedRepositoryCountQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface githubMaintainedRepositoryCountResult extends GithubResponse {
-  githubMaintainedRepositoryCount: {
+export interface MaintainedRepositoryCountResult extends GithubResponse {
+  maintainedRepositoryCount: {
     repositories: {
       nodes: RepositoryQuery[];
     };
@@ -54,6 +54,6 @@ export interface githubMaintainedRepositoryCountResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface githubMaintainedRepositoryCountData extends GithubData {
+export interface MaintainedRepositoryCountData extends GithubData {
   githubMaintainedRepositoryCount: number;
 }

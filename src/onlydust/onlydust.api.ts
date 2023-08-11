@@ -17,9 +17,6 @@ export class OnlydustApi {
       database: database,
       password: password,
       port: port,
-      ssl: {
-        rejectUnauthorized: false,
-      },
     };
   }
 

@@ -2,16 +2,16 @@ import { GithubData, GithubQuery, GithubResponse } from '../github.query';
 import { getContributionsCount } from './helpers';
 import { ContributionsByRepository } from './types';
 
-export class githubIssuePullRequestRatioQuery extends GithubQuery<
-  githubIssuePullRequestRatioResult,
-  githubIssuePullRequestRatioData
+export class IssuePullRequestRatioQuery extends GithubQuery<
+  IssuePullRequestRatioResult,
+  IssuePullRequestRatioData
 > {
   /**
    * @inheritDoc
    */
   buildQuery(username: string): string {
     return `
-      githubIssuePullRequestRatio: user(login: "${username}") {
+      issuePullRequestRatio: user(login: "${username}") {
         contributionsCollection {
           issueContributionsByRepository {
             contributions(first: 100) {
@@ -42,18 +42,16 @@ export class githubIssuePullRequestRatioQuery extends GithubQuery<
     `;
   }
 
-  parseResult(
-    result: githubIssuePullRequestRatioResult,
-  ): githubIssuePullRequestRatioData {
+  parseResult(result: IssuePullRequestRatioResult): IssuePullRequestRatioData {
     // Issue
     const issueContributionsCount: number = getContributionsCount(
-      result.githubIssuePullRequestRatio.contributionsCollection
+      result.issuePullRequestRatio.contributionsCollection
         .issueContributionsByRepository,
     );
 
     // Pull Request
     const pullRequestContributionsCount: number = getContributionsCount(
-      result.githubIssuePullRequestRatio.contributionsCollection
+      result.issuePullRequestRatio.contributionsCollection
         .pullRequestContributionsByRepository,
     );
 
@@ -70,8 +68,8 @@ export class githubIssuePullRequestRatioQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface githubIssuePullRequestRatioResult extends GithubResponse {
-  githubIssuePullRequestRatio: {
+export interface IssuePullRequestRatioResult extends GithubResponse {
+  issuePullRequestRatio: {
     contributionsCollection: {
       issueContributionsByRepository: ContributionsByRepository[];
       pullRequestContributionsByRepository: ContributionsByRepository[];
@@ -82,6 +80,6 @@ export interface githubIssuePullRequestRatioResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface githubIssuePullRequestRatioData extends GithubData {
+export interface IssuePullRequestRatioData extends GithubData {
   githubIssuePullRequestRatio: number;
 }

@@ -3,9 +3,9 @@ import { RepositoriesQuery } from '@/github/queries/helpers';
 import { getContributionsCount } from './helpers';
 import { ContributionsByRepository } from './types';
 
-export class githubTotalPullRequestsQuery extends GithubQuery<
-  githubTotalPullRequestsResult,
-  githubTotalPullRequestsData
+export class TotalPullRequestsQuery extends GithubQuery<
+  TotalPullRequestsResult,
+  TotalPullRequestsData
 > {
   buildQuery(username: string): string {
     return `
@@ -64,9 +64,7 @@ export class githubTotalPullRequestsQuery extends GithubQuery<
     `;
   }
 
-  parseResult(
-    result: githubTotalPullRequestsResult,
-  ): githubTotalPullRequestsData {
+  parseResult(result: TotalPullRequestsResult): TotalPullRequestsData {
     // Pull Request
     const pullRequestContributionsCount: number = getContributionsCount(
       result.totalContributions.contributionsCollection
@@ -82,7 +80,7 @@ export class githubTotalPullRequestsQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface githubTotalPullRequestsResult extends GithubResponse {
+export interface TotalPullRequestsResult extends GithubResponse {
   totalContributions: {
     contributionsCollection: {
       repositoryContributions: {
@@ -98,6 +96,6 @@ export interface githubTotalPullRequestsResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface githubTotalPullRequestsData extends GithubData {
+export interface TotalPullRequestsData extends GithubData {
   githubTotalPullRequests: number;
 }

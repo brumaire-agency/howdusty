@@ -1,8 +1,8 @@
 import response from '../github-response.example.json';
-import { githubContributedRepositoryCountQuery } from './contributed-repository-count.query';
+import { ContributedRepositoryCountQuery } from './contributed-repository-count.query';
 
 describe('Contributed Repository Count Query', () => {
-  const query = new githubContributedRepositoryCountQuery();
+  const query = new ContributedRepositoryCountQuery();
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);

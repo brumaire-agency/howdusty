@@ -10,10 +10,10 @@ import {
   WeekObject,
 } from './types';
 
-export class githubActiveContributionWeeksQuery extends GithubQuery {
+export class ActiveContributionWeeksQuery extends GithubQuery {
   buildQuery(username: string): string {
     return `
-      githubActiveContributionWeeks: user(login: "${username}") {
+      activeContributionWeeks: user(login: "${username}") {
         contributionsCollection {
           repositoryContributions(first: 100) {
             nodes {
@@ -75,29 +75,29 @@ export class githubActiveContributionWeeksQuery extends GithubQuery {
   }
 
   parseResult(
-    result: githubActiveContributionWeeksResult,
-  ): githubActiveContributionWeeksData {
+    result: ActiveContributionWeeksResult,
+  ): ActiveContributionWeeksData {
     // Repository
     const repositoryWeeks: WeekObject[] = getWeeksOfCreatedRepositories(
-      result.githubActiveContributionWeeks.contributionsCollection
+      result.activeContributionWeeks.contributionsCollection
         .repositoryContributions.nodes,
     );
 
     // Commit
     const commitWeeks: WeekObject[] = getWeeksOfContributions(
-      result.githubActiveContributionWeeks.contributionsCollection
+      result.activeContributionWeeks.contributionsCollection
         .commitContributionsByRepository,
     );
 
     // Issue
     const issueWeeks: WeekObject[] = getWeeksOfContributions(
-      result.githubActiveContributionWeeks.contributionsCollection
+      result.activeContributionWeeks.contributionsCollection
         .issueContributionsByRepository,
     );
 
     // Pull Request
     const pullRequestWeeks: WeekObject[] = getWeeksOfContributions(
-      result.githubActiveContributionWeeks.contributionsCollection
+      result.activeContributionWeeks.contributionsCollection
         .pullRequestContributionsByRepository,
     );
 
@@ -117,8 +117,8 @@ export class githubActiveContributionWeeksQuery extends GithubQuery {
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface githubActiveContributionWeeksResult extends GithubResponse {
-  githubActiveContributionWeeks: {
+export interface ActiveContributionWeeksResult extends GithubResponse {
+  activeContributionWeeks: {
     contributionsCollection: {
       repositoryContributions: {
         nodes: CreatedRepositories[];
@@ -133,6 +133,6 @@ export interface githubActiveContributionWeeksResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface githubActiveContributionWeeksData extends GithubData {
+export interface ActiveContributionWeeksData extends GithubData {
   githubActiveContributionWeeks: number;
 }
