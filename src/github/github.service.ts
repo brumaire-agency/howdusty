@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { MetricName } from '@/metrics';
 import { GithubApi } from './github.api';
 import {
-  ActiveContributionWeeksQuery,
-  ContributedRepositoryCountQuery,
-  IssuePullRequestRatioQuery,
-  MaintainedRepositoryCountQuery,
-  TotalPullRequestsQuery,
-  TotalIssuesQuery,
+  githubActiveContributionWeeksQuery,
+  githubContributedRepositoryCountQuery,
+  githubIssuePullRequestRatioQuery,
+  githubMaintainedRepositoryCountQuery,
+  githubTotalPullRequestsQuery,
+  githubTotalIssuesQuery,
   UserInfoQuery,
   GithubQueries,
 } from './queries';
@@ -19,14 +19,16 @@ export class GithubService {
 
   constructor(private api: GithubApi) {
     this.allQueries = {
-      [MetricName.activeContributionWeeks]: new ActiveContributionWeeksQuery(),
-      [MetricName.contributedRepositoryCount]:
-        new ContributedRepositoryCountQuery(),
-      [MetricName.issuePullRequestRatio]: new IssuePullRequestRatioQuery(),
-      [MetricName.maintainedRepositoryCount]:
-        new MaintainedRepositoryCountQuery(),
-      [MetricName.totalPullRequests]: new TotalPullRequestsQuery(),
-      [MetricName.totalIssues]: new TotalIssuesQuery(),
+      [MetricName.githubActiveContributionWeeks]:
+        new githubActiveContributionWeeksQuery(),
+      [MetricName.githubContributedRepositoryCount]:
+        new githubContributedRepositoryCountQuery(),
+      [MetricName.githubIssuePullRequestRatio]:
+        new githubIssuePullRequestRatioQuery(),
+      [MetricName.githubMaintainedRepositoryCount]:
+        new githubMaintainedRepositoryCountQuery(),
+      [MetricName.githubTotalPullRequests]: new githubTotalPullRequestsQuery(),
+      [MetricName.githubTotalIssues]: new githubTotalIssuesQuery(),
       ['userInfo']: new UserInfoQuery(),
     };
   }

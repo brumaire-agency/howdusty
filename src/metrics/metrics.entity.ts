@@ -14,40 +14,40 @@ export class Metrics implements Metricable {
   @PrimaryColumn()
   id: string;
 
-  @Column({ name: 'total_pull_requests' })
-  totalPullRequests: number;
+  @Column({ name: 'github_total_pull_requests' })
+  githubTotalPullRequests: number;
 
-  @Column({ name: 'total_issues' })
-  totalIssues: number;
+  @Column({ name: 'github_total_issues' })
+  githubTotalIssues: number;
 
-  @Column({ name: 'contributed_repository_count' })
-  contributedRepositoryCount: number;
+  @Column({ name: 'github_contributed_repository_count' })
+  githubContributedRepositoryCount: number;
 
-  @Column({ name: 'maintained_repository_count' })
-  maintainedRepositoryCount: number;
+  @Column({ name: 'github_maintained_repository_count' })
+  githubMaintainedRepositoryCount: number;
 
   @Column({
-    name: 'issue_pull_request_ratio',
+    name: 'github_issue_pull_request_ratio',
     type: 'decimal',
     precision: 6,
     scale: 2,
   })
-  issuePullRequestRatio: number;
+  githubIssuePullRequestRatio: number;
 
-  @Column({ name: 'active_contribution_weeks' })
-  activeContributionWeeks: number;
+  @Column({ name: 'github_active_contribution_weeks' })
+  githubActiveContributionWeeks: number;
 
-  @Column({ name: 'collected_grant' })
-  collectedGrant: number;
+  @Column({ name: 'onlydust_collected_grant' })
+  onlydustCollectedGrant: number;
 
-  @Column({ name: 'mean_grant_per_project' })
-  meanGrantPerProject: number;
+  @Column({ name: 'onlydust_mean_grant_per_project' })
+  onlydustMeanGrantPerProject: number;
 
-  @Column({ name: 'contributed_project_count' })
-  contributedProjectCount: number;
+  @Column({ name: 'onlydust_contributed_project_count' })
+  onlydustContributedProjectCount: number;
 
-  @Column({ name: 'contribution_count' })
-  contributionCount: number;
+  @Column({ name: 'onlydust_contribution_count' })
+  onlydustContributionCount: number;
 
   @OneToOne(() => Contributor, (contributor) => contributor.metrics)
   @JoinColumn()

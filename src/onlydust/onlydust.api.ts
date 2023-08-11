@@ -39,9 +39,9 @@ export class OnlydustApi {
   }
 
   /**
-   * Gets collectedGrant for all users from OnlyDust.
+   * Gets onlydustCollectedGrant for all users from OnlyDust.
    */
-  async getCollectedGrants(
+  async getonlydustCollectedGrants(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     const client = await this.getClient();
@@ -71,7 +71,7 @@ export class OnlydustApi {
     await client.end();
 
     return {
-      collectedGrant: result.rows.reduce(
+      onlydustCollectedGrant: result.rows.reduce(
         (record, item) => ({
           ...record,
           [item.login]: item.collected_grant ? item.collected_grant : 0,
@@ -84,7 +84,7 @@ export class OnlydustApi {
   /**
    * Gets the mean of collected grants per project for all users from OnlyDust.
    */
-  async getMeanGrantPerProject(
+  async getonlydustMeanGrantPerProject(
     usernames: string[],
   ): Promise<Record<string, number>> {
     const client = await this.getClient();
@@ -113,7 +113,7 @@ export class OnlydustApi {
     await client.end();
 
     return {
-      meanGrantPerProject: result.rows.reduce(
+      onlydustMeanGrantPerProject: result.rows.reduce(
         (record, item) => ({
           ...record,
           [item.login]: item.total_grants
@@ -128,7 +128,7 @@ export class OnlydustApi {
   /**
    * Gets the number of unique projects each contributor has contributed to.
    */
-  async getContributedProjectCount(
+  async getonlydustContributedProjectCount(
     usernames: string[],
   ): Promise<Record<string, number>> {
     const client = await this.getClient();
@@ -147,7 +147,7 @@ export class OnlydustApi {
     await client.end();
 
     return {
-      contributedProjectCount: result.rows.reduce(
+      onlydustContributedProjectCount: result.rows.reduce(
         (record, item) => ({
           ...record,
           [item.login]: item.project_count || 0,
@@ -160,7 +160,7 @@ export class OnlydustApi {
   /**
    * Gets the number of missions each contributor.
    */
-  async getContributionCount(
+  async getonlydustContributionCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     const client = await this.getClient();
@@ -179,7 +179,7 @@ export class OnlydustApi {
     await client.end();
 
     return {
-      contributionCount: result.rows.reduce(
+      onlydustContributionCount: result.rows.reduce(
         (record, item) => ({
           ...record,
           [item.login]: item.contribution_count ? item.contribution_count : 0,

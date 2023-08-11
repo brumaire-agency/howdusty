@@ -7,8 +7,8 @@ export class OnlydustApiMock {
     { id: '3', login: 'username3' },
   ];
 
-  collectedGrants = {
-    collectedGrant: {
+  onlydustCollectedGrants = {
+    onlydustCollectedGrant: {
       username1: 100,
       username2: 300,
       username3: 500,
@@ -23,13 +23,13 @@ export class OnlydustApiMock {
   }
 
   /**
-   * Gets collectedGrant for all users from OnlyDust.
+   * Gets onlydustCollectedGrant for all users from OnlyDust.
    */
-  getCollectedGrants(
+  getonlydustCollectedGrants(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
-      collectedGrant: usernames.reduce(
+      onlydustCollectedGrant: usernames.reduce(
         (record, username) => ({
           ...record,
           [username]: 100,
@@ -40,13 +40,13 @@ export class OnlydustApiMock {
   }
 
   /**
-   * Gets meanGrantPerProject for all users from OnlyDust.
+   * Gets onlydustMeanGrantPerProject for all users from OnlyDust.
    */
-  getMeanGrantPerProject(
+  getonlydustMeanGrantPerProject(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
-      meanGrantPerProject: usernames.reduce(
+      onlydustMeanGrantPerProject: usernames.reduce(
         (record, username) => ({
           ...record,
           [username]: 10,
@@ -59,11 +59,11 @@ export class OnlydustApiMock {
   /**
    * Gets the number of unique projects each contributor has contributed to.
    */
-  getContributedProjectCount(
+  getonlydustContributedProjectCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
-      contributedProjectCount: usernames.reduce(
+      onlydustContributedProjectCount: usernames.reduce(
         (record, username) => ({
           ...record,
           [username]: 5,
@@ -76,11 +76,11 @@ export class OnlydustApiMock {
   /**
    * Gets the number of missions each contributor.
    */
-  getContributionCount(
+  getonlydustContributionCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
-      contributionCount: usernames.reduce(
+      onlydustContributionCount: usernames.reduce(
         (record, username) => ({
           ...record,
           [username]: 20,

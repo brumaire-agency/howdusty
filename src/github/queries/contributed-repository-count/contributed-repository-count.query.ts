@@ -1,16 +1,16 @@
 import { GithubData, GithubQuery, GithubResponse } from '../github.query';
 import { getOpenSourceRepositories, RepositoryQuery } from '../helpers';
 
-export class ContributedRepositoryCountQuery extends GithubQuery<
-  ContributedRepositoryCountResult,
-  ContributedRepositoryCountData
+export class githubContributedRepositoryCountQuery extends GithubQuery<
+  githubContributedRepositoryCountResult,
+  githubContributedRepositoryCountData
 > {
   /**
    * @inheritDoc
    */
   buildQuery(username: string): string {
     return `
-      contributedRepositoryCount: user(login: "${username}") {
+      githubContributedRepositoryCount: user(login: "${username}") {
         repositoriesContributedTo(first: 100, privacy: PUBLIC) {
           nodes {
             licenseInfo {
@@ -24,15 +24,15 @@ export class ContributedRepositoryCountQuery extends GithubQuery<
   }
 
   parseResult(
-    result: ContributedRepositoryCountResult,
-  ): ContributedRepositoryCountData {
+    result: githubContributedRepositoryCountResult,
+  ): githubContributedRepositoryCountData {
     const openSourceRepositories = getOpenSourceRepositories(
-      result.contributedRepositoryCount.repositoriesContributedTo.nodes,
+      result.githubContributedRepositoryCount.repositoriesContributedTo.nodes,
     );
     const totalOpenSourceRepositories = openSourceRepositories.length;
 
     return {
-      contributedRepositoryCount: totalOpenSourceRepositories,
+      githubContributedRepositoryCount: totalOpenSourceRepositories,
     };
   }
 }
@@ -40,8 +40,8 @@ export class ContributedRepositoryCountQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface ContributedRepositoryCountResult extends GithubResponse {
-  contributedRepositoryCount: {
+export interface githubContributedRepositoryCountResult extends GithubResponse {
+  githubContributedRepositoryCount: {
     repositoriesContributedTo: {
       nodes: RepositoryQuery[];
     };
@@ -51,6 +51,6 @@ export interface ContributedRepositoryCountResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface ContributedRepositoryCountData extends GithubData {
-  contributedRepositoryCount: number;
+export interface githubContributedRepositoryCountData extends GithubData {
+  githubContributedRepositoryCount: number;
 }

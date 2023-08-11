@@ -1,11 +1,11 @@
 import response from '../github-response.example.json';
-import { ActiveContributionWeeksQuery } from './active-contribution-weeks.query';
+import { githubActiveContributionWeeksQuery } from './active-contribution-weeks.query';
 
 describe('Active Contribution Weeks Query', () => {
-  const query = new ActiveContributionWeeksQuery();
+  const query = new githubActiveContributionWeeksQuery();
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);
-    expect(typeof data.activeContributionWeeks).toBe('number');
+    expect(typeof data.githubActiveContributionWeeks).toBe('number');
   });
 });

@@ -39,14 +39,26 @@ describe('OnlydustService', () => {
         'username3',
       ]);
       expect(result).toStrictEqual({
-        collectedGrant: { username1: 100, username2: 100, username3: 100 },
-        meanGrantPerProject: { username1: 10, username2: 10, username3: 10 },
-        contributedProjectCount: {
+        onlydustCollectedGrant: {
+          username1: 100,
+          username2: 100,
+          username3: 100,
+        },
+        onlydustMeanGrantPerProject: {
+          username1: 10,
+          username2: 10,
+          username3: 10,
+        },
+        onlydustContributedProjectCount: {
           username1: 5,
           username2: 5,
           username3: 5,
         },
-        contributionCount: { username1: 20, username2: 20, username3: 20 },
+        onlydustContributionCount: {
+          username1: 20,
+          username2: 20,
+          username3: 20,
+        },
       });
     });
   });

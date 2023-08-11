@@ -3,9 +3,9 @@ import { RepositoriesQuery } from '@/github/queries/helpers';
 import { getContributionsCount } from './helpers';
 import { ContributionsByRepository } from './types';
 
-export class TotalIssuesQuery extends GithubQuery<
-  TotalIssuesResult,
-  TotalIssuesData
+export class githubTotalIssuesQuery extends GithubQuery<
+  githubTotalIssuesResult,
+  githubTotalIssuesData
 > {
   buildQuery(username: string): string {
     return `
@@ -64,7 +64,7 @@ export class TotalIssuesQuery extends GithubQuery<
     `;
   }
 
-  parseResult(result: TotalIssuesResult): TotalIssuesData {
+  parseResult(result: githubTotalIssuesResult): githubTotalIssuesData {
     // Issue
     const issueContributionsCount: number = getContributionsCount(
       result.totalContributions.contributionsCollection
@@ -72,7 +72,7 @@ export class TotalIssuesQuery extends GithubQuery<
     );
 
     return {
-      totalIssues: issueContributionsCount,
+      githubTotalIssues: issueContributionsCount,
     };
   }
 }
@@ -80,7 +80,7 @@ export class TotalIssuesQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface TotalIssuesResult extends GithubResponse {
+export interface githubTotalIssuesResult extends GithubResponse {
   totalContributions: {
     contributionsCollection: {
       repositoryContributions: {
@@ -96,6 +96,6 @@ export interface TotalIssuesResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface TotalIssuesData extends GithubData {
-  totalIssues: number;
+export interface githubTotalIssuesData extends GithubData {
+  githubTotalIssues: number;
 }

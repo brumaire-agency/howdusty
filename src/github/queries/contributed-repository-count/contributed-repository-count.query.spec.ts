@@ -1,11 +1,11 @@
 import response from '../github-response.example.json';
-import { ContributedRepositoryCountQuery } from './contributed-repository-count.query';
+import { githubContributedRepositoryCountQuery } from './contributed-repository-count.query';
 
 describe('Contributed Repository Count Query', () => {
-  const query = new ContributedRepositoryCountQuery();
+  const query = new githubContributedRepositoryCountQuery();
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);
-    expect(typeof data.contributedRepositoryCount).toBe('number');
+    expect(typeof data.githubContributedRepositoryCount).toBe('number');
   });
 });

@@ -36,16 +36,16 @@ describe('MetricsService', () => {
         await metricsService.getMetricsForUsers(['username']),
       ).toStrictEqual({
         username: {
-          activeContributionWeeks: 4,
-          contributedRepositoryCount: 6,
-          issuePullRequestRatio: 0.01,
-          maintainedRepositoryCount: 5,
-          totalIssues: 304,
-          totalPullRequests: 618,
-          collectedGrant: 100,
-          meanGrantPerProject: 10,
-          contributedProjectCount: 5,
-          contributionCount: 20,
+          githubActiveContributionWeeks: 4,
+          githubContributedRepositoryCount: 6,
+          githubIssuePullRequestRatio: 0.01,
+          githubMaintainedRepositoryCount: 5,
+          githubTotalIssues: 304,
+          githubTotalPullRequests: 618,
+          onlydustCollectedGrant: 100,
+          onlydustMeanGrantPerProject: 10,
+          onlydustContributedProjectCount: 5,
+          onlydustContributionCount: 20,
         },
       });
     });

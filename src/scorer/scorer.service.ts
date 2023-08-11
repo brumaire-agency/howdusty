@@ -7,16 +7,16 @@ import { Metricable, MetricName } from '@/metrics';
 @Injectable()
 export class ScorerService {
   private weights: Metricable = {
-    [MetricName.totalPullRequests]: 1,
-    [MetricName.totalIssues]: 1,
-    [MetricName.contributedRepositoryCount]: 1,
-    [MetricName.maintainedRepositoryCount]: 1,
-    [MetricName.issuePullRequestRatio]: 1,
-    [MetricName.activeContributionWeeks]: 1,
-    [MetricName.collectedGrant]: 1,
-    [MetricName.meanGrantPerProject]: 1,
-    [MetricName.contributedProjectCount]: 1,
-    [MetricName.contributionCount]: 1,
+    [MetricName.githubTotalPullRequests]: 1,
+    [MetricName.githubTotalIssues]: 1,
+    [MetricName.githubContributedRepositoryCount]: 1,
+    [MetricName.githubMaintainedRepositoryCount]: 1,
+    [MetricName.githubIssuePullRequestRatio]: 1,
+    [MetricName.githubActiveContributionWeeks]: 1,
+    [MetricName.onlydustCollectedGrant]: 1,
+    [MetricName.onlydustMeanGrantPerProject]: 1,
+    [MetricName.onlydustContributedProjectCount]: 1,
+    [MetricName.onlydustContributionCount]: 1,
   };
 
   /**

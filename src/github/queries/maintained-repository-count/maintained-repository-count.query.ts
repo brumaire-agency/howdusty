@@ -4,16 +4,16 @@ import {
   RepositoryQuery,
 } from '@/github/queries/helpers';
 
-export class MaintainedRepositoryCountQuery extends GithubQuery<
-  MaintainedRepositoryCountResult,
-  MaintainedRepositoryCountData
+export class githubMaintainedRepositoryCountQuery extends GithubQuery<
+  githubMaintainedRepositoryCountResult,
+  githubMaintainedRepositoryCountData
 > {
   /**
    * @inheritDoc
    */
   buildQuery(username: string): string {
     return `
-      maintainedRepositoryCount: user(login: "${username}") {
+      githubMaintainedRepositoryCount: user(login: "${username}") {
         repositories(first: 100, privacy: PUBLIC) {
           nodes {
               licenseInfo {
@@ -27,15 +27,15 @@ export class MaintainedRepositoryCountQuery extends GithubQuery<
   }
 
   parseResult(
-    result: MaintainedRepositoryCountResult,
-  ): MaintainedRepositoryCountData {
+    result: githubMaintainedRepositoryCountResult,
+  ): githubMaintainedRepositoryCountData {
     const openSourceRepositories = getOpenSourceRepositories(
-      result.maintainedRepositoryCount.repositories.nodes,
+      result.githubMaintainedRepositoryCount.repositories.nodes,
     );
     const totalOpenSourceRepositories = openSourceRepositories.length;
 
     return {
-      maintainedRepositoryCount: totalOpenSourceRepositories,
+      githubMaintainedRepositoryCount: totalOpenSourceRepositories,
     };
   }
 }
@@ -43,8 +43,8 @@ export class MaintainedRepositoryCountQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface MaintainedRepositoryCountResult extends GithubResponse {
-  maintainedRepositoryCount: {
+export interface githubMaintainedRepositoryCountResult extends GithubResponse {
+  githubMaintainedRepositoryCount: {
     repositories: {
       nodes: RepositoryQuery[];
     };
@@ -54,6 +54,6 @@ export interface MaintainedRepositoryCountResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface MaintainedRepositoryCountData extends GithubData {
-  maintainedRepositoryCount: number;
+export interface githubMaintainedRepositoryCountData extends GithubData {
+  githubMaintainedRepositoryCount: number;
 }

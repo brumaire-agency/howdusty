@@ -10,10 +10,10 @@ import {
   WeekObject,
 } from './types';
 
-export class ActiveContributionWeeksQuery extends GithubQuery {
+export class githubActiveContributionWeeksQuery extends GithubQuery {
   buildQuery(username: string): string {
     return `
-      activeContributionWeeks: user(login: "${username}") {
+      githubActiveContributionWeeks: user(login: "${username}") {
         contributionsCollection {
           repositoryContributions(first: 100) {
             nodes {
@@ -75,29 +75,29 @@ export class ActiveContributionWeeksQuery extends GithubQuery {
   }
 
   parseResult(
-    result: ActiveContributionWeeksResult,
-  ): ActiveContributionWeeksData {
+    result: githubActiveContributionWeeksResult,
+  ): githubActiveContributionWeeksData {
     // Repository
     const repositoryWeeks: WeekObject[] = getWeeksOfCreatedRepositories(
-      result.activeContributionWeeks.contributionsCollection
+      result.githubActiveContributionWeeks.contributionsCollection
         .repositoryContributions.nodes,
     );
 
     // Commit
     const commitWeeks: WeekObject[] = getWeeksOfContributions(
-      result.activeContributionWeeks.contributionsCollection
+      result.githubActiveContributionWeeks.contributionsCollection
         .commitContributionsByRepository,
     );
 
     // Issue
     const issueWeeks: WeekObject[] = getWeeksOfContributions(
-      result.activeContributionWeeks.contributionsCollection
+      result.githubActiveContributionWeeks.contributionsCollection
         .issueContributionsByRepository,
     );
 
     // Pull Request
     const pullRequestWeeks: WeekObject[] = getWeeksOfContributions(
-      result.activeContributionWeeks.contributionsCollection
+      result.githubActiveContributionWeeks.contributionsCollection
         .pullRequestContributionsByRepository,
     );
 
@@ -109,7 +109,7 @@ export class ActiveContributionWeeksQuery extends GithubQuery {
     ]);
 
     return {
-      activeContributionWeeks: allWeeks.length,
+      githubActiveContributionWeeks: allWeeks.length,
     };
   }
 }
@@ -117,8 +117,8 @@ export class ActiveContributionWeeksQuery extends GithubQuery {
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface ActiveContributionWeeksResult extends GithubResponse {
-  activeContributionWeeks: {
+export interface githubActiveContributionWeeksResult extends GithubResponse {
+  githubActiveContributionWeeks: {
     contributionsCollection: {
       repositoryContributions: {
         nodes: CreatedRepositories[];
@@ -133,6 +133,6 @@ export interface ActiveContributionWeeksResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface ActiveContributionWeeksData extends GithubData {
-  activeContributionWeeks: number;
+export interface githubActiveContributionWeeksData extends GithubData {
+  githubActiveContributionWeeks: number;
 }

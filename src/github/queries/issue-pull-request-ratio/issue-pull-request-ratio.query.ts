@@ -2,16 +2,16 @@ import { GithubData, GithubQuery, GithubResponse } from '../github.query';
 import { getContributionsCount } from './helpers';
 import { ContributionsByRepository } from './types';
 
-export class IssuePullRequestRatioQuery extends GithubQuery<
-  IssuePullRequestRatioResult,
-  IssuePullRequestRatioData
+export class githubIssuePullRequestRatioQuery extends GithubQuery<
+  githubIssuePullRequestRatioResult,
+  githubIssuePullRequestRatioData
 > {
   /**
    * @inheritDoc
    */
   buildQuery(username: string): string {
     return `
-      issuePullRequestRatio: user(login: "${username}") {
+      githubIssuePullRequestRatio: user(login: "${username}") {
         contributionsCollection {
           issueContributionsByRepository {
             contributions(first: 100) {
@@ -42,21 +42,23 @@ export class IssuePullRequestRatioQuery extends GithubQuery<
     `;
   }
 
-  parseResult(result: IssuePullRequestRatioResult): IssuePullRequestRatioData {
+  parseResult(
+    result: githubIssuePullRequestRatioResult,
+  ): githubIssuePullRequestRatioData {
     // Issue
     const issueContributionsCount: number = getContributionsCount(
-      result.issuePullRequestRatio.contributionsCollection
+      result.githubIssuePullRequestRatio.contributionsCollection
         .issueContributionsByRepository,
     );
 
     // Pull Request
     const pullRequestContributionsCount: number = getContributionsCount(
-      result.issuePullRequestRatio.contributionsCollection
+      result.githubIssuePullRequestRatio.contributionsCollection
         .pullRequestContributionsByRepository,
     );
 
     return {
-      issuePullRequestRatio:
+      githubIssuePullRequestRatio:
         issueContributionsCount === 0 && pullRequestContributionsCount === 0
           ? 0
           : issueContributionsCount /
@@ -68,8 +70,8 @@ export class IssuePullRequestRatioQuery extends GithubQuery<
 /**
  * Represents the object returned by the github graphql api.
  */
-export interface IssuePullRequestRatioResult extends GithubResponse {
-  issuePullRequestRatio: {
+export interface githubIssuePullRequestRatioResult extends GithubResponse {
+  githubIssuePullRequestRatio: {
     contributionsCollection: {
       issueContributionsByRepository: ContributionsByRepository[];
       pullRequestContributionsByRepository: ContributionsByRepository[];
@@ -80,6 +82,6 @@ export interface IssuePullRequestRatioResult extends GithubResponse {
 /**
  * Represents the data associated with the metric.
  */
-export interface IssuePullRequestRatioData extends GithubData {
-  issuePullRequestRatio: number;
+export interface githubIssuePullRequestRatioData extends GithubData {
+  githubIssuePullRequestRatio: number;
 }

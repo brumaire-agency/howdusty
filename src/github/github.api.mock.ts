@@ -23,13 +23,16 @@ export class GithubApiMock {
       });
     }
     return Promise.resolve({
-      totalPullRequests: contributor.metrics.totalPullRequests,
-      totalIssues: contributor.metrics.totalIssues,
-      contributedRepositoryCount:
-        contributor.metrics.contributedRepositoryCount,
-      maintainedRepositoryCount: contributor.metrics.maintainedRepositoryCount,
-      issuePullRequestRatio: contributor.metrics.issuePullRequestRatio,
-      activeContributionWeeks: contributor.metrics.activeContributionWeeks,
+      githubTotalPullRequests: contributor.metrics.githubTotalPullRequests,
+      githubTotalIssues: contributor.metrics.githubTotalIssues,
+      githubContributedRepositoryCount:
+        contributor.metrics.githubContributedRepositoryCount,
+      githubMaintainedRepositoryCount:
+        contributor.metrics.githubMaintainedRepositoryCount,
+      githubIssuePullRequestRatio:
+        contributor.metrics.githubIssuePullRequestRatio,
+      githubActiveContributionWeeks:
+        contributor.metrics.githubActiveContributionWeeks,
     });
   }
 }

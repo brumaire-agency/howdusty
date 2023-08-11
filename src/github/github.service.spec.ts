@@ -41,12 +41,12 @@ describe('GithubService', () => {
       const metrics = Object.values(MetricName) as MetricName[];
       expect(await github.getMetricsForUser('username', metrics)).toStrictEqual(
         {
-          activeContributionWeeks: 4,
-          contributedRepositoryCount: 6,
-          issuePullRequestRatio: 0.01,
-          maintainedRepositoryCount: 5,
-          totalIssues: 304,
-          totalPullRequests: 618,
+          githubActiveContributionWeeks: 4,
+          githubContributedRepositoryCount: 6,
+          githubIssuePullRequestRatio: 0.01,
+          githubMaintainedRepositoryCount: 5,
+          githubTotalIssues: 304,
+          githubTotalPullRequests: 618,
         },
       );
     });
