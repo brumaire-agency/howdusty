@@ -24,7 +24,7 @@ export class MetricsFactory {
         [MetricName.collectedGrant]: faker.number.int(5000),
         [MetricName.meanGrantPerProject]: faker.number.int(500),
         [MetricName.contributedProjectCount]: faker.number.int(10),
-        [MetricName.missionCount]: faker.number.int(20),
+        [MetricName.contributionCount]: faker.number.int(20),
         contributor: ContributorFactory.generate(),
       } as Metrics,
       preset,

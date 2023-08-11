@@ -46,8 +46,8 @@ export class Metrics implements Metricable {
   @Column({ name: 'contributed_project_count' })
   contributedProjectCount: number;
 
-  @Column({ name: 'mission_count' })
-  missionCount: number;
+  @Column({ name: 'contribution_count' })
+  contributionCount: number;
 
   @OneToOne(() => Contributor, (contributor) => contributor.metrics)
   @JoinColumn()

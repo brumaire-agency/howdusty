@@ -17,7 +17,7 @@ export interface ContributorMetrics {
   collectedGrant: number;
   meanGrantPerProject: number;
   contributedProjectCount: number;
-  missionCount: number;
+  contributionCount: number;
 }
 
 export interface ContributorModel extends ContributorInfo {
