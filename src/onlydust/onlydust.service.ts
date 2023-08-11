@@ -17,12 +17,12 @@ export class OnlydustService {
     const contributedProjectCount = await this.api.getContributedProjectCount(
       usernames,
     );
-    const missionCount = await this.api.getMissionCount(usernames);
+    const contributionCount = await this.api.getContributionCount(usernames);
     const allMetrics = {
       ...collectedGrants,
       ...meanGrantPerProject,
       ...contributedProjectCount,
-      ...missionCount,
+      ...contributionCount,
     };
     return allMetrics;
   }

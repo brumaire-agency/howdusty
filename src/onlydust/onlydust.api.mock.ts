@@ -76,11 +76,11 @@ export class OnlydustApiMock {
   /**
    * Gets the number of missions each contributor.
    */
-  getMissionCount(
+  getContributionCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
-      missionCount: usernames.reduce(
+      contributionCount: usernames.reduce(
         (record, username) => ({
           ...record,
           [username]: 20,

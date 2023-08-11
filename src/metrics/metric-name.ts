@@ -8,5 +8,5 @@ export enum MetricName {
   collectedGrant = 'collectedGrant',
   meanGrantPerProject = 'meanGrantPerProject',
   contributedProjectCount = 'contributedProjectCount',
-  missionCount = 'missionCount',
+  contributionCount = 'contributionCount',
 }

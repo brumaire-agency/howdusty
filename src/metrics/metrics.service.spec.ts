@@ -45,7 +45,7 @@ describe('MetricsService', () => {
           collectedGrant: 100,
           meanGrantPerProject: 10,
           contributedProjectCount: 5,
-          missionCount: 20,
+          contributionCount: 20,
         },
       });
     });

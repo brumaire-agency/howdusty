@@ -46,7 +46,7 @@ describe('OnlydustService', () => {
           username2: 5,
           username3: 5,
         },
-        missionCount: { username1: 20, username2: 20, username3: 20 },
+        contributionCount: { username1: 20, username2: 20, username3: 20 },
       });
     });
   });
