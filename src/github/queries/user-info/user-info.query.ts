@@ -10,7 +10,7 @@ export class UserInfoQuery extends GithubQuery<
   buildQuery(username: string): string {
     return `
       userInfo: user(login: "${username}") {
-        id
+        databaseId
         login
         name
         avatarUrl
@@ -20,7 +20,7 @@ export class UserInfoQuery extends GithubQuery<
 
   parseResult(result: UserInfoMetricResult): UserInfoData {
     return {
-      id: result.userInfo.id,
+      id: result.userInfo.databaseId.toString(),
       username: result.userInfo.login,
       name: result.userInfo.name,
       avatarUrl: result.userInfo.avatarUrl,
@@ -33,7 +33,7 @@ export class UserInfoQuery extends GithubQuery<
  */
 export interface UserInfoMetricResult extends GithubResponse {
   userInfo: {
-    id: string;
+    databaseId: number;
     login: string;
     name: string;
     avatarUrl: string;
