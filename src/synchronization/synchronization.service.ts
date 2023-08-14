@@ -58,6 +58,7 @@ export class SynchronizationService {
         githubRank: contributor.githubRank,
         onlydustScore: contributor.onlydustScore,
         onlydustRank: contributor.onlydustRank,
+        maxRank: contributor.maxRank,
       })),
     );
   }

@@ -9,6 +9,7 @@ export interface ContributorInfo {
   onlydustRank?: number;
   globalScore?: number;
   globalRank?: number;
+  maxRank?: number;
 }
 
 export interface ContributorMetrics {

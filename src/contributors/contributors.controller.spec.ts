@@ -70,6 +70,7 @@ describe('ContributorsController', () => {
       expect(response).toHaveProperty('onlydustScore');
       expect(response).toHaveProperty('globalRank');
       expect(response).toHaveProperty('globalScore');
+      expect(response).toHaveProperty('maxRank');
     });
 
     it('should return a contributor if it does exist', async () => {
