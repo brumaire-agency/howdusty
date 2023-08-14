@@ -70,6 +70,7 @@ export class ScorerService {
       githubRank: this.findRank(contributor, rankedScores.github),
       onlydustRank: this.findRank(contributor, rankedScores.onlydust),
       globalRank: this.findRank(contributor, rankedScores.global),
+      maxRank: contributors.length,
     }));
 
     return rankedContributors;

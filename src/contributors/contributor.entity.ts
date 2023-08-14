@@ -51,6 +51,9 @@ export class Contributor {
   @Column({ name: 'global_rank', nullable: true })
   globalRank?: number;
 
+  @Column({ name: 'max_rank', nullable: true })
+  maxRank?: number;
+
   @OneToOne(() => Metrics, (metric) => metric.contributor)
   metrics?: Relation<Metrics>;
 }

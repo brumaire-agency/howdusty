@@ -51,6 +51,7 @@ describe('Scorer', () => {
         expect(contributor.githubScore).toBeGreaterThanOrEqual(0);
         expect(contributor.onlydustScore).toBeGreaterThanOrEqual(0);
         expect(contributor.globalScore).toBeGreaterThanOrEqual(0);
+        expect(contributor.maxRank).toEqual(10);
       }
     });
 
