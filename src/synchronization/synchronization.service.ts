@@ -1,4 +1,4 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import { Inject, Injectable, Logger, forwardRef } from '@nestjs/common';
 import { Contributor, ContributorsService } from '@/contributors';
 import { ScorerService } from '@/scorer';
 import { MetricsService, Metrics } from '@/metrics';
@@ -6,6 +6,8 @@ import { GithubService } from '@/github';
 
 @Injectable()
 export class SynchronizationService {
+  private readonly logger = new Logger(SynchronizationService.name);
+
   constructor(
     @Inject(forwardRef(() => ContributorsService))
     private contributors: ContributorsService,
@@ -30,7 +32,7 @@ export class SynchronizationService {
     const metrics: Metrics[] = [];
     const usersMetrics = await this.metrics.getMetricsForUsers(usernames);
     for (const [index, username] of usernames.entries()) {
-      console.log(
+      this.logger.log(
         `[${index + 1}/${usernames.length}] syncing info for user ${username}`,
       );
       const userInfo = await this.contributors.findOneByUsername(username);

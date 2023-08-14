@@ -2,6 +2,7 @@ import { ContributorsService } from '@/contributors';
 import { UserNotFoundException } from '@/github';
 import { OnlydustService } from '@/onlydust';
 import { SynchronizationService } from '@/synchronization';
+import { Logger } from '@nestjs/common';
 import { Command, CommandRunner } from 'nest-commander';
 
 /**
@@ -11,6 +12,8 @@ import { Command, CommandRunner } from 'nest-commander';
   name: 'onlydust:import',
 })
 export class OnlydustImportCommand extends CommandRunner {
+  private readonly logger = new Logger(OnlydustImportCommand.name);
+
   constructor(
     private contributors: ContributorsService,
     private onlydust: OnlydustService,
@@ -43,15 +46,15 @@ export class OnlydustImportCommand extends CommandRunner {
         const user = await this.synchronization.synchronizeUser(
           newOnlydustUsernames[key],
         );
-        console.log(
+        this.logger.log(
           `synchronizing ${user.username}, ${parseInt(key) + 1}/${
             newOnlydustUsernames.length
           }`,
         );
       } catch (error) {
         if (error instanceof UserNotFoundException) {
-          console.log(error.message);
-          console.log(
+          this.logger.error(error.message);
+          this.logger.warn(
             `warning: could not synchronize ${newOnlydustUsernames[key]}`,
           );
         } else {
