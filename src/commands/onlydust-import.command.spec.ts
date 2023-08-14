@@ -8,6 +8,7 @@ import {
 } from '@/onlydust';
 import { SynchronizationTestingModule } from '@/synchronization';
 import { OnlydustImportCommand } from './onlydust-import.command';
+import { Logger } from '@nestjs/common';
 
 describe('OnlydustImportCommand', () => {
   let command: OnlydustImportCommand;
@@ -30,7 +31,7 @@ describe('OnlydustImportCommand', () => {
   });
 
   it('should get onlydust users and synchronizes them', async () => {
-    const logSpy = jest.spyOn(global.console, 'log');
+    const logSpy = jest.spyOn(Logger.prototype, 'log');
     await command.run();
     expect(logSpy).toHaveBeenNthCalledWith(
       1,

@@ -9,6 +9,7 @@ import {
 } from '@/contributors';
 import { SynchronizationTestingModule } from '@/synchronization';
 import { SynchronizeContributorCommand } from './synchronize-contributor.command';
+import { Logger } from '@nestjs/common';
 
 describe('SynchronizeContributorCommand', () => {
   let command: SynchronizeContributorCommand;
@@ -32,7 +33,7 @@ describe('SynchronizeContributorCommand', () => {
     await contributorsRepository.save(
       ContributorFactory.generateContributorInfo({ username: 'username' }),
     );
-    const logSpy = jest.spyOn(global.console, 'log');
+    const logSpy = jest.spyOn(Logger.prototype, 'log');
     await command.run(['username']);
     expect(logSpy).toHaveBeenCalledWith('1 users have been synchronized');
     logSpy.mockRestore();
@@ -43,7 +44,7 @@ describe('SynchronizeContributorCommand', () => {
     await contributorsRepository.save(
       ContributorFactory.generateManyContributorInfo(3),
     );
-    const logSpy = jest.spyOn(global.console, 'log');
+    const logSpy = jest.spyOn(Logger.prototype, 'log');
     await command.run();
     expect(logSpy).toHaveBeenCalledWith(
       `${contributorsRepository.contributors.length} users have been synchronized`,
