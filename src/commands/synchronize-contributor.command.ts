@@ -1,5 +1,6 @@
 import { Command, CommandRunner } from 'nest-commander';
 import { SynchronizationService } from '@/synchronization';
+import { Logger } from '@nestjs/common';
 
 /**
  * Synchronize contributors with the github API.
@@ -8,12 +9,14 @@ import { SynchronizationService } from '@/synchronization';
   name: 'contributors:sync',
 })
 export class SynchronizeContributorCommand extends CommandRunner {
+  private readonly logger = new Logger(SynchronizeContributorCommand.name);
+
   constructor(private synchronization: SynchronizationService) {
     super();
   }
 
   async run(usernames?: string[]) {
     const users = await this.synchronization.synchronizeUsersMetrics(usernames);
-    console.log(`${users.length} users have been synchronized`);
+    this.logger.log(`${users.length} users have been synchronized`);
   }
 }
