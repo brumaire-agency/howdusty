@@ -109,7 +109,7 @@ export class ActiveContributionWeeksQuery extends GithubQuery {
     ]);
 
     return {
-      activeContributionWeeks: allWeeks.length,
+      githubActiveContributionWeeks: allWeeks.length,
     };
   }
 }
@@ -134,5 +134,5 @@ export interface ActiveContributionWeeksResult extends GithubResponse {
  * Represents the data associated with the metric.
  */
 export interface ActiveContributionWeeksData extends GithubData {
-  activeContributionWeeks: number;
+  githubActiveContributionWeeks: number;
 }

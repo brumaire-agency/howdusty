@@ -6,6 +6,6 @@ describe('Total Contributions Query', () => {
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);
-    expect(typeof data.totalIssues).toBe('number');
+    expect(typeof data.githubTotalIssues).toBe('number');
   });
 });

@@ -6,6 +6,6 @@ describe('Active Contribution Weeks Query', () => {
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);
-    expect(typeof data.activeContributionWeeks).toBe('number');
+    expect(typeof data.githubActiveContributionWeeks).toBe('number');
   });
 });

@@ -6,6 +6,6 @@ describe('Contributed Repository Count Query', () => {
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);
-    expect(typeof data.contributedRepositoryCount).toBe('number');
+    expect(typeof data.githubContributedRepositoryCount).toBe('number');
   });
 });

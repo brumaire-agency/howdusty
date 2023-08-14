@@ -19,14 +19,16 @@ export class GithubService {
 
   constructor(private api: GithubApi) {
     this.allQueries = {
-      [MetricName.activeContributionWeeks]: new ActiveContributionWeeksQuery(),
-      [MetricName.contributedRepositoryCount]:
+      [MetricName.githubActiveContributionWeeks]:
+        new ActiveContributionWeeksQuery(),
+      [MetricName.githubContributedRepositoryCount]:
         new ContributedRepositoryCountQuery(),
-      [MetricName.issuePullRequestRatio]: new IssuePullRequestRatioQuery(),
-      [MetricName.maintainedRepositoryCount]:
+      [MetricName.githubIssuePullRequestRatio]:
+        new IssuePullRequestRatioQuery(),
+      [MetricName.githubMaintainedRepositoryCount]:
         new MaintainedRepositoryCountQuery(),
-      [MetricName.totalPullRequests]: new TotalPullRequestsQuery(),
-      [MetricName.totalIssues]: new TotalIssuesQuery(),
+      [MetricName.githubTotalPullRequests]: new TotalPullRequestsQuery(),
+      [MetricName.githubTotalIssues]: new TotalIssuesQuery(),
       ['userInfo']: new UserInfoQuery(),
     };
   }

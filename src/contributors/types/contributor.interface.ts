@@ -12,16 +12,16 @@ export interface ContributorInfo {
 }
 
 export interface ContributorMetrics {
-  totalPullRequests: number;
-  totalIssues: number;
-  contributedRepositoryCount: number;
-  maintainedRepositoryCount: number;
-  issuePullRequestRatio: number;
-  activeContributionWeeks: number;
-  collectedGrant: number;
-  meanGrantPerProject: number;
-  contributedProjectCount: number;
-  contributionCount: number;
+  githubTotalPullRequests: number;
+  githubTotalIssues: number;
+  githubContributedRepositoryCount: number;
+  githubMaintainedRepositoryCount: number;
+  githubIssuePullRequestRatio: number;
+  githubActiveContributionWeeks: number;
+  onlydustCollectedGrant: number;
+  onlydustMeanGrantPerProject: number;
+  onlydustContributedProjectCount: number;
+  onlydustContributionCount: number;
 }
 
 export interface ContributorModel extends ContributorInfo {

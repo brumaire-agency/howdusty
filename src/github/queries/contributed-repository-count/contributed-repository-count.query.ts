@@ -32,7 +32,7 @@ export class ContributedRepositoryCountQuery extends GithubQuery<
     const totalOpenSourceRepositories = openSourceRepositories.length;
 
     return {
-      contributedRepositoryCount: totalOpenSourceRepositories,
+      githubContributedRepositoryCount: totalOpenSourceRepositories,
     };
   }
 }
@@ -52,5 +52,5 @@ export interface ContributedRepositoryCountResult extends GithubResponse {
  * Represents the data associated with the metric.
  */
 export interface ContributedRepositoryCountData extends GithubData {
-  contributedRepositoryCount: number;
+  githubContributedRepositoryCount: number;
 }

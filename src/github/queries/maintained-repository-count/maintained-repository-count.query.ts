@@ -35,7 +35,7 @@ export class MaintainedRepositoryCountQuery extends GithubQuery<
     const totalOpenSourceRepositories = openSourceRepositories.length;
 
     return {
-      maintainedRepositoryCount: totalOpenSourceRepositories,
+      githubMaintainedRepositoryCount: totalOpenSourceRepositories,
     };
   }
 }
@@ -55,5 +55,5 @@ export interface MaintainedRepositoryCountResult extends GithubResponse {
  * Represents the data associated with the metric.
  */
 export interface MaintainedRepositoryCountData extends GithubData {
-  maintainedRepositoryCount: number;
+  githubMaintainedRepositoryCount: number;
 }

@@ -56,7 +56,7 @@ export class IssuePullRequestRatioQuery extends GithubQuery<
     );
 
     return {
-      issuePullRequestRatio:
+      githubIssuePullRequestRatio:
         issueContributionsCount === 0 && pullRequestContributionsCount === 0
           ? 0
           : issueContributionsCount /
@@ -81,5 +81,5 @@ export interface IssuePullRequestRatioResult extends GithubResponse {
  * Represents the data associated with the metric.
  */
 export interface IssuePullRequestRatioData extends GithubData {
-  issuePullRequestRatio: number;
+  githubIssuePullRequestRatio: number;
 }

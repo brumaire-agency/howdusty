@@ -94,18 +94,18 @@ describe('ContributorsController', () => {
         avatarUrl: 'https://avatars.gi',
         metric: {
           totalContributions: faker.number.int(1000),
-          contributedRepositoryCount: faker.number.int(10),
-          maintainedRepositoryCount: faker.number.int(10),
-          issuePullRequestRatio: faker.number.float({
+          githubContributedRepositoryCount: faker.number.int(10),
+          githubMaintainedRepositoryCount: faker.number.int(10),
+          githubIssuePullRequestRatio: faker.number.float({
             min: 0.01,
             max: 0.99,
             precision: 0.01,
           }),
-          activeContributionWeeks: faker.number.int(10),
-          collectedGrant: faker.number.int(5000),
-          meanGrantPerProject: faker.number.int(500),
-          contributedProjectCount: faker.number.int(10),
-          contributionCount: faker.number.int(20),
+          githubActiveContributionWeeks: faker.number.int(10),
+          onlydustCollectedGrant: faker.number.int(5000),
+          onlydustMeanGrantPerProject: faker.number.int(500),
+          onlydustContributedProjectCount: faker.number.int(10),
+          onlydustContributionCount: faker.number.int(20),
         },
       };
       await repository.save([expectedContributor]);

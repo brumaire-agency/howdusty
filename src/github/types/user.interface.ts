@@ -3,10 +3,10 @@ export interface User {
   username: string;
   name?: string;
   avatarUrl: string;
-  totalPullRequests: number;
-  totalIssues: number;
-  contributedRepositoryCount: number;
-  maintainedRepositoryCount: number;
-  issuePullRequestRatio: number;
-  activeContributionWeeks: number;
+  githubTotalPullRequests: number;
+  githubTotalIssues: number;
+  githubContributedRepositoryCount: number;
+  githubMaintainedRepositoryCount: number;
+  githubIssuePullRequestRatio: number;
+  githubActiveContributionWeeks: number;
 }

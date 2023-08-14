@@ -7,16 +7,16 @@ import { Metricable, MetricName } from '@/metrics';
 @Injectable()
 export class ScorerService {
   private weights: Metricable = {
-    [MetricName.totalPullRequests]: 1,
-    [MetricName.totalIssues]: 1,
-    [MetricName.contributedRepositoryCount]: 1,
-    [MetricName.maintainedRepositoryCount]: 1,
-    [MetricName.issuePullRequestRatio]: 1,
-    [MetricName.activeContributionWeeks]: 1,
-    [MetricName.collectedGrant]: 1,
-    [MetricName.meanGrantPerProject]: 1,
-    [MetricName.contributedProjectCount]: 1,
-    [MetricName.contributionCount]: 1,
+    [MetricName.githubTotalPullRequests]: 1,
+    [MetricName.githubTotalIssues]: 1,
+    [MetricName.githubContributedRepositoryCount]: 1,
+    [MetricName.githubMaintainedRepositoryCount]: 1,
+    [MetricName.githubIssuePullRequestRatio]: 1,
+    [MetricName.githubActiveContributionWeeks]: 1,
+    [MetricName.onlydustCollectedGrant]: 1,
+    [MetricName.onlydustMeanGrantPerProject]: 1,
+    [MetricName.onlydustContributedProjectCount]: 1,
+    [MetricName.onlydustContributionCount]: 1,
   };
 
   /**
@@ -36,20 +36,20 @@ export class ScorerService {
 
     const scored = normalized.map((row, index) => {
       const githubScore = this.calculateScore(row, [
-        MetricName.totalPullRequests,
-        MetricName.totalIssues,
-        MetricName.contributedRepositoryCount,
-        MetricName.maintainedRepositoryCount,
-        MetricName.issuePullRequestRatio,
-        MetricName.activeContributionWeeks,
+        MetricName.githubTotalPullRequests,
+        MetricName.githubTotalIssues,
+        MetricName.githubContributedRepositoryCount,
+        MetricName.githubMaintainedRepositoryCount,
+        MetricName.githubIssuePullRequestRatio,
+        MetricName.githubActiveContributionWeeks,
       ]);
       const onlydustScore = this.calculateScore(row, [
-        MetricName.collectedGrant,
-        MetricName.meanGrantPerProject,
-        MetricName.contributedProjectCount,
-        MetricName.contributionCount,
+        MetricName.onlydustCollectedGrant,
+        MetricName.onlydustMeanGrantPerProject,
+        MetricName.onlydustContributedProjectCount,
+        MetricName.onlydustContributionCount,
       ]);
-      const globalScore = this.calculateScore(row, metrics as MetricName[]);
+      const globalScore = githubScore + onlydustScore;
 
       return {
         ...contributors[index],

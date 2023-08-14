@@ -6,6 +6,6 @@ describe('Issue Pull Request Ratio Query', () => {
 
   it('parseResult should return a User', async () => {
     const data = await query.parseResult(response);
-    expect(typeof data.issuePullRequestRatio).toBe('number');
+    expect(typeof data.githubIssuePullRequestRatio).toBe('number');
   });
 });

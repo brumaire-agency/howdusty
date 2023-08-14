@@ -72,7 +72,7 @@ export class TotalIssuesQuery extends GithubQuery<
     );
 
     return {
-      totalIssues: issueContributionsCount,
+      githubTotalIssues: issueContributionsCount,
     };
   }
 }
@@ -97,5 +97,5 @@ export interface TotalIssuesResult extends GithubResponse {
  * Represents the data associated with the metric.
  */
 export interface TotalIssuesData extends GithubData {
-  totalIssues: number;
+  githubTotalIssues: number;
 }
