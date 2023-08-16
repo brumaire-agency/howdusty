@@ -25,6 +25,7 @@ export class MetricsFactory {
         [MetricName.onlydustMeanGrantPerProject]: faker.number.int(500),
         [MetricName.onlydustContributedProjectCount]: faker.number.int(10),
         [MetricName.onlydustContributionCount]: faker.number.int(20),
+        [MetricName.onlydustRegularity]: faker.number.int(15),
         contributor: ContributorFactory.generate(),
       } as Metrics,
       preset,

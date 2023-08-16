@@ -49,6 +49,14 @@ export class Metrics implements Metricable {
   @Column({ name: 'onlydust_contribution_count' })
   onlydustContributionCount: number;
 
+  @Column({
+    name: 'onlydust_regularity',
+    type: 'decimal',
+    precision: 6,
+    scale: 2,
+  })
+  onlydustRegularity: number;
+
   @OneToOne(() => Contributor, (contributor) => contributor.metrics)
   @JoinColumn()
   contributor: Relation<Contributor>;

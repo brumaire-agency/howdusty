@@ -46,6 +46,7 @@ describe('MetricsService', () => {
           onlydustMeanGrantPerProject: 10,
           onlydustContributedProjectCount: 5,
           onlydustContributionCount: 20,
+          onlydustRegularity: 15,
         },
       });
     });

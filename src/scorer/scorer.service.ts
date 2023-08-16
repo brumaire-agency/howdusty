@@ -17,6 +17,7 @@ export class ScorerService {
     [MetricName.onlydustMeanGrantPerProject]: 1,
     [MetricName.onlydustContributedProjectCount]: 1,
     [MetricName.onlydustContributionCount]: 1,
+    [MetricName.onlydustRegularity]: 1,
   };
 
   /**
@@ -48,6 +49,7 @@ export class ScorerService {
         MetricName.onlydustMeanGrantPerProject,
         MetricName.onlydustContributedProjectCount,
         MetricName.onlydustContributionCount,
+        MetricName.onlydustRegularity,
       ]);
       const globalScore = githubScore + onlydustScore;
 

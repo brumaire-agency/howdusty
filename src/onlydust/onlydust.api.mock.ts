@@ -25,7 +25,7 @@ export class OnlydustApiMock {
   /**
    * Gets onlydustCollectedGrant for all users from OnlyDust.
    */
-  getonlydustCollectedGrants(
+  getOnlydustCollectedGrants(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
@@ -42,7 +42,7 @@ export class OnlydustApiMock {
   /**
    * Gets onlydustMeanGrantPerProject for all users from OnlyDust.
    */
-  getonlydustMeanGrantPerProject(
+  getOnlydustMeanGrantPerProject(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
@@ -59,7 +59,7 @@ export class OnlydustApiMock {
   /**
    * Gets the number of unique projects each contributor has contributed to.
    */
-  getonlydustContributedProjectCount(
+  getOnlydustContributedProjectCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
@@ -76,7 +76,7 @@ export class OnlydustApiMock {
   /**
    * Gets the number of missions each contributor.
    */
-  getonlydustContributionCount(
+  getOnlydustContributionCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     return Promise.resolve({
@@ -84,6 +84,23 @@ export class OnlydustApiMock {
         (record, username) => ({
           ...record,
           [username]: 20,
+        }),
+        {},
+      ),
+    });
+  }
+
+  /**
+   * Gets the frequency of contributions each contributor.
+   */
+  getOnlydustRegularity(
+    usernames: string[],
+  ): Promise<Record<string, Record<string, number>>> {
+    return Promise.resolve({
+      onlydustRegularity: usernames.reduce(
+        (record, username) => ({
+          ...record,
+          [username]: 15,
         }),
         {},
       ),

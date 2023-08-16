@@ -9,4 +9,5 @@ export enum MetricName {
   onlydustMeanGrantPerProject = 'onlydustMeanGrantPerProject',
   onlydustContributedProjectCount = 'onlydustContributedProjectCount',
   onlydustContributionCount = 'onlydustContributionCount',
+  onlydustRegularity = 'onlydustRegularity',
 }
