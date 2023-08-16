@@ -41,7 +41,7 @@ export class OnlydustApi {
   /**
    * Gets onlydustCollectedGrant for all users from OnlyDust.
    */
-  async getonlydustCollectedGrants(
+  async getOnlydustCollectedGrants(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     const client = await this.getClient();
@@ -84,7 +84,7 @@ export class OnlydustApi {
   /**
    * Gets the mean of collected grants per project for all users from OnlyDust.
    */
-  async getonlydustMeanGrantPerProject(
+  async getOnlydustMeanGrantPerProject(
     usernames: string[],
   ): Promise<Record<string, number>> {
     const client = await this.getClient();
@@ -128,7 +128,7 @@ export class OnlydustApi {
   /**
    * Gets the number of unique projects each contributor has contributed to.
    */
-  async getonlydustContributedProjectCount(
+  async getOnlydustContributedProjectCount(
     usernames: string[],
   ): Promise<Record<string, number>> {
     const client = await this.getClient();
@@ -160,7 +160,7 @@ export class OnlydustApi {
   /**
    * Gets the number of missions each contributor.
    */
-  async getonlydustContributionCount(
+  async getOnlydustContributionCount(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
     const client = await this.getClient();
@@ -186,6 +186,69 @@ export class OnlydustApi {
         }),
         {},
       ),
+    };
+  }
+
+  async getOnlydustRegularity(
+    usernames: string[],
+  ): Promise<Record<string, Record<string, number>>> {
+    const client = await this.getClient();
+
+    const query = `
+    SELECT users.id, users.login,
+    DATE_TRUNC('month', COALESCE(issues.created_at, pull_requests.created_at, code_reviews.submitted_at)) as month,
+    COUNT(COALESCE(issues.id, pull_requests.id, code_reviews.pull_request_id)) as contribution_count
+    FROM public.github_users AS users
+    LEFT JOIN public.contributions AS contributions
+    ON users.id = contributions.user_id
+    LEFT JOIN public.github_issues AS issues
+    ON contributions.details_id = issues.id AND contributions.type = 'issue'
+    LEFT JOIN public.github_pull_requests AS pull_requests
+    ON contributions.details_id = pull_requests.id AND contributions.type = 'pull_request'
+    LEFT JOIN public.github_pull_request_reviews AS code_reviews
+    ON contributions.details_id = code_reviews.pull_request_id AND contributions.type = 'code_review'
+    WHERE users.login = ANY($1)
+      AND COALESCE(issues.created_at, pull_requests.created_at, code_reviews.submitted_at) >= CURRENT_DATE - INTERVAL '11 months'
+    GROUP BY users.id, users.login, month
+    `;
+
+    const result = await client.query(query, [usernames]);
+
+    await client.end();
+
+    const constributions: Record<string, Record<string, number>> = {};
+
+    result.rows.forEach((row) => {
+      const { login, month, contribution_count } = row;
+
+      constributions[login] = constributions[login] || {};
+      constributions[login][month.toISOString()] = contribution_count;
+    });
+
+    const contributorsRegularity: Record<string, number> = {};
+
+    Object.keys(constributions).forEach((contributor) => {
+      const contribution = constributions[contributor];
+
+      const maxMonths = 12;
+      let regularity = 0;
+
+      const currentDate = new Date();
+      for (const month in contribution) {
+        const monthDate = new Date(month);
+        const monthsDiff =
+          (currentDate.getFullYear() - monthDate.getFullYear()) * 12 +
+          currentDate.getMonth() -
+          monthDate.getMonth();
+        regularity +=
+          (contribution[month] * (maxMonths - monthsDiff)) / maxMonths;
+      }
+
+      contributorsRegularity[contributor] = regularity;
+    });
+
+    return {
+      onlydustRegularity: contributorsRegularity,
     };
   }
 

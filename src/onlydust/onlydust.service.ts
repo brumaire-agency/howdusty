@@ -10,20 +10,22 @@ export class OnlydustService {
   }
 
   async getMetricsForAll(usernames: string[]) {
-    const onlydustCollectedGrants = await this.api.getonlydustCollectedGrants(
+    const onlydustCollectedGrants = await this.api.getOnlydustCollectedGrants(
       usernames,
     );
     const onlydustMeanGrantPerProject =
-      await this.api.getonlydustMeanGrantPerProject(usernames);
+      await this.api.getOnlydustMeanGrantPerProject(usernames);
     const onlydustContributedProjectCount =
-      await this.api.getonlydustContributedProjectCount(usernames);
+      await this.api.getOnlydustContributedProjectCount(usernames);
     const onlydustContributionCount =
-      await this.api.getonlydustContributionCount(usernames);
+      await this.api.getOnlydustContributionCount(usernames);
+    const onlydustRegularity = await this.api.getOnlydustRegularity(usernames);
     const allMetrics = {
       ...onlydustCollectedGrants,
       ...onlydustMeanGrantPerProject,
       ...onlydustContributedProjectCount,
       ...onlydustContributionCount,
+      ...onlydustRegularity,
     };
     return allMetrics;
   }
