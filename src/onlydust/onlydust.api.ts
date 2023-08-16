@@ -189,6 +189,10 @@ export class OnlydustApi {
     };
   }
 
+  /**
+   * Gets the frequency of contributions each contributor.
+   */
+
   async getOnlydustRegularity(
     usernames: string[],
   ): Promise<Record<string, Record<string, number>>> {
@@ -232,6 +236,7 @@ export class OnlydustApi {
 
       const maxMonths = 12;
       let regularity = 0;
+      const sumOfMonths = (maxMonths * (maxMonths + 1)) / 2;
 
       const currentDate = new Date();
       for (const month in contribution) {
@@ -240,8 +245,8 @@ export class OnlydustApi {
           (currentDate.getFullYear() - monthDate.getFullYear()) * 12 +
           currentDate.getMonth() -
           monthDate.getMonth();
-        regularity +=
-          (contribution[month] * (maxMonths - monthsDiff)) / maxMonths;
+        const monthWeight = maxMonths - monthsDiff;
+        regularity += (contribution[month] * monthWeight) / sumOfMonths;
       }
 
       contributorsRegularity[contributor] = regularity;

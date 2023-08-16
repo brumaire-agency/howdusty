@@ -35,16 +35,16 @@ describe('SynchronizationService', () => {
       await synchronization.synchronizeUser('username');
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual({
-        id: 'd02e642a-c468-4389-a20f-dc7f6ee9be51',
+        id: 'e642ac46-8389-420f-8dc7-f6ee9be51938',
         username: 'username',
-        name: 'Miss Shelia Lindgren',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/35675332',
+        name: 'Leah McGlynn',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/96525532',
       });
     });
     it('should update a contributor if it does exist', async () => {
       faker.seed(42);
       const contributor = ContributorFactory.generate({
-        id: 'd02e642a-c468-4389-a20f-dc7f6ee9be51',
+        id: 'e642ac46-8389-420f-8dc7-f6ee9be51938',
         username: 'username',
       });
       contributorsRepository.contributors.push(contributor);
@@ -52,10 +52,10 @@ describe('SynchronizationService', () => {
       await synchronization.synchronizeUser('username');
       expect(contributorsRepository.contributors.length).toBe(1);
       expect(contributorsRepository.contributors[0]).toStrictEqual({
-        id: 'd02e642a-c468-4389-a20f-dc7f6ee9be51',
+        id: 'e642ac46-8389-420f-8dc7-f6ee9be51938',
         username: 'username',
-        name: 'Miss Shelia Lindgren',
-        avatarUrl: 'https://avatars.githubusercontent.com/u/35675332',
+        name: 'Leah McGlynn',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/96525532',
       });
     });
   });

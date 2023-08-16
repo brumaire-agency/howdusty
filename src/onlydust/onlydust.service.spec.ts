@@ -59,6 +59,11 @@ describe('OnlydustService', () => {
           username2: 20,
           username3: 20,
         },
+        onlydustRegularity: {
+          username1: 15,
+          username2: 15,
+          username3: 15,
+        },
       });
     });
   });
